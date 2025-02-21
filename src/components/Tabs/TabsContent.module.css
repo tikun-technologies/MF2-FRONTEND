@@ -1,4 +1,19 @@
+.wrapper {
+  /* background-color: red; */
+}
+
 .dataWrapper {
   /* background-color: red; */
   margin: 2rem 0rem;
+}
+
+.questionHeader {
+  display: inline-block; /* Prevent full width stretch */
+  width: 100%;
+  word-wrap: break-word; /* Wrap long words onto next line */
+  white-space: normal; /* Allow text to wrap */
+  text-align: left; /* Center the text */
+  font-size: 24px;
+  font-weight: bold;
+  /* margin: 0 auto; */
 }
