@@ -3,10 +3,9 @@ import { FaFilePdf, FaRegFilePowerpoint } from "react-icons/fa";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import PptxGenJS from "pptxgenjs";
-import "./ExportButton.css"
+import "./ExportButton.css";
 
 export const ExportPage = () => {
-
   // Function to Export Page as PDF
   const exportToPDF = () => {
     const element = document.getElementById("page-content");
@@ -25,7 +24,7 @@ export const ExportPage = () => {
   const exportToPPTX = () => {
     let pptx = new PptxGenJS();
     let slide = pptx.addSlide();
-    
+
     slide.addText("Page Export", { x: 1, y: 0.5, fontSize: 24, bold: true });
 
     const element = document.getElementById("page-content");
@@ -37,14 +36,14 @@ export const ExportPage = () => {
   };
 
   return (
-      <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
-        <button onClick={exportToPDF} style={buttonStyle}>
-          <FaFilePdf size={20} color="red" /> Export PDF
-        </button>
-        <button onClick={exportToPPTX} style={buttonStyle}>
-          <FaRegFilePowerpoint size={20} color="orange" /> Export PPTX
-        </button>
-      </div>
+    <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
+      <button onClick={exportToPDF}>
+        <FaFilePdf size={20} color="red" /> Export PDF
+      </button>
+      <button onClick={exportToPPTX}>
+        <FaRegFilePowerpoint size={20} color="orange" /> Export PPTX
+      </button>
+    </div>
   );
 };
 
@@ -60,7 +59,7 @@ const buttonStyle = {
   background: "#f4f4f4",
   borderRadius: "5px",
   transition: "0.3s",
-  color:"blue"
+  color: "blue",
 };
 
 export default ExportPage;

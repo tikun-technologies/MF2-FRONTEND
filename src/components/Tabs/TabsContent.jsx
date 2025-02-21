@@ -1,4 +1,3 @@
-
 // import React, { useState } from "react";
 // import { useFilter } from "../../context/FilterContext";
 // import StudyTable from "../Table/StudyTable";
@@ -63,19 +62,19 @@
 //           } else if (tab === "2Mindsets") {
 //                         console.log(option.Mindsets);
 //                         headers = ["Response", "Mindset 1 of 2", "Mindset 2 of 2"];
-                        
+
 //                         // Extract values dynamically from the array
 //                         const mindsets = Object.fromEntries(option.Mindsets.map(m => Object.entries(m)[0]));
-                        
+
 //                         rowData["Mindset 1 of 2"] = mindsets["Mindset 1 of 2"] ?? "-";
 //                         rowData["Mindset 2 of 2"] = mindsets["Mindset 2 of 2"] ?? "-";
-                      
+
 //                       }else if (tab === "3Mindsets") {
 //                         headers = ["Response", "Mindset 1 of 3", "Mindset 2 of 3", "Mindset 3 of 3"];
-                      
+
 //                         // Extract values dynamically from the array
 //                         const mindsets = Object.fromEntries(option.Mindsets.map(m => Object.entries(m)[0]));
-                        
+
 //                         rowData["Mindset 1 of 3"] = mindsets["Mindset 1 of 3"] ?? "-";
 //                         rowData["Mindset 2 of 3"] = mindsets["Mindset 2 of 3"] ?? "-";
 //                         rowData["Mindset 3 of 3"] = mindsets["Mindset 3 of 3"] ?? "-";
@@ -91,12 +90,12 @@
 //         return (
 //           <div key={index}>
 //             <h2>{question.Question}</h2>
-            
+
 //             {activeVisualization === "table" ? (
 //               <StudyTable headers={headers} data={data} />
 //             ) : (
 //               <ResponsiveContainer width="100%" height={400}>
-                
+
 //                 {chartType === "bar" && (
 //                   <BarChart data={data}>
 //                     <XAxis dataKey="Response" tick={{ fontSize: 12 }} />
@@ -143,21 +142,38 @@
 
 // export default TabsContent;
 
-
-
 import React, { useState } from "react";
 import { useFilter } from "../../context/FilterContext";
 import StudyTable from "../Table/StudyTable";
 import ReactApexChart from "react-apexcharts";
 import {
-  BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
-  XAxis, YAxis, Tooltip, ResponsiveContainer, Legend
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
 } from "recharts";
 import { Button } from "@mui/material";
 // import HeatMapGrid from "react-heatmap-grid";
-import {HeatmapChart} from "../Heatmap/HeatmapChart"
+import { HeatmapChart } from "../Heatmap/HeatmapChart";
+import styles from "./TabsContent.module.css";
 
-const colors = ["#8884d8", "#82ca9d", "#ffc658", "#ff7f50", "#d84315", "#3949ab", "#f50057"];
+const colors = [
+  "#8884d8",
+  "#82ca9d",
+  "#ffc658",
+  "#ff7f50",
+  "#d84315",
+  "#3949ab",
+  "#f50057",
+];
 
 const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
   const { activeFilter, activeVisualization } = useFilter();
@@ -175,12 +191,27 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
   }
 
   return (
-    <>
+    <div className={styles.dataWrapper}>
       {activeVisualization === "graph" && (
-        <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-          <Button variant="contained" onClick={() => setChartType("bar")}>Bar Chart</Button>
-          <Button variant="contained" onClick={() => setChartType("line")}>Line Chart</Button>
-          <Button variant="contained" onClick={() => setChartType("pie")}>Pie Chart</Button>
+        <div style={{ display: "flex", gap: "10px", marginBottom: "32px" }}>
+          <button
+            className={chartType === "bar" ? "activeButton" : ""}
+            onClick={() => setChartType("bar")}
+          >
+            Bar Chart
+          </button>
+          <button
+            className={chartType === "line" ? "activeButton" : ""}
+            onClick={() => setChartType("line")}
+          >
+            Line Chart
+          </button>
+          <button
+            className={chartType === "pie" ? "activeButton" : ""}
+            onClick={() => setChartType("pie")}
+          >
+            Pie Chart
+          </button>
         </div>
       )}
       {filterDownedData.Data.Questions.map((question, index) => {
@@ -188,9 +219,9 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
 
         let headers = ["Response"];
         const data = question.options.map((option) => {
-          console.log(option)
+          console.log(option);
           let rowData = { Response: option.optiontext };
-          
+
           if (tab === "overall") {
             headers = ["Response", "Total"];
             rowData.Total = option.Total ?? "-";
@@ -201,7 +232,10 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
               rowData[key] = option[tab][key] ?? "-";
             });
           } else if (tab === "Prelim-Answer Segments") {
-            const mergedData = option[tab]?.reduce((acc, obj) => ({ ...acc, ...obj }), {});
+            const mergedData = option[tab]?.reduce(
+              (acc, obj) => ({ ...acc, ...obj }),
+              {}
+            );
             const keys = Object.keys(mergedData || {});
             headers = ["Response", ...keys];
             keys.forEach((key) => {
@@ -210,35 +244,41 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
           } else if (tab === "2Mindsets") {
             console.log(option.Mindsets);
             headers = ["Response", "Mindset 1 of 2", "Mindset 2 of 2"];
-            
+
             // Extract values dynamically from the array
-            const mindsets = Object.fromEntries(option.Mindsets.map(m => Object.entries(m)[0]));
-            
+            const mindsets = Object.fromEntries(
+              option.Mindsets.map((m) => Object.entries(m)[0])
+            );
+
             rowData["Mindset 1 of 2"] = mindsets["Mindset 1 of 2"] ?? "-";
             rowData["Mindset 2 of 2"] = mindsets["Mindset 2 of 2"] ?? "-";
-          
-          }else if (tab === "3Mindsets") {
-            headers = ["Response", "Mindset 1 of 3", "Mindset 2 of 3", "Mindset 3 of 3"];
-          
+          } else if (tab === "3Mindsets") {
+            headers = [
+              "Response",
+              "Mindset 1 of 3",
+              "Mindset 2 of 3",
+              "Mindset 3 of 3",
+            ];
+
             // Extract values dynamically from the array
-            const mindsets = Object.fromEntries(option.Mindsets.map(m => Object.entries(m)[0]));
-            
+            const mindsets = Object.fromEntries(
+              option.Mindsets.map((m) => Object.entries(m)[0])
+            );
+
             rowData["Mindset 1 of 3"] = mindsets["Mindset 1 of 3"] ?? "-";
             rowData["Mindset 2 of 3"] = mindsets["Mindset 2 of 3"] ?? "-";
             rowData["Mindset 3 of 3"] = mindsets["Mindset 3 of 3"] ?? "-";
           }
-          console.log(rowData) 
+          console.log(rowData);
           return rowData;
-        }
-        );
-        
+        });
+
         if (activeVisualization === "heatmap") {
-         
-          console.log(question)
+          console.log(question);
           return (
-            <div width="100%"  key={index}>
+            <div width="100%" key={index}>
               <h2>{question.Question}</h2>
-              <HeatmapChart data={question.options} tab={tab}/>
+              <HeatmapChart data={question.options} tab={tab} />
             </div>
           );
         }
@@ -257,7 +297,11 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
                     <Tooltip />
                     <Legend />
                     {headers.slice(1).map((key, idx) => (
-                      <Bar key={key} dataKey={key} fill={colors[idx % colors.length]} />
+                      <Bar
+                        key={key}
+                        dataKey={key}
+                        fill={colors[idx % colors.length]}
+                      />
                     ))}
                   </BarChart>
                 )}
@@ -268,7 +312,13 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
                     <Tooltip />
                     <Legend />
                     {headers.slice(1).map((key, idx) => (
-                      <Line key={key} type="monotone" dataKey={key} stroke={colors[idx % colors.length]} strokeWidth={2} />
+                      <Line
+                        key={key}
+                        type="monotone"
+                        dataKey={key}
+                        stroke={colors[idx % colors.length]}
+                        strokeWidth={2}
+                      />
                     ))}
                   </LineChart>
                 )}
@@ -276,9 +326,20 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
                   <PieChart>
                     <Tooltip />
                     <Legend />
-                    <Pie data={data} dataKey={headers[1]} nameKey="Response" cx="50%" cy="50%" outerRadius={100} label>
+                    <Pie
+                      data={data}
+                      dataKey={headers[1]}
+                      nameKey="Response"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={100}
+                      label
+                    >
                       {data.map((_, index) => (
-                        <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={colors[index % colors.length]}
+                        />
                       ))}
                     </Pie>
                   </PieChart>
@@ -288,7 +349,7 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 

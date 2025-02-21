@@ -12,7 +12,19 @@ const StudyCard = ({ study }) => {
       <h2 className={styles.studyTitle}>{studyTitle}</h2>
       <div className={styles.studyMeta}>
         <div className={styles.studyStatus}>
-          <Badge badgeText={studyStatus} type={studyStatus} />
+          <Badge
+            type={
+              /^\d{2}\/\d{2}\/\d{4}$/.test(studyStatus)
+                ? "completed"
+                : studyStatus
+            }
+            badgeText={
+              /^\d{2}\/\d{2}\/\d{4}$/.test(studyStatus)
+                ? "completed"
+                : studyStatus
+            }
+          />
+
           {studyStarted && <p>{`Created on: ${studyStarted}`}</p>}
         </div>
       </div>

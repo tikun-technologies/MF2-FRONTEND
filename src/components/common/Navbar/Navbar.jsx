@@ -15,18 +15,20 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.navContent}>
-        <img src={Logo} className={styles.navLogo} />
+        <Link to="/" className={styles.navLink}>
+          <img src={Logo} className={styles.navLogo} />
+        </Link>
         <div className={styles.navLinks}>
-          <Link to="/" className={styles.navLink}>
+          {/* <Link to="/" className={styles.navLink}>
             Home
-          </Link>
-          <a href="/about" className={styles.navLink}>
+          </Link> */}
+          {/* <a href="/about" className={styles.navLink}>
             About
-          </a>
-          <a href="/browse" className={styles.navLink}>
+          </a> */}
+          {/* <a href="/browse" className={styles.navLink}>
             Browse
-          </a>
-          <Link to="/dashboard" className={styles.navLink}>
+          </a> */}
+          {/* <Link to="/dashboard" className={styles.navLink}>
             Dashboard
           </Link>
           <a href="/create" className={styles.navLink}>
@@ -34,10 +36,10 @@ const Navbar = () => {
           </a>
           <a href="/content" className={styles.navLink}>
             Contact
-          </a>
+          </a> */}
         </div>
         <div className={styles.rightSection}>
-          <form onSubmit={handleSearch} className={styles.searchForm}>
+          {/* <form onSubmit={handleSearch} className={styles.searchForm}>
             <div className={styles.searchInputWrapper}>
               <HiSearch className={styles.searchIcon} />
               <input
@@ -48,8 +50,8 @@ const Navbar = () => {
                 className={styles.searchInput}
               />
             </div>
-          </form>
-          <button className={styles.signInButton}>Sign In</button>
+          </form> */}
+          {/* <button className={styles.signInButton}>Sign In</button> */}
         </div>
       </div>
     </nav>
