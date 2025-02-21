@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("./assets/fonts/SpaceGrotesk-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 700; /* Supports weight range */
+  font-style: normal;
+}
+
+:root {
+  
+}
+
 *,
 *::before,
 *::after {
@@ -13,6 +25,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
   background: #efefef;
+  font-family: "Space Grotesk", sans-serif;
 }
 
 img,
@@ -91,6 +104,10 @@ h1 {
 }
 
 /* Buttons */
+
+button {
+  font-family: ;
+}
 
 button:hover {
   background-color: #ffffff;
