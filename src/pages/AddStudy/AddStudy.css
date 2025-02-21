@@ -1,0 +1,120 @@
+/* General Container */
+.AddStudy-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Card Style */
+  .addstudy-form-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+
+  
+  /* File Upload Box */
+  .addstudy-upload-box {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .addstudy-upload-icon {
+    width: 40px;
+    height: 40px;
+    color: #777;
+  }
+  
+  /* Success & Error Messages */
+  .addstudy-message {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+  }
+  
+  .addstudy-success {
+    background: #e6ffe6;
+    color: #2d7a2d;
+  }
+  .addstudy-success-card {
+    text-align: center;
+    padding: 25px;
+  }
+  .addstudy-error {
+    background: #ffe6e6;
+    color: #a12d2d;
+  }
+  
+  .addstudy-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  /* Loading Indicator */
+  .addstudy-loading {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .addstudy-spinner {
+    animation: spin 1s linear infinite;
+    color: #007bff;
+    width: 40px;
+    height: 40px;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+
+
+  .addstudy-btn-group  {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  .addstudy-button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .addstudy-button.btn-primary {
+    background: #4CAF50;
+    color: #fff;
+  }
+  
+  .addstudy-button.btn-secondary {
+    background: #777;
+    color: #fff;
+  }
+  
+  .addstudy-button:hover {
+    transform: scale(1.05);
+  }
+  
+  .addstudy-button:active {
+    transform: scale(0.98);
+  }

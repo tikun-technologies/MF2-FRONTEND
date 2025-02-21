@@ -1,0 +1,32 @@
+.tableWrapper {
+  width: 100%;
+  margin: 2rem 0rem;
+  overflow-x: auto;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.studyTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.studyTable th,
+.studyTable td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ececec;
+}
+
+.studyTable th {
+  font-weight: 600;
+  color: #616161;
+  background-color: #f9f9f9;
+}
+
+/* .studyTable tr:hover {
+  background-color: #f1f1f1;
+  transition: background-color 0.3s;
+} */

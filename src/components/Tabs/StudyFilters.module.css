@@ -1,0 +1,41 @@
+.studyFiltersContainer {
+  /* background-color: red; */
+  /* border: 2px solid red; */
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.studyVisualizations {
+  /* background-color: red; */
+  display: flex;
+  width: fit-content;
+  gap: 0.5rem;
+}
+
+.studyFilters {
+  display: flex;
+  /* padding: 0.1rem; */
+  gap: 0.5rem;
+  background-color: #cccaca;
+}
+
+.filterButton {
+  background: none;
+  color: #333;
+}
+
+.activeButton,
+.activeButton:hover {
+  background-color: black;
+  color: #ffffff;
+}
+
+.activeToggle,
+.activeToggle:hover,
+.filterButton:hover {
+  background: #ffffff;
+  border-radius: 0px;
+}

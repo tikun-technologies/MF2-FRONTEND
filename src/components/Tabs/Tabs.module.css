@@ -1,0 +1,40 @@
+/* Container for tabs */
+.tabsContainer {
+  /* display: flex; */
+  width: 100%;
+  /* makes scrollable horizontal */
+  overflow-x: auto;
+  white-space: nowrap;
+  /* border: 2px solid red; */
+  margin-top: 1rem;
+}
+
+.tabsList {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgb(197, 197, 197);
+  padding: 0.5rem;
+  background: #ffffff;
+}
+
+.tabTrigger {
+  background: none;
+  color: #333;
+  font-size: 0.875rem;
+  margin-right: 0.2rem;
+  font-weight: 700;
+  border-radius: 0px;
+}
+
+.tabTrigger:hover {
+  background: none;
+}
+
+.tabTrigger[data-state="active"] {
+  color: #000; /* Change active tab text to black */
+  font-weight: bold;
+}
+
+.tabTrigger[data-state="active"] {
+  border-bottom: 2px solid blue;
+}

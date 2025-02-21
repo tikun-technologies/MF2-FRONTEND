@@ -1,0 +1,18 @@
+.badgeOngoing {
+  background: #fefce8;
+  color: #a16207;
+  font-weight: 600;
+}
+
+.badgeCompleted {
+  background: #e8f7e8;
+  color: #166534;
+  font-weight: 600;
+}
+
+.badgeTag,
+.defaultBadge {
+  background: #e5e7eb;
+  color: #374151;
+  font-weight: 600;
+}

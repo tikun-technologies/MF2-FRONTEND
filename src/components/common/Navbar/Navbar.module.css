@@ -1,0 +1,91 @@
+.navbar {
+  /* background-color: lightblue; */
+  border-bottom: 2px solid #eaeaea;
+  padding: 1rem 0;
+  background: #fff;
+}
+
+.navContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navLogo {
+  width: auto;
+  height: 32px;
+  /* height: 60px; */
+}
+
+.navLinks {
+  display: flex;
+  font-weight: 500;
+  gap: 2rem;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #333;
+  font-size: 1rem;
+}
+
+.rightSection {
+  /* background-color: lightblue; */
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+.searchForm {
+  position: relative;
+  /* background-color: purple; */
+  /* display: flex;
+  align-items: center; */
+}
+.searchInputWrapper {
+  position: relative;
+  /* background-color: green; */
+  display: flex;
+  align-items: center;
+}
+.searchInput {
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border: none;
+  background-color: rgb(235, 235, 235);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  width: 200px;
+}
+.searchInput:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 0.5rem;
+  color: #666;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.signInButton {
+  background: none;
+  border: none;
+  color: #333;
+  font-weight: 700;
+  /* font-size: 1rem; */
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navLinks {
+    display: none;
+  }
+  .searchInput {
+    /* width: 150px; */
+  }
+}
