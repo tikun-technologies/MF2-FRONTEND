@@ -1,4 +1,4 @@
-const BASE_URL = "http://studies.centralus.cloudapp.azure.com:5000";
+const BASE_URL = "/api";
 
 export async function getStudies() {
   try {

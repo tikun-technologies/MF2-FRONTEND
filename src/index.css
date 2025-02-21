@@ -7,7 +7,8 @@
 }
 
 :root {
-  
+  /* fonts */
+  --primary-font: "Space Grotesk";
 }
 
 *,
@@ -106,7 +107,7 @@ h1 {
 /* Buttons */
 
 button {
-  font-family: ;
+  font-family: var(--primary-font);
 }
 
 button:hover {

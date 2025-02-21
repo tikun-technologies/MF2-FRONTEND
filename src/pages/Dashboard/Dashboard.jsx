@@ -38,7 +38,7 @@ const Dashboard = () => {
     <div className="container">
       {/* Header */}
       <div className={styles.header}>
-        <h1 className={styles.headerText}>My Dashboard</h1>
+        <h1 className={styles.headerText}>My Studies</h1>
         {/* <button className="button">
           <HiPlus />
           Create New Study
