@@ -278,7 +278,11 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
           return (
             <div width="100%" key={index}>
               <h2>{question.Question}</h2>
-              <HeatmapChart data={question.options} tab={tab} />
+              <HeatmapChart
+                data={question.options}
+                tab={tab}
+                filter={activeFilter}
+              />
             </div>
           );
         }

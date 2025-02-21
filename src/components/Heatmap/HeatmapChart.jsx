@@ -1,9 +1,11 @@
 import React from "react";
 import Chart from "react-apexcharts";
+import heatmapColors from "./heatmapColors";
 
-export const HeatmapChart = ({ data, tab }) => {
+export const HeatmapChart = ({ data, tab, filter }) => {
   console.log("data= ", data);
   console.log("Tab from study details:", tab);
+  console.log("Filter from heatmap", filter);
 
   // if (tab==="overall") {
   //   return <p>No data available</p>;
@@ -75,18 +77,20 @@ export const HeatmapChart = ({ data, tab }) => {
     },
     dataLabels: { enabled: true },
     // colors: ["#FF5733", "#33FF57", "#3357FF"],
-    colors: ["#ba322b", "#767676", "#029109"],
+    colors: heatmapColors[filter]?.ranges.map((range) => range.color) || [
+      "#767676",
+    ],
     title: { text: "" },
     xaxis: { categories: ageCategories },
     yaxis: { title: { text: "Response" } },
     plotOptions: {
       heatmap: {
         colorScale: {
-          ranges: [
+          ranges: heatmapColors[filter]?.ranges || [
             { from: -1000, to: 0, color: "#ba322b", name: "Negative" },
             { from: 0, to: 20, color: "#767676", name: "Neutral" },
             { from: 20, to: 1000, color: "#029109", name: "Positive" },
-          ],
+          ], // Default fallback
         },
       },
     },

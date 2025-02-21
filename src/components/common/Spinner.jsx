@@ -5,7 +5,7 @@ const Spinner = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 3000); // Simulate loading
+    const timer = setTimeout(() => setLoading(false), 8000); // Simulate loading
     return () => clearTimeout(timer);
   }, []);
 
