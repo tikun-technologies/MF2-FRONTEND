@@ -1,6 +1,7 @@
 import React from "react";
 import Chart from "react-apexcharts";
 import heatmapColors from "./heatmapColors";
+import styles from "./Heatmap.module.css";
 
 export const HeatmapChart = ({ data, tab, filter }) => {
   console.log("data= ", data);
@@ -97,8 +98,8 @@ export const HeatmapChart = ({ data, tab, filter }) => {
   };
 
   return (
-    <div>
-      <Chart options={options} series={series} type="heatmap" height={350} />;
+    <div className={styles.wrapper}>
+      <Chart options={options} series={series} type="heatmap" height={400} />
     </div>
   );
 };

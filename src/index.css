@@ -9,6 +9,9 @@
 :root {
   /* fonts */
   --primary-font: "Space Grotesk";
+
+  /* Shadows */
+  --box-shadow-1: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 *,
@@ -127,3 +130,9 @@ button:hover {
 .buttonIcon:hover {
   background-color: #ffffff8c;
 }
+
+/* .apexcharts-yaxis-label {
+  text-anchor: end !important; 
+  text-align: left;
+  font-size: clamp(0.5rem, 1vw, 2.5rem);
+} */

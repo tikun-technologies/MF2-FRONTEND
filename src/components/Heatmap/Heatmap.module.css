@@ -1,0 +1,19 @@
+.heatmapWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.react-heatmap-grid .cell {
+  border-radius: 5px;
+}
+
+.wrapper {
+  background-color: #ffffff;
+  padding: 1rem;
+  margin: 2rem 0rem;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow-1);
+
+  display: flex;
+  flex-direction: column;
+}

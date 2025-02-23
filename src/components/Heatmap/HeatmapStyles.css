@@ -1,8 +1,0 @@
-.heatmapWrapper {
-    width: 100%;
-    overflow-x: auto;
-}
-
-.react-heatmap-grid .cell {
-    border-radius: 5px;
-}
