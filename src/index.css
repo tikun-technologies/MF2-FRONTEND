@@ -10,6 +10,15 @@
   /* fonts */
   --primary-font: "Space Grotesk";
 
+  /* Colors */
+
+  --white-primary: #ffffff;
+  --neon-gradient: linear-gradient(
+    360deg,
+    rgba(0, 67, 158, 0.8),
+    rgba(3, 255, 255, 1)
+  );
+
   /* Shadows */
   --box-shadow-1: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
@@ -102,6 +111,25 @@ button:hover {
   font-size: 0.9rem;
 }
 
+/* Glows */
+.gradient-text {
+  font-family: var(--primary-font), sans-serif;
+  /* font-size: 4rem; */
+  background: var(--neon-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: neonPulse 2s infinite alternate;
+}
+
+@keyframes neonPulse {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
 /* Fonts and Typography */
 h1 {
   font-size: clamp(1.5rem, 4vw, 2.5rem);
@@ -129,6 +157,22 @@ button:hover {
 }
 .buttonIcon:hover {
   background-color: #ffffff8c;
+}
+
+/* Logos */
+.logo {
+  width: 120px;
+}
+
+/* Toast */
+.Toastify__toast-container {
+  width: auto !important;
+  max-width: 100% !important;
+}
+
+/* Ensure it always appears on top */
+.Toastify__toast {
+  z-index: 9999 !important;
 }
 
 /* .apexcharts-yaxis-label {

@@ -5,6 +5,12 @@
   background: #fff;
 }
 
+.navLeft {
+  display: flex;
+  align-items: center;
+  /* border: 2px solid red; */
+}
+
 .navContent {
   max-width: 1200px;
   margin: 0 auto;

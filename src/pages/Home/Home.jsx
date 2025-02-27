@@ -1,10 +1,21 @@
 import React from "react";
+import {
+  HeroSection,
+  FeaturesSection,
+  TrustedSection,
+  FinalCTASection,
+} from "./";
+import Footer from "../../components/common/Footer/Footer";
 
 const Home = () => {
   return (
-    <div>
-      <h1>Home Page</h1>
-    </div>
+    <>
+      <HeroSection />
+      <FeaturesSection />
+      <TrustedSection />
+      <FinalCTASection />
+      <Footer />
+    </>
   );
 };
 

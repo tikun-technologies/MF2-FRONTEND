@@ -4,7 +4,7 @@ import styles from "./Navbar.module.css";
 import { HiSearch } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ fixed }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (e) => {
@@ -15,20 +15,27 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.navContent}>
-        <Link to="/" className={styles.navLink}>
-          <img src={Logo} className={styles.navLogo} />
-        </Link>
+        <div className={styles.navLeft}>
+          <Link to="/" className={styles.navLink}>
+            <img src={Logo} className={styles.navLogo} />
+          </Link>
+          <Link to="/" className={styles.navLink}>
+            <h2 className={`gradient-text ${styles.navLogoText}`}>
+              Mind Genome
+            </h2>
+          </Link>
+        </div>
         <div className={styles.navLinks}>
-          {/* <Link to="/" className={styles.navLink}>
+          <Link to="/" className={styles.navLink}>
             Home
-          </Link> */}
-          {/* <a href="/about" className={styles.navLink}>
+          </Link>
+          <a href="/about" className={styles.navLink}>
             About
-          </a> */}
-          {/* <a href="/browse" className={styles.navLink}>
+          </a>
+          <a href="/browse" className={styles.navLink}>
             Browse
-          </a> */}
-          {/* <Link to="/dashboard" className={styles.navLink}>
+          </a>
+          <Link to="/dashboard" className={styles.navLink}>
             Dashboard
           </Link>
           <a href="/create" className={styles.navLink}>
@@ -36,7 +43,7 @@ const Navbar = () => {
           </a>
           <a href="/content" className={styles.navLink}>
             Contact
-          </a> */}
+          </a>
         </div>
         <div className={styles.rightSection}>
           {/* <form onSubmit={handleSearch} className={styles.searchForm}>
