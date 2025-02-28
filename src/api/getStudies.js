@@ -24,9 +24,15 @@ export async function getStudies(token) {
   }
 }
 
-export async function getStudy(id) {
+export async function getStudy(id, token) {
   try {
-    const response = await fetch(`${BASE_URL}/studies`);
+    const response = await fetch(`${API_BASE_URL}/user/studies`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }

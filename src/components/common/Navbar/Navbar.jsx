@@ -25,7 +25,7 @@ const Navbar = ({ fixed }) => {
             </h2>
           </Link>
         </div>
-        <div className={styles.navLinks}>
+        {/* <div className={styles.navLinks}>
           <Link to="/" className={styles.navLink}>
             Home
           </Link>
@@ -44,7 +44,7 @@ const Navbar = ({ fixed }) => {
           <a href="/content" className={styles.navLink}>
             Contact
           </a>
-        </div>
+        </div> */}
         <div className={styles.rightSection}>
           {/* <form onSubmit={handleSearch} className={styles.searchForm}>
             <div className={styles.searchInputWrapper}>
@@ -58,7 +58,9 @@ const Navbar = ({ fixed }) => {
               />
             </div>
           </form> */}
-          {/* <button className={styles.signInButton}>Sign In</button> */}
+          <Link to="/login" className={styles.navLink}>
+            <button className={styles.signInButton}>Sign In</button>
+          </Link>
         </div>
       </div>
     </nav>

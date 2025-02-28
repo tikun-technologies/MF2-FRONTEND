@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./StudyDetail.module.css";
 import { getStudy } from "../../api/getStudies";
@@ -9,6 +9,7 @@ import { FilterProvider } from "../../context/FilterContext";
 import StudyFilters from "../../components/Tabs/StudyFilters";
 import ExportPage from "../../components/ExportButton/ExportButton";
 import Spinner from "../../components/common/Spinner";
+import AuthContext from "../../context/AuthContext";
 
 // Test study data
 const headers = ["Response", "Overall"];
@@ -27,13 +28,19 @@ const data = [
 const StudyDetail = () => {
   const [study, setStudy] = useState({});
   const [loading, setLoading] = useState(true);
+  const { token } = useContext(AuthContext);
 
   const { id } = useParams(); // Get study id from url
 
   useEffect(() => {
     const fetchStudy = async () => {
+      if (!token) {
+        console.warn("No authentication token found. Redirecting to login...");
+        return;
+      }
+
       try {
-        const study = await getStudy(id);
+        const study = await getStudy(id, token);
         console.log(study);
         setStudy(study);
       } catch (error) {
