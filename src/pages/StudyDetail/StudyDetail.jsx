@@ -9,6 +9,7 @@ import { FilterProvider } from "../../context/FilterContext";
 import StudyFilters from "../../components/Tabs/StudyFilters";
 import ExportPage from "../../components/ExportButton/ExportButton";
 import Spinner from "../../components/common/Spinner";
+import Sidebar from "../../components/Navbar/Sidebar";
 
 // Test study data
 const headers = ["Response", "Overall"];
@@ -66,6 +67,7 @@ const StudyDetail = () => {
 
   return (
     <>
+      <Sidebar />
       <div id="page-content">
         <FilterProvider>
           <div className="container">

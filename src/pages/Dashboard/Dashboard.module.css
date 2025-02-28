@@ -1,3 +1,25 @@
+body {
+  background: var(--dark-blue-primary);
+}
+
+.contentWrapper {
+  /* background-color: red; */
+  display: flex;
+}
+
+.contentRightContainer {
+  background-color: #e6e6e6;
+  flex-grow: 1;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 16px 0px 0px 0px;
+}
+
+.contentRightContent {
+  /* background-color: red; */
+  margin-left: 1rem;
+}
+
 .header {
   /* background-color: blue; */
   display: flex;
@@ -20,5 +42,3 @@
   border: none;
   background: aqua;
 }
-
-

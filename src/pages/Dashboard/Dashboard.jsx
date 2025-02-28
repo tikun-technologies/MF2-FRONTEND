@@ -6,6 +6,7 @@ import { HiPlus } from "react-icons/hi";
 import SkeletonCard from "../../components/StudyCard/SkeletonCard";
 import { Link } from "react-router-dom";
 import StudyTable from "../../components/Table/StudyTable";
+import Sidebar from "../../components/Navbar/Sidebar";
 
 const Dashboard = () => {
   const [studies, setStudies] = useState([]);
@@ -35,29 +36,37 @@ const Dashboard = () => {
   // }, [studies]);
 
   return (
-    <div className="container">
-      {/* Header */}
-      <div className={styles.header}>
-        <h1 className={styles.headerText}>My Studies</h1>
-        {/* <button className="button">
+    <>
+      <div className={styles.contentWrapper}>
+        <Sidebar />
+
+        <div className={styles.contentRightContainer}>
+          <div className={styles.contentRightContent}>
+            {/* Header */}
+            <div className={styles.header}>
+              <h1 className={styles.headerText}>My Studies</h1>
+              {/* <button className="button">
           <HiPlus />
           Create New Study
         </button> */}
+            </div>
+            {/* Studies */}
+            {loading
+              ? [...Array(3)].map((_, index) => <SkeletonCard key={index} />)
+              : studies.map((study) => (
+                  <Link
+                    to={`/study/${study._id}`}
+                    key={study._id}
+                    state={{ studies }}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <StudyCard key={study._id} study={study} />
+                  </Link>
+                ))}
+          </div>
+        </div>
       </div>
-      {/* Studies */}
-      {loading
-        ? [...Array(3)].map((_, index) => <SkeletonCard key={index} />)
-        : studies.map((study) => (
-            <Link
-              to={`/study/${study._id}`}
-              key={study._id}
-              state={{ studies }}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <StudyCard key={study._id} study={study} />
-            </Link>
-          ))}
-    </div>
+    </>
   );
 };
 

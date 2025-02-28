@@ -8,7 +8,6 @@ import AddDataForm from "./pages/AddStudy/AddStudy";
 function App() {
   return (
     <>
-      <Navbar />
       <Routes>
         {/* <Route path="/" element={<Home />} /> */}
         <Route path="/" element={<Dashboard />} />
