@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./Home.module.css";
-import heroImage from "../../assets/heroimage.png";
 import { FiArrowRight } from "react-icons/fi";
 import Synapses from "../../components/Models/Synapses";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,7 +28,11 @@ const HeroSection = () => {
           </Link>
         </div>
         <div className={styles.imgContainer}>
-          <img className={styles.heroImage} src={heroImage} alt="" />
+          <img
+            className={styles.heroImage}
+            src="/images/heroImage.png"
+            alt=""
+          />
         </div>
       </div>
     </section>

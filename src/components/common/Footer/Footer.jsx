@@ -10,7 +10,7 @@ const Footer = () => {
         <div className={styles.footerLeft}>
           <div className={styles.footerLogo}>
             <Link to="/home">
-              <img src={Logo} width={"60px"} />
+              <img src="/images/mindgenomics.png" width={"60px"} />
             </Link>
             <Link className={styles.footerLink} to="/home">
               <h4 className={`gradient-text ${styles.footerLogoText}`}>
