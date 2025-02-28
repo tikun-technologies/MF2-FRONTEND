@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Logo from "../../../assets/mindgenomics.png";
 import styles from "./Navbar.module.css";
 import { HiSearch } from "react-icons/hi";
 import { Link } from "react-router-dom";
@@ -17,7 +16,7 @@ const Navbar = ({ fixed }) => {
       <div className={styles.navContent}>
         <div className={styles.navLeft}>
           <Link to="/" className={styles.navLink}>
-            <img src={Logo} className={styles.navLogo} />
+            <img src="/images/mindgenomics.png" className={styles.navLogo} />
           </Link>
           <Link to="/" className={styles.navLink}>
             <h2 className={`gradient-text ${styles.navLogoText}`}>
