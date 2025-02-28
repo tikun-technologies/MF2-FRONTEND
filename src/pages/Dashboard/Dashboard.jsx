@@ -36,9 +36,10 @@ const Dashboard = () => {
   }, [token]);
 
   return (
-    <div className="container">
+    <div className={`container ${styles.content}`}>
       <div className={styles.header}>
         <h1 className={styles.headerText}>My Studies</h1>
+        <button className={styles.addStudy}>Add Study</button>
       </div>
       {error && <p className={styles.errorMessage}>⚠️ {error}</p>}
       {loading

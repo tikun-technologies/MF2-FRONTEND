@@ -1,5 +1,14 @@
+/* * {
+  border: 2px solid red;
+} */
+
+.content {
+  border: 2px solid green;
+}
+
 .header {
   /* background-color: blue; */
+  /* border: 2px solid red; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,7 +27,5 @@
   font-weight: 500;
   border-radius: 4px;
   border: none;
-  background: aqua;
+  background: var(--dark-primary);
 }
-
-

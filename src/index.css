@@ -11,7 +11,7 @@
   --primary-font: "Space Grotesk";
 
   /* Colors */
-
+  --dark-primary: #11112b;
   --white-primary: #ffffff;
   --neon-gradient: linear-gradient(
     360deg,
