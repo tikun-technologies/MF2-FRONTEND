@@ -23,6 +23,7 @@ const Dashboard = () => {
         console.log("🔍 Fetching studies with token:", token);
         const response = await getStudies(token);
         setStudies(response.studies);
+        console.log("Studies Retrieved: ", studies);
       } catch (err) {
         console.error("❌ Error fetching studies:", err.message);
         setError(err.message);
@@ -46,7 +47,7 @@ const Dashboard = () => {
             <Link
               to={`/study/${study._id}`}
               key={study._id}
-              state={{ studies }}
+              state={{ study }}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <StudyCard key={study._id} study={study} />
