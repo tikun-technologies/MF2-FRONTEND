@@ -6,10 +6,12 @@ import {
   FinalCTASection,
 } from "./";
 import Footer from "../../components/common/Footer/Footer";
+import Navbar from "../../components/common/Navbar/Navbar";
 
 const Home = () => {
   return (
     <>
+      <Navbar fixed="true" />
       <HeroSection />
       <FeaturesSection />
       <TrustedSection />

@@ -18,7 +18,6 @@ function App() {
     <>
       {" "}
       {/* All app has access to token */}
-      <Navbar fixed="true" />
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Home />} />
