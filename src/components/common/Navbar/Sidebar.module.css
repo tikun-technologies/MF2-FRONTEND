@@ -38,7 +38,6 @@
 .sidebarTab {
   display: flex;
   align-items: center;
-  /* border: 1px solid pink; */
   padding: 0.5rem;
   justify-content: space-between;
   gap: 0.75rem;
@@ -53,7 +52,8 @@
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
-  /* border: 2px solid red; */
+  border: 2px solid red;
+  /* width: 100%; */
 }
 
 .sidebarTab:hover,
@@ -75,4 +75,19 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+.sidebarIcon {
+  font-size: 1.8rem; /* ✅ Increase icon size */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* ✅ Ensures proper centering */
+  /* border: 2px solid red; */
+}
+
+.active,
+.sidebarIconActive {
+  color: aqua;
+  text-decoration: none;
 }
