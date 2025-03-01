@@ -8,6 +8,9 @@ import AddDataForm from "../pages/AddStudy/AddStudy";
 import Register from "../pages/Auth/Register";
 import Login from "../pages/Auth/Login";
 import ProtectedRoute from "../middlewares/ProtectedRoute";
+import DashboardLayout from "../components/Layout/DashboardLayout";
+import Articles from "../pages/Articles/Articles";
+import { SidebarProvider } from "../context/SidebarContext";
 
 const AppRoutes = () => {
   const { token } = useContext(AuthContext);
@@ -22,7 +25,18 @@ const AppRoutes = () => {
 
       {/* ✅ Protected Dashboard */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          element={
+            <SidebarProvider>
+              <DashboardLayout />
+            </SidebarProvider>
+          }
+        >
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/study/:id" element={<StudyDetail />} />
+          <Route path="/create" element={<AddDataForm />} />
+          <Route path="/articles" element={<Articles />} />
+        </Route>
       </Route>
 
       {/* ✅ Other Routes */}

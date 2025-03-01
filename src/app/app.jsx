@@ -5,8 +5,10 @@ import AppRoutes from "./router";
 
 function App() {
   return (
+    // App Providers
     <AppProviders>
       <BrowserRouter>
+        {/* Routes */}
         <AppRoutes />
       </BrowserRouter>
     </AppProviders>

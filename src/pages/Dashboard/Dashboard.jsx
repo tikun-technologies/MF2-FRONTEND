@@ -37,10 +37,10 @@ const Dashboard = () => {
 
   return (
     <div className={`container ${styles.content}`}>
-      <div className={styles.header}>
+      {/* <div className={styles.header}>
         <h1 className={styles.headerText}>My Studies</h1>
         <button className={styles.addStudy}>Add Study</button>
-      </div>
+      </div> */}
       {error && <p className={styles.errorMessage}>⚠️ {error}</p>}
       {loading
         ? [...Array(3)].map((_, index) => <SkeletonCard key={index} />)
