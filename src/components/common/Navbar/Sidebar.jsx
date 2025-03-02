@@ -52,7 +52,7 @@ const Sidebar = ({ isSidebarOpen }) => {
             <span className={styles.sidebarIcon}>
               <CgProfile />
             </span>
-            {isSidebarOpen && <span className={styles.linkText}>Rajesh</span>}
+            {isSidebarOpen && <span className={styles.linkText}>Account</span>}
           </NavLink>
         </div>
       </div>
