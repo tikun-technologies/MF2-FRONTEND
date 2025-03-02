@@ -4,6 +4,7 @@ import {
   FeaturesSection,
   TrustedSection,
   FinalCTASection,
+  ArticlesSection,
 } from "./";
 import Footer from "../../components/common/Footer/Footer";
 import Navbar from "../../components/common/Navbar/Navbar";
@@ -14,6 +15,8 @@ const Home = () => {
       <Navbar fixed="true" />
       <HeroSection />
       <FeaturesSection />
+      <ArticlesSection />
+
       <TrustedSection />
       <FinalCTASection />
       <Footer />

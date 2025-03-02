@@ -1,0 +1,95 @@
+.card {
+  background: var(--white-primary);
+  border-radius: 12px;
+  overflow: hidden; /* ✅ Ensures scaling doesn't overflow */
+  box-shadow: var(--box-shadow);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ✅ Fix Image Container */
+.imageContainer {
+  position: relative;
+  height: 180px;
+  background: #f3f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* ✅ Fix typo: 'justify-content' should be 'center' */
+  overflow: hidden; /* ✅ Prevents image scaling from breaking layout */
+}
+
+/* ✅ Fix Image Hover Scaling */
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* ✅ Category Tag Styling */
+.category {
+  position: absolute;
+  background-color: #f3f3f3;
+  top: 10px;
+  left: 10px;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
+/* ✅ Content Section */
+.content {
+  padding: 16px;
+  flex-grow: 1; /* ✅ Ensures content expands properly */
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+/* ✅ Keep Metadata Consistent */
+.meta {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+/* ✅ Ensure Title & Description Stay Balanced */
+.title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+  flex-grow: 0;
+}
+
+/* ✅ Limit Description to 3 Lines */
+.description {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.4;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* ✅ Limits text to 3 lines */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  flex-grow: 1; /* ✅ Prevents uneven height issues */
+}
+
+/* ✅ Hover Effects */
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card:hover .image {
+  transform: scale(1.1);
+}
+
+@media (max-width: 900px) {
+  .ard {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
