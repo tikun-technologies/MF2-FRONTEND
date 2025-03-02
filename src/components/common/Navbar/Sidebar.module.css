@@ -45,6 +45,7 @@
   list-style: none;
   font-size: 1.2rem;
   font-weight: 700;
+  /* border: 2px solid red; */
 }
 
 .sidebarTabCollapsed {
@@ -77,6 +78,15 @@
   gap: 2rem;
 }
 
+.sidebarBottom {
+  margin-top: auto; /* ✅ Push bottom section to the bottom */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%; /* ✅ Ensures full width */
+  gap: 1rem; /* ✅ Adds spacing between Profile & Logout */
+}
+
 .sidebarIcon {
   font-size: 1.8rem; /* ✅ Increase icon size */
   display: flex;
@@ -84,6 +94,11 @@
   align-items: center;
   width: 100%; /* ✅ Ensures proper centering */
   /* border: 2px solid red; */
+}
+
+.sidebarLogout {
+  margin-left: 4px;
+  margin-right: -4px;
 }
 
 .active,
