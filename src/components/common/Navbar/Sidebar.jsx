@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Sidebar.module.css";
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { GiBrain } from "react-icons/gi";
 import { CgProfile } from "react-icons/cg";
 import { RiArticleLine } from "react-icons/ri";
+import { IoLogOutOutline } from "react-icons/io5";
+import AuthContext from "../../../context/AuthContext";
 
 const Sidebar = ({ isSidebarOpen }) => {
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { firstName } = user;
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+    navigate("/");
+  };
+
   return (
     <div
       className={`${styles.sidebarContainer} ${
@@ -52,7 +63,21 @@ const Sidebar = ({ isSidebarOpen }) => {
             <span className={styles.sidebarIcon}>
               <CgProfile />
             </span>
-            {isSidebarOpen && <span className={styles.linkText}>Account</span>}
+            {isSidebarOpen && (
+              <span className={styles.linkText}>{firstName}</span>
+            )}
+          </NavLink>
+          <NavLink
+            to="/"
+            onClick={handleLogout}
+            className={({ isActive }) =>
+              `${styles.sidebarTab} ${isActive ? styles.active : styles.sidebarLink}`
+            }
+          >
+            <span className={`${styles.sidebarIcon} ${styles.sidebarLogout}`}>
+              <IoLogOutOutline />
+            </span>
+            {isSidebarOpen && <span className={styles.linkText}>Logout</span>}
           </NavLink>
         </div>
       </div>
