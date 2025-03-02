@@ -16,7 +16,7 @@ const ProtectedRoute = () => {
     return null; // Prevent redirecting before checking token
   }
 
-  if (!token) {
+  if (!token && window.location.pathname !== "/") {
     console.warn("🔄 No token found. Redirecting to login...");
     return <Navigate to="/login" />;
   }

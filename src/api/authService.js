@@ -32,6 +32,7 @@ export const loginUser = async (email, password) => {
     });
 
     const data = await response.json();
+    console.log("login response:", data);
     if (!response.ok) throw new Error(data.error || "Login Failed");
 
     return data; //This contains the token

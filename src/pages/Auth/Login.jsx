@@ -41,7 +41,7 @@ const Login = () => {
       console.error("❌ Login Failed:", data.error);
     } else {
       console.log("✅ Login Successful, storing token:", data.access_token);
-      login(data.access_token); // ✅ Use AuthContext login function
+      login(data.access_token, data.user); // ✅ Use AuthContext login function
       toast.success("Login successful!");
       navigate("/dashboard");
     }

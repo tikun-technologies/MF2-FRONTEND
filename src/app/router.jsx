@@ -20,7 +20,7 @@ const AppRoutes = () => {
       {/* ✅ Redirect `/` to `/dashboard` if logged in */}
       <Route
         path="/"
-        element={token ? <Navigate to="/dashboard" /> : <Home />}
+        element={token ? <Navigate to="/dashboard" replace /> : <Home />}
       />
 
       {/* ✅ Protected Dashboard */}
