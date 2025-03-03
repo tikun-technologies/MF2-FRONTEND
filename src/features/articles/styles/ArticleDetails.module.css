@@ -1,0 +1,226 @@
+/* ✅ Page Container */
+
+/* ✅ Wrap the entire page with a different background */
+.articlePageWrapper {
+  /* padding-top: 2rem; */
+  margin-top: 4rem;
+  background-color: #f8f9fa; /* Change to your desired color */
+  min-height: 100vh; /* Ensure it covers full viewport height */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+  overflow-x: hidden;
+}
+
+.articleContainer {
+  /* border: 2px solid red; */
+  max-width: 750px;
+  margin: auto;
+  margin-top: 2rem;
+  padding: 4rem 4rem;
+  background-color: var(--white-primary);
+  box-shadow: var(--box-shadow-1);
+  border-radius: 16px;
+  /* font-family: "Inter", sans-serif; */
+}
+
+/* ✅ Back Link */
+
+.linksWrapper {
+  display: flex;
+  /* background-color: lightgreen; */
+  /* margin: 0rem 2rem; */
+  align-items: center;
+  justify-content: space-between;
+  /* width: 95%; */
+}
+
+.backLink {
+  background-color: var(--white-primary);
+  box-shadow: var(--box-shadow-1);
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background 0.3s ease-in-out,
+    color 0.3s ease-in-out; /* Smooth transition */
+}
+
+.backLink:hover {
+  background: var(--blue-light-primary); /* Ensure hover background changes */
+  color: var(--white-primary) !important; /* Change text color on hover */
+}
+
+.articleLink {
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.articleLink:hover {
+  color: var(--white-primary) !important;
+}
+
+.articleLink a:hover {
+  color: var(--white-primary);
+}
+
+.backLink a {
+  text-decoration: none;
+}
+
+.backlink span:hover {
+  color: var(--white-primary);
+}
+
+/* ✅ Hero Section */
+.hero {
+  text-align: left;
+  margin-bottom: 2rem;
+  /* border: 2px solid red; */
+  /* background-color: var(--white-primary); */
+}
+
+.metaInfo {
+  display: flex;
+  /* border: 2px solid red; */
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.category {
+  background: #e8e8e8;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.author {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* ✅ Hero Image */
+.articleImage {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+/* ✅ Content Styling */
+.content {
+  line-height: 1.7;
+  font-size: 1rem;
+  color: #333;
+}
+
+.content h2 {
+  font-size: 1.4rem;
+  margin-top: 2rem;
+}
+
+.content p {
+  margin-bottom: 1.5rem;
+}
+
+/* ✅ Quote Styling */
+.content blockquote {
+  font-style: italic;
+  border-left: 4px solid #3b82f6;
+  padding-left: 1rem;
+  color: #444;
+}
+
+/* ✅ Author Section */
+.authorSection {
+  background: #f8f8f8;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 3rem;
+}
+
+.authorInfo h4 {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.authorInfo p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* ✅ Related Articles */
+.relatedArticles {
+  margin-top: 3rem;
+}
+
+.relatedArticles h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.relatedGrid {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.relatedCard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 350px;
+  text-decoration: none;
+  background: #f8f8f8;
+  padding: 1rem;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.relatedCard:hover {
+  transform: translateY(-5px);
+}
+
+.relatedImage {
+  width: 100%;
+  height: 150px;
+  background: #ddd;
+  border-radius: 5px;
+}
+
+.relatedMeta {
+  padding-top: 1rem;
+}
+
+.relatedCategory {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #666;
+}
+
+.relatedTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222;
+  margin-top: 0.5rem;
+}

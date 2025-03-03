@@ -3,6 +3,7 @@ import ArticleCard from "../../components/Cards/ArticleCard";
 import styles from "./Home.module.css";
 import { FiArrowRight } from "react-icons/fi";
 import { articlesData } from "../../data/test/articlesData";
+import { Link } from "react-router-dom";
 
 const ArticlesSection = () => {
   return (
@@ -15,7 +16,12 @@ const ArticlesSection = () => {
         </p>
         <div className={styles.articleGrid}>
           {articlesData.map((article) => (
-            <ArticleCard key={article._id} {...article} />
+            <Link
+              className={styles.articleLink}
+              to={`/articles/${article._id}`}
+            >
+              <ArticleCard key={article._id} {...article} />
+            </Link>
           ))}
         </div>
         <button className={`${styles.articlesRedirect} ${styles.actionButton}`}>

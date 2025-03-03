@@ -373,6 +373,15 @@ section {
   align-items: stretch; /* ✅ Ensures all items align at the top */
 }
 
+.articleLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.articleLink:visited {
+  color: inherit;
+}
+
 .articlesRedirect {
   /* border: 2px solid red; */
   margin-top: 4rem;

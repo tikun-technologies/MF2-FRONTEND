@@ -12,6 +12,7 @@
 
   /* Colors */
   --dark-primary: #11112b;
+  --blue-light-primary: #3b82f6;
   --white-primary: #ffffff;
   --neon-gradient: linear-gradient(
     360deg,

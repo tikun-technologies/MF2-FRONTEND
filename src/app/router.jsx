@@ -11,6 +11,7 @@ import ProtectedRoute from "../middlewares/ProtectedRoute";
 import DashboardLayout from "../components/Layout/DashboardLayout";
 import Articles from "../pages/Articles/Articles";
 import { SidebarProvider } from "../context/SidebarContext";
+import ArticleDetails from "../features/articles/pages/ArticleDetails";
 
 const AppRoutes = () => {
   const { token } = useContext(AuthContext);
@@ -22,6 +23,12 @@ const AppRoutes = () => {
         path="/"
         element={token ? <Navigate to="/dashboard" replace /> : <Home />}
       />
+
+      {/* ✅ Public Routes */}
+      <Route path="/articles/:id" element={<ArticleDetails />} />
+      <Route path="/signup" element={<Register />} />
+      <Route path="/create" element={<AddDataForm />} />
+      <Route path="/login" element={<Login />} />
 
       {/* ✅ Protected Dashboard */}
       <Route element={<ProtectedRoute />}>
@@ -39,11 +46,8 @@ const AppRoutes = () => {
         </Route>
       </Route>
 
-      {/* ✅ Other Routes */}
-      <Route path="/signup" element={<Register />} />
-      <Route path="/create" element={<AddDataForm />} />
-      <Route path="/study/:id" element={<StudyDetail />} />
-      <Route path="/login" element={<Login />} />
+      {/* ✅ Catch-All Route (404 Page - Optional) */}
+      <Route path="*" element={<h2>Page Not Found</h2>} />
     </Routes>
   );
 };
