@@ -4,17 +4,14 @@ import seoConfig from "../../config/seoConfig";
 const SEO = ({ title, description, keywords, image, url }) => {
   return (
     <Helmet>
+      {/* Primary Meta Tags */}
       <title>{title || seoConfig.defaultTitle}</title>
       <meta
         name="description"
         content={description || seoConfig.defaultDescription}
       />
-      <meta
-        name="keywords"
-        content={(keywords || seoConfig.defaultKeywords).join(", ")}
-      />
 
-      {/* Open Graph (Facebook, Linkedin) */}
+      {/* Open Graph / Facebook / WhatsApp */}
       <meta property="og:title" content={title || seoConfig.defaultTitle} />
       <meta
         property="og:description"
@@ -22,16 +19,19 @@ const SEO = ({ title, description, keywords, image, url }) => {
       />
       <meta property="og:image" content={image || seoConfig.defaultImage} />
       <meta property="og:url" content={url || seoConfig.siteUrl} />
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content="article" />
 
-      {/* Twitter Cards */}
+      {/* Ensure proper WhatsApp preview */}
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+
+      {/* Twitter Meta Tags */}
       <meta name="twitter:title" content={title || seoConfig.defaultTitle} />
       <meta
         name="twitter:description"
         content={description || seoConfig.defaultDescription}
       />
       <meta name="twitter:image" content={image || seoConfig.defaultImage} />
-      <meta name="twitter:site" content={seoConfig.twitterHandle} />
       <meta name="twitter:card" content="summary_large_image" />
     </Helmet>
   );

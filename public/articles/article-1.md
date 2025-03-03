@@ -4,6 +4,7 @@ date: "March 3, 2025"
 author: "J Brown Fitterman, Joshua Mathew, Dr. Howard Moskowitz"
 readTime: "7 min read"
 category: "Sports"
+description: "Luka Dončić, at 25 years old, was the face of the Dallas Mavericks and a generational talent"
 image: "https://pbs.twimg.com/media/GjENw3vXgAAWVGq?format=jpg&name=medium"
 ---
 
