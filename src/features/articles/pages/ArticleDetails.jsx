@@ -8,6 +8,8 @@ import ShareButtons from "../../../components/common/Share/ShareButtons";
 import Navbar from "../../../components/common/Navbar/Navbar";
 import matter from "gray-matter";
 import { Buffer } from "buffer";
+import SEO from "../../../components/seo/SEO";
+import API_BASE_URL from "../../../api/config";
 
 // ✅ Ensure Buffer is available in the browser
 if (!window.Buffer) {
@@ -69,6 +71,13 @@ const ArticleDetails = () => {
 
   return (
     <>
+      <SEO
+        title={meta?.title}
+        description={meta?.description}
+        keywords={[meta?.category, "AI", "research"]}
+        image={meta?.image}
+        url={`${API_BASE_URL}/articles/${meta?._id}`}
+      />
       <Navbar />
       <div className={styles.articlePageWrapper}>
         <div className={`${styles.linksWrapper} container`}>
