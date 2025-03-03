@@ -9,7 +9,6 @@ import Navbar from "../../../components/common/Navbar/Navbar";
 import matter from "gray-matter";
 import { Buffer } from "buffer";
 import SEO from "../../../components/seo/SEO";
-import API_BASE_URL from "../../../api/config";
 
 // ✅ Ensure Buffer is available in the browser
 if (!window.Buffer) {
@@ -22,6 +21,11 @@ const ArticleDetails = () => {
   const [meta, setMeta] = useState(null);
   const [relatedArticles, setRelatedArticles] = useState([]);
   const [error, setError] = useState(null);
+  const [pageUrl, setPageUrl] = useState(""); // ✅ Fix for window.location.href
+
+  useEffect(() => {
+    setPageUrl(window.location.href); // ✅ Safe URL handling
+  }, []);
 
   useEffect(() => {
     fetch(`/articles/article-${id}.md`)
@@ -35,11 +39,9 @@ const ArticleDetails = () => {
         console.log("✅ Fetched Markdown:", text); // Debugging
 
         try {
-          const { data: metaData, content } = matter(text);
-          console.log("✅ Extracted Metadata:", metaData); // Debugging
-
-          setMeta(metaData);
-          setArticleContent(content);
+          const parsed = matter(text);
+          setMeta(parsed.data || {}); // ✅ Ensure valid metadata
+          setArticleContent(parsed.content || "");
         } catch (parseError) {
           console.error("❌ Error parsing markdown:", parseError);
           setError("Error parsing article content.");
@@ -55,13 +57,9 @@ const ArticleDetails = () => {
     if (meta) {
       const related = articlesData
         .filter(
-          (article) =>
-            article.category === meta.category &&
-            String(article._id) !== String(id) // ✅ Ensure ID is compared as a string
+          (article) => article.category === meta.category && article._id !== id
         )
         .slice(0, 2);
-
-      console.log("✅ Related Articles:", related); // Debugging
       setRelatedArticles(related);
     }
   }, [meta, id]);
@@ -76,7 +74,7 @@ const ArticleDetails = () => {
         description={meta?.description}
         keywords={[meta?.category, "AI", "research"]}
         image={meta?.image}
-        url={`${API_BASE_URL}/articles/${meta?._id}`}
+        url={`${window.location.origin}/articles/${id}`} // ✅ Fix URL
       />
       <Navbar />
       <div className={styles.articlePageWrapper}>
@@ -90,7 +88,7 @@ const ArticleDetails = () => {
           <div className={styles.articleShare}>
             <ShareButtons
               className={styles.articleShareButtons}
-              url={window.location.href}
+              url={pageUrl} // ✅ Safe usage
               title={meta.title}
             />
           </div>
@@ -128,11 +126,11 @@ const ArticleDetails = () => {
           <div className={styles.authorSection}>
             <div className={styles.authorInfo}>
               <h4>{meta.author}</h4>
-              <p>{meta.authorBio || "Senior Partner"}</p>
+              <p>{meta.authorBio || "Contributors"}</p>
             </div>
           </div>
 
-          {/* ✅ Related Articles
+          {/* ✅ Related Articles */}
           {relatedArticles.length > 0 && (
             <section className={styles.relatedArticles}>
               <h2>Related Articles</h2>
@@ -155,7 +153,7 @@ const ArticleDetails = () => {
                 ))}
               </div>
             </section>
-          )} */}
+          )}
         </div>
       </div>
     </>

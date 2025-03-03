@@ -1,20 +1,15 @@
 export const articlesData = [
   {
     _id: "1",
-    title: "Keir Stamer pounds Zelensky",
+    title: "The Luka Dončić Trade: What Fans Are Really Thinking",
     description:
-      "Zelensky met Keir Stamer at 10 Downing Street and got pounded. We have never seen a pounding like this.",
-    date: "Feb 25, 2025",
-    readTime: "5 mins",
-    category: "Research",
-    author: "John Doe",
-    image:
-      "https://media.cnn.com/api/v1/images/stellar/prod/2025-03-01t174617z-1698872933-rc2h4dapo419-rtrmadp-3-ukraine-crisis-britain.jpg?c=16x9&q=h_653,w_1160,c_fill/f_webp",
-    keyTakeaways: [
-      "Zelensky faced intense questioning from Keir Starmer.",
-      "Discussions revolved around UK-Ukraine military support.",
-      "Keir Starmer emphasized diplomatic negotiations over conflict escalation.",
-    ],
+      "Luka Dončić, at 25 years old, was the face of the Dallas Mavericks and a generational talent.",
+    date: "March 3, 2025",
+    readTime: "7 min read",
+    category: "Sports",
+    author: "J Brown Fitterman, Joshua Mathew, Dr. Howard Moskowitz",
+    image: "https://pbs.twimg.com/media/GjENw3vXgAAWVGq?format=jpg&name=medium",
+    keyTakeaways: ["Majority of fans believe the league is conspiracy driven"],
     content: [
       {
         heading: "The Background",
