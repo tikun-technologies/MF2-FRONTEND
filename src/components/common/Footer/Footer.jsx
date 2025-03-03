@@ -20,7 +20,7 @@ const Footer = () => {
 
           <p>© 2025 All rights reserved.</p>
         </div>
-        <div className={styles.footerRight}>
+        {/* <div className={styles.footerRight}>
           <Link to="/privacy" className={styles.footerLink}>
             Privacy
           </Link>
@@ -30,7 +30,7 @@ const Footer = () => {
           <Link to="/contact" className={styles.footerLink}>
             Contact
           </Link>
-        </div>
+        </div> */}
       </div>
     </footer>
   );

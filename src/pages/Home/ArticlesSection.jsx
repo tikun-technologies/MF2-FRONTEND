@@ -24,10 +24,10 @@ const ArticlesSection = () => {
             </Link>
           ))}
         </div>
-        <button className={`${styles.articlesRedirect} ${styles.actionButton}`}>
+        {/* <button className={`${styles.articlesRedirect} ${styles.actionButton}`}>
           View All Articles
           <FiArrowRight className={styles.arrowIcon} />
-        </button>
+        </button> */}
       </div>
     </section>
   );

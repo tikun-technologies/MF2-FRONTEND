@@ -69,6 +69,7 @@ const ArticleDetails = () => {
 
   return (
     <>
+      {/* Add SEO component here */}
       <SEO
         title={meta?.title}
         description={meta?.description}
@@ -76,13 +77,13 @@ const ArticleDetails = () => {
         image={meta?.image}
         url={`${window.location.origin}/articles/${id}`} // ✅ Fix URL
       />
+
       <Navbar />
       <div className={styles.articlePageWrapper}>
         <div className={`${styles.linksWrapper} container`}>
           <div className={styles.backLink}>
-            <Link className={styles.articleLink} to="/articles">
-              ←{" "}
-              <span className={styles.articleButtonText}>Back to Articles</span>
+            <Link className={styles.articleLink} to="/">
+              ← <span className={styles.articleButtonText}>Back Home</span>
             </Link>
           </div>
           <div className={styles.articleShare}>

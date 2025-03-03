@@ -1,6 +1,6 @@
 ---
 title: "The Luka Dončić Trade: What Fans Are Really Thinking"
-date: "March 3, 2025"
+date: "Feb 8, 2025"
 author: "J Brown Fitterman, Joshua Mathew, Dr. Howard Moskowitz"
 readTime: "7 min read"
 category: "Sports"

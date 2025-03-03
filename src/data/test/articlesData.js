@@ -34,67 +34,54 @@ export const articlesData = [
   },
   {
     _id: "2",
-    title: "The Impact of AI on Political Decisions",
+    title: "The Future of UK Nightlife: It’s All About Curation 🕺",
     description:
-      "AI is playing an increasing role in shaping political narratives and decision-making processes worldwide.",
-    date: "March 10, 2025",
-    readTime: "6 mins",
-    category: "Technology",
-    author: "Sarah Smith",
-    image: "https://source.unsplash.com/800x400/?AI,politics",
+      "Consumer preferences in nightlife have shifted. The venues that thrive will be those that master the art of curation and exclusivity.",
+    date: "March 3, 2025",
+    readTime: "12 mins",
+    category: "Nightlife",
+    author: "J. Brown Fitterman",
+    image: "https://pbs.twimg.com/media/GjSVsu1XQAAcPZr?format=jpg&name=medium",
     keyTakeaways: [
-      "AI is used for political campaigns and voter analysis.",
-      "Governments are leveraging AI for policymaking.",
-      "Concerns over AI bias and misinformation persist.",
+      "Nightlife success is driven by the social scene, not just music or drinks.",
+      "Two main consumer types dominate nightlife: Experience Maximizers and Relaxed Socializers.",
+      "Exclusivity and curated experiences are key to driving demand.",
     ],
     content: [
       {
-        heading: "AI in Political Campaigns",
-        text: "Political parties now use AI-driven analytics to predict voter behavior and optimize their campaign strategies.",
-        image: "https://source.unsplash.com/800x400/?analytics,politics",
+        heading: "The Nightlife Formula: What Questions Actually Matter?",
+        text: "In nightlife, it’s all about who is in the room, the vibe they create, and the exclusivity on offer. Venues that curate the right crowd through events, partnerships, and access control generate more demand than those relying solely on DJs or bar upgrades.",
+        image: "https://source.unsplash.com/800x400/?nightclub,crowd",
       },
       {
-        heading: "Ethical Concerns with AI in Politics",
-        text: "While AI can enhance efficiency, there are growing concerns about potential bias and misinformation spreading through automated political campaigns.",
+        heading: "Two Kinds of Nightlife Consumers",
+        text: "Experience Maximizers seek high-energy, status-driven events, while Relaxed Socializers prefer stress-free settings and ambiance. Successful venues either lean into one identity or craft separate experiences under the same brand.",
+        image: "https://source.unsplash.com/800x400/?party,vibe",
+      },
+      {
+        heading: "The Key Factors That Influence Nightlife Choices",
+        text: "The deciding factors for venue selection include the social scene, vibe, value, exclusivity, and convenience. Pricing isn’t just about affordability—it’s a form of social signaling. The right crowd and atmosphere define a venue’s appeal.",
+        image: "https://source.unsplash.com/800x400/?bar,club",
+      },
+      {
+        heading: "The Playbook: What Venues Need To Do",
+        text: "Curate the crowd through influencer partnerships and guest lists. Tailor experiences for different consumer types, using exclusivity and scarcity to create demand. A ticket that’s hard to get is more desirable than a discounted one.",
+        image: "https://source.unsplash.com/800x400/?VIP,nightlife",
         quote:
-          "AI should be a tool for transparency, not manipulation. — AI Ethics Committee",
+          "In nightlife, people don’t just buy drinks. They buy status, access, and belonging.",
+      },
+      {
+        heading: "Conclusion: The Future of Nightlife is Curation",
+        text: "The old playbook of big DJs and drink deals is outdated. The future belongs to venues that curate their audience and craft exclusive experiences. Those who control the crowd control the success.",
+        image: "https://source.unsplash.com/800x400/?city,night",
       },
     ],
     relatedArticles: [
-      { id: "1", title: "Keir Stamer pounds Zelensky" },
-      { id: "4", title: "The Role of AI in National Security" },
-    ],
-  },
-  {
-    _id: "3",
-    title: "Economic Recovery Post-Pandemic",
-    description:
-      "How global economies are bouncing back after the COVID-19 pandemic.",
-    date: "April 5, 2025",
-    readTime: "8 mins",
-    category: "Economy",
-    author: "Michael Brown",
-    image: "https://source.unsplash.com/800x400/?economy,recovery",
-    keyTakeaways: [
-      "Global GDP is projected to grow by 4% in 2025.",
-      "Unemployment rates are declining as businesses recover.",
-      "Governments are investing heavily in infrastructure projects.",
-    ],
-    content: [
       {
-        heading: "Global Economic Trends",
-        text: "After years of uncertainty, economies worldwide are showing signs of strong recovery, driven by policy support and increased consumer demand.",
+        id: "2",
+        title: "The Science of Nightlife: Understanding Consumer Behavior",
       },
-      {
-        heading: "The Role of Government Stimulus",
-        text: "Stimulus packages in major economies have helped stabilize markets and provide relief to struggling businesses.",
-        quote:
-          "Economic stability is built on strong policies and public trust. — IMF",
-      },
-    ],
-    relatedArticles: [
-      { id: "2", title: "The Impact of AI on Political Decisions" },
-      { id: "5", title: "How Inflation is Affecting Global Trade" },
+      { id: "5", title: "How AI is Shaping the Future of Event Planning" },
     ],
   },
 ];

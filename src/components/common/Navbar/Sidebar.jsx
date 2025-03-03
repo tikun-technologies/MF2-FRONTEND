@@ -39,7 +39,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           </NavLink>
 
           {/* ✅ Articles Tab */}
-          <NavLink
+          {/* <NavLink
             to="/articles"
             className={({ isActive }) =>
               `${styles.sidebarTab} ${isActive ? styles.active : styles.sidebarLink}`
@@ -49,12 +49,12 @@ const Sidebar = ({ isSidebarOpen }) => {
               <RiArticleLine />
             </span>
             {isSidebarOpen && <span className={styles.linkText}>Articles</span>}
-          </NavLink>
+          </NavLink> */}
         </div>
 
         <div className={styles.sidebarBottom}>
           {/* ✅ Profile Tab */}
-          <NavLink
+          {/* <NavLink
             to="/account"
             className={({ isActive }) =>
               `${styles.sidebarTab} ${isActive ? styles.active : styles.sidebarLink}`
@@ -66,7 +66,7 @@ const Sidebar = ({ isSidebarOpen }) => {
             {isSidebarOpen && (
               <span className={styles.linkText}>{firstName}</span>
             )}
-          </NavLink>
+          </NavLink> */}
           <NavLink
             to="/"
             onClick={handleLogout}
