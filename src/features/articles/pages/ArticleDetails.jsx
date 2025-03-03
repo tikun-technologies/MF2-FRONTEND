@@ -79,7 +79,11 @@ const ArticleDetails = () => {
             </Link>
           </div>
           <div className={styles.articleShare}>
-            <ShareButtons url={window.location.href} title={meta.title} />
+            <ShareButtons
+              className={styles.articleShareButtons}
+              url={window.location.href}
+              title={meta.title}
+            />
           </div>
         </div>
         <div className={styles.articleContainer}>

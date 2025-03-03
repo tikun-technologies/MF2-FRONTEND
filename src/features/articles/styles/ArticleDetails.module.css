@@ -2,96 +2,97 @@
 
 /* ✅ Wrap the entire page with a different background */
 .articlePageWrapper {
-  /* padding-top: 2rem; */
   margin-top: 4rem;
-  background-color: #f8f9fa; /* Change to your desired color */
-  min-height: 100vh; /* Ensure it covers full viewport height */
-
+  background-color: #f8f9fa;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2rem 0;
-  overflow-x: hidden;
+  overflow-x: hidden; /* ✅ Prevents horizontal scrolling */
+  width: 100%;
 }
 
+/* ✅ Article Container - Adjust for Small Screens */
 .articleContainer {
-  /* border: 2px solid red; */
   max-width: 750px;
+  width: 90%;
   margin: auto;
   margin-top: 2rem;
-  padding: 4rem 4rem;
+  padding: 2rem;
   background-color: var(--white-primary);
   box-shadow: var(--box-shadow-1);
   border-radius: 16px;
-  /* font-family: "Inter", sans-serif; */
 }
 
-/* ✅ Back Link */
-
+/* ✅ Fix Share & Back Links Alignment */
 .linksWrapper {
   display: flex;
-  /* background-color: lightgreen; */
-  /* margin: 0rem 2rem; */
   align-items: center;
   justify-content: space-between;
-  /* width: 95%; */
+  flex-wrap: wrap; /* ✅ Ensures buttons wrap properly on small screens */
+  width: 100%;
+  gap: 10px; /* ✅ Space between elements */
 }
 
+/* ✅ Back Button */
 .backLink {
   background-color: var(--white-primary);
   box-shadow: var(--box-shadow-1);
-  padding: 0.75rem;
+  padding: 0.5rem 1rem;
   font-size: 0.9rem;
   font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 160px;
+  width: auto;
   border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
   transition:
     background 0.3s ease-in-out,
-    color 0.3s ease-in-out; /* Smooth transition */
-}
-
-.backLink:hover {
-  background: var(--blue-light-primary); /* Ensure hover background changes */
-  color: var(--white-primary) !important; /* Change text color on hover */
-}
-
-.articleLink {
-  text-decoration: none;
-  color: var(--text-primary);
-}
-
-.articleLink:hover {
-  color: var(--white-primary) !important;
-}
-
-.articleLink a:hover {
-  color: var(--white-primary);
+    color 0.3s ease-in-out;
 }
 
 .backLink a {
   text-decoration: none;
+  color: inherit;
 }
 
-.backlink span:hover {
-  color: var(--white-primary);
+.backLink:visited {
+  color: inherit;
+}
+
+.backLink:hover {
+  background: var(--blue-light-primary);
+  color: var(--white-primary) !important;
+}
+
+/* ✅ Share Buttons Layout */
+.articleShare {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* ✅ Fix Share Button Size */
+.articleShare button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ✅ Hero Section */
 .hero {
   text-align: left;
   margin-bottom: 2rem;
-  /* border: 2px solid red; */
-  /* background-color: var(--white-primary); */
 }
 
 .metaInfo {
   display: flex;
-  /* border: 2px solid red; */
   align-items: center;
   gap: 1rem;
   font-size: 0.9rem;
@@ -106,15 +107,18 @@
   font-weight: 700;
 }
 
+/* ✅ Adjust Title & Author for Mobile */
 .title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
   margin: 1rem 0;
+  text-align: left;
 }
 
 .author {
   font-size: 0.9rem;
   color: #777;
+  display: block;
 }
 
 /* ✅ Hero Image */
@@ -179,10 +183,12 @@
   margin-bottom: 1rem;
 }
 
+/* ✅ Adjust Related Articles for Mobile */
 .relatedGrid {
   display: flex;
   gap: 1rem;
   justify-content: center;
+  flex-wrap: wrap; /* ✅ Allows articles to wrap properly */
 }
 
 .relatedCard {
@@ -223,4 +229,34 @@
   font-weight: bold;
   color: #222;
   margin-top: 0.5rem;
+}
+
+/* ✅ Mobile Responsiveness */
+@media only screen and (max-width: 600px) {
+  .articleContainer {
+    margin-top: 1rem;
+    width: 100%;
+    border-radius: 0;
+    padding: 1.5rem;
+  }
+
+  .articleShare {
+    margin-top: 1rem;
+    justify-content: center;
+  }
+
+  .relatedGrid {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .backLink {
+    width: auto;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
 }
