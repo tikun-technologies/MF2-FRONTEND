@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import styles from "../styles/ArticleDetails.module.css";
 import articlesData from "../../../data/test/articlesData";
+import ShareButtons from "../../../components/common/Share/ShareButtons";
 import Navbar from "../../../components/common/Navbar/Navbar";
 import matter from "gray-matter";
 import { Buffer } from "buffer";
@@ -77,7 +78,9 @@ const ArticleDetails = () => {
               <span className={styles.articleButtonText}>Back to Articles</span>
             </Link>
           </div>
-          <div className={styles.articleShare}>Share</div>
+          <div className={styles.articleShare}>
+            <ShareButtons url={window.location.href} title={meta.title} />
+          </div>
         </div>
         <div className={styles.articleContainer}>
           {/* ✅ Hero Section */}
