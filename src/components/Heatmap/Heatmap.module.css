@@ -1,12 +1,14 @@
 .heatmapWrapper {
   width: 100%;
   overflow-x: auto;
+  /* border: 2px solid red; */
 }
 
 .react-heatmap-grid .cell {
   border-radius: 5px;
 }
 
+/* A general wrapper for the heatmap section */
 .wrapper {
   background-color: #ffffff;
   padding: 1rem;
@@ -16,4 +18,46 @@
 
   display: flex;
   flex-direction: column;
+}
+
+/* Container holding the label column (left) and the chart column (right) */
+.container {
+  display: flex;
+  background-color: var(--white-primary);
+  padding: 2rem;
+  /* border: 2px solid red; */
+  /* Adjust if you need specific widths or alignment */
+}
+
+/* The left column where your custom labels go */
+.labelColumn {
+  width: 220px; /* Enough space for longer labels */
+  margin-right: 1rem; /* Spacing between labels and chart */
+}
+
+/* Each individual label row in the left column */
+
+.labelRow:first-child {
+  margin-top: 3.6rem;
+}
+
+.labelRow {
+  /* Allow multiline wrapping for long text */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  /* border: 2px solid green; */
+  height: 60px;
+  /* margin-top: 4rem; */
+
+  /* Adjust spacing to roughly match the chart's row spacing */
+  margin-bottom: 20px;
+
+  /* Style your label text here */
+  font-size: 12px;
+  color: #000;
+}
+
+/* The right column where the ApexCharts heatmap goes */
+.chartColumn {
+  flex-grow: 1; /* Let the chart fill remaining horizontal space */
 }

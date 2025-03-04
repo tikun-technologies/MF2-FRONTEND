@@ -8,32 +8,30 @@ export const HeatmapChart = ({ data, tab, filter }) => {
   console.log("Tab from study details:", tab);
   console.log("Filter from heatmap", filter);
 
-  // if (tab==="overall") {
-  //   return <p>No data available</p>;
-  // }
-
+  // Build the series for ApexCharts
   let ageCategories = [];
-  console.log(ageCategories);
   const series = data.map((item) => {
     if (tab === "2Mindsets") {
+      // Example: 2 Mindsets
       const mindsets = Object.fromEntries(
         item.Mindsets.map((m) => Object.entries(m)[0])
       );
-      ageCategories[("Mindset 1 of 2", "Mindset 2 of 2")];
+      ageCategories = ["Mindset 1 of 2", "Mindset 2 of 2"];
       return {
-        name: item.optiontext, // Y-axis (Row Labels)
+        name: item.optiontext, // This label goes in our custom column
         data: [
           { x: "Mindset 1 of 2", y: mindsets["Mindset 1 of 2"] ?? "-" },
           { x: "Mindset 2 of 2", y: mindsets["Mindset 2 of 2"] ?? "-" },
         ],
       };
     } else if (tab === "3Mindsets") {
+      // Example: 3 Mindsets
       const mindsets = Object.fromEntries(
         item.Mindsets.map((m) => Object.entries(m)[0])
       );
-      ageCategories[("Mindset 1 of 3", "Mindset 2 of 3", "Mindset 3 of 3")];
+      ageCategories = ["Mindset 1 of 3", "Mindset 2 of 3", "Mindset 3 of 3"];
       return {
-        name: item.optiontext, // Y-axis (Row Labels)
+        name: item.optiontext,
         data: [
           { x: "Mindset 1 of 3", y: mindsets["Mindset 1 of 3"] ?? "-" },
           { x: "Mindset 2 of 3", y: mindsets["Mindset 2 of 3"] ?? "-" },
@@ -41,28 +39,30 @@ export const HeatmapChart = ({ data, tab, filter }) => {
         ],
       };
     } else if (tab === "Prelim-Answer Segments") {
+      // Example: Prelim-Answer Segments
       const formattedObject = Object.assign(
         {},
         ...item["Prelim-Answer Segments"]
       );
-      console.log("formated plumn:- ", formattedObject);
       ageCategories = Object.keys(data[0][tab]);
       return {
-        name: item.optiontext, // Y-axis (Row Labels)
+        name: item.optiontext,
         data: Object.entries(formattedObject).map(([age, value]) => ({
           x: age,
           y: value,
         })),
       };
     } else if (tab === "overall") {
+      // Single column labeled "Total"
       return {
-        name: item.optiontext, // Y-axis (Row Labels)
+        name: item.optiontext,
         data: [{ x: "Total", y: item.Total ?? "-" }],
       };
     } else {
+      // Generic case (Age, Gender, etc.)
       ageCategories = Object.keys(data[0][tab]);
       return {
-        name: item.optiontext, // Y-axis (Row Labels)
+        name: item.optiontext,
         data: Object.entries(item[tab]).map(([age, value]) => ({
           x: age,
           y: value,
@@ -71,37 +71,31 @@ export const HeatmapChart = ({ data, tab, filter }) => {
     }
   });
 
+  // ApexCharts config
   const options = {
     chart: {
       type: "heatmap",
       toolbar: { show: true },
     },
-    dataLabels: { enabled: true },
-    // colors: ["#FF5733", "#33FF57", "#3357FF"],
+    dataLabels: {
+      enabled: true,
+      style: {
+        fontSize: "14px",
+        colors: ["#000"],
+      },
+    },
     colors: heatmapColors[filter]?.ranges.map((range) => range.color) || [
       "#767676",
     ],
     title: { text: "" },
     xaxis: {
       categories: ageCategories,
-      style: {
-        color: "red",
-      },
     },
+    // Hide ApexCharts' y-axis labels so we can use our own
     yaxis: {
-      title: { text: "Response" },
       labels: {
-        style: {
-          fontSize: "14px", // Increase font size
-          colors: "#000", // Ensure visibility
-          maxWidth: 200, // Increase label width to prevent cutoff
-          whiteSpace: "break-spaces", // Allow text to wrap
-          textOverflow: "ellipsis", // Ensure overflow handling
-        },
+        show: false,
       },
-      // style: {
-      //   color: "red",
-      // },
     },
     plotOptions: {
       heatmap: {
@@ -110,15 +104,27 @@ export const HeatmapChart = ({ data, tab, filter }) => {
             { from: -1000, to: 0, color: "#ba322b", name: "Negative" },
             { from: 0, to: 20, color: "#767676", name: "Neutral" },
             { from: 20, to: 1000, color: "#029109", name: "Positive" },
-          ], // Default fallback
+          ],
         },
       },
     },
   };
 
   return (
-    <div className={styles.wrapper}>
-      <Chart options={options} series={series} type="heatmap" height={400} />
+    <div className={styles.container}>
+      {/* LEFT COLUMN: Custom multiline labels */}
+      <div className={styles.labelColumn}>
+        {series.map((row, idx) => (
+          <div key={idx} className={styles.labelRow}>
+            {row.name}
+          </div>
+        ))}
+      </div>
+
+      {/* RIGHT COLUMN: Heatmap Chart */}
+      <div className={styles.chartColumn}>
+        <Chart options={options} series={series} type="heatmap" height={400} />
+      </div>
     </div>
   );
 };
