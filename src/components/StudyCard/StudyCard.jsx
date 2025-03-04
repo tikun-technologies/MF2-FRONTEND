@@ -69,7 +69,7 @@ const StudyCard = ({ study, onDeleteSuccess, onEdit }) => {
 
   // 3-dot menu options
   const options = [
-    { label: "Edit", icon: <FiEdit />, onClick: () => onEdit && onEdit(_id) },
+    // { label: "Edit", icon: <FiEdit />, onClick: () => onEdit && onEdit(_id) },
     { label: "Delete", icon: <FiTrash2 />, onClick: handleDeleteClick },
   ];
 
