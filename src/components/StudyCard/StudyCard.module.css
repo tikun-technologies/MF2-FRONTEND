@@ -12,6 +12,27 @@
   background-color: #ffffffc4;
 }
 
+.studiesHeader {
+  /* border: 2px solid red; */
+  display: flex;
+  justify-content: space-between;
+}
+.studyOptions {
+  /* border: 2px solid blue; */
+  padding: 0.5rem;
+}
+
+.studyOptionsIcon {
+  font-size: 1.5rem;
+}
+
+.studyOptionsModal {
+  /* border: 2px solid red; */
+  position: absolute;
+  right: 0;
+  top: 40%;
+}
+
 .studyStatus {
   display: flex;
   align-items: center;

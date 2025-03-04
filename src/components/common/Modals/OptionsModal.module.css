@@ -1,0 +1,28 @@
+.modalContainer {
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  min-width: 150px;
+}
+
+.modalOption {
+  background: none;
+  border: none;
+  padding: 0.75rem;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.modalOption:hover {
+  background: #f4f4f4;
+}
+
+.icon {
+  margin-right: 8px;
+}

@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [studies, setStudies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetchStudies();
@@ -42,8 +42,16 @@ const Dashboard = () => {
   // Callback for modal success (refresh studies after upload)
   const handleStudyUploaded = () => {
     toast.success("Study uploaded successfully!");
-    fetchStudies(); // Refresh studies after upload
-    setIsModalOpen(false); // Close modal
+    fetchStudies();
+    setIsModalOpen(false);
+  };
+
+  // ✅ Callback when a study is deleted successfully
+  const handleDeleteSuccess = (deletedId) => {
+    // Remove the study from the current list
+    setStudies((prevStudies) => prevStudies.filter((s) => s._id !== deletedId));
+    // Show a single success toast here
+    toast.success("Study deleted successfully!");
   };
 
   return (
@@ -63,13 +71,12 @@ const Dashboard = () => {
       {loading
         ? [...Array(3)].map((_, index) => <SkeletonCard key={index} />)
         : studies.map((study) => (
-            <Link
-              to={`/study/${study._id}`}
+            <StudyCard
               key={study._id}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <StudyCard study={study} />
-            </Link>
+              study={study}
+              // Pass our delete success callback
+              onDeleteSuccess={handleDeleteSuccess}
+            />
           ))}
 
       {/* Add Study Modal */}
