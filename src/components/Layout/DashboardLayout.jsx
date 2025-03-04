@@ -26,9 +26,9 @@ const DashboardLayout = ({}) => {
         className={`${styles.mainContent} ${!isSidebarOpen && styles.toggled}`}
       >
         {/* Fixed header section */}
-        <div className={`container ${styles.header}`}>
+        {/* <div className={`container ${styles.header}`}>
           <h1>My Studies</h1>
-        </div>
+        </div> */}
         {/* Scrollable Content */}
         <div className={styles.contentArea}>
           <Outlet /> {/* This will render correct page */}

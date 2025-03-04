@@ -82,8 +82,27 @@ export const HeatmapChart = ({ data, tab, filter }) => {
       "#767676",
     ],
     title: { text: "" },
-    xaxis: { categories: ageCategories },
-    yaxis: { title: { text: "Response" } },
+    xaxis: {
+      categories: ageCategories,
+      style: {
+        color: "red",
+      },
+    },
+    yaxis: {
+      title: { text: "Response" },
+      labels: {
+        style: {
+          fontSize: "14px", // Increase font size
+          colors: "#000", // Ensure visibility
+          maxWidth: 200, // Increase label width to prevent cutoff
+          whiteSpace: "break-spaces", // Allow text to wrap
+          textOverflow: "ellipsis", // Ensure overflow handling
+        },
+      },
+      // style: {
+      //   color: "red",
+      // },
+    },
     plotOptions: {
       heatmap: {
         colorScale: {

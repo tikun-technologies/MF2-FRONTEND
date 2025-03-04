@@ -29,3 +29,9 @@
   border: none;
   background: var(--dark-primary);
 }
+
+.addStudy:hover {
+  background: var(--white-primary);
+  color: #000000;
+  box-shadow: var(--box-shadow-1);
+}
