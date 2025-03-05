@@ -68,7 +68,7 @@ export const resetPasswordRequest = async (email) => {
 // Reset Password (Final Step)
 export const resetPassword = async (token, newPassword) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/mf2/reset-password`, {
+    const response = await fetch(`${API_BASE_URL}/reset-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
