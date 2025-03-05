@@ -105,6 +105,16 @@
   font-weight: bold;
 }
 
+.passwordReset {
+  color: var(--primary-color);
+  /* text-decoration: underline; */
+  font-size: 0.875rem;
+  /* font-weight: bold; */
+}
+.passwordReset:hover {
+  text-decoration: underline;
+}
+
 .authLink:hover {
   text-decoration: underline;
 }
@@ -169,4 +179,11 @@
 
 .eyeIcon:hover {
   color: black;
+}
+
+.successMessage {
+  margin-top: 1rem;
+  color: green;
+  font-size: 0.9rem;
+  text-align: center;
 }

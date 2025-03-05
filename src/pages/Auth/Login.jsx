@@ -99,6 +99,12 @@ const Login = () => {
             Create one
           </Link>
         </p>
+        <p className={styles.authFooter}>
+          {/* Forget Password?{" "} */}
+          <Link to="/reset-password" className={styles.passwordReset}>
+            Reset Password
+          </Link>
+        </p>
       </div>
     </div>
   );

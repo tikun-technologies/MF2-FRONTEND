@@ -7,6 +7,7 @@ import StudyDetail from "../pages/StudyDetail/StudyDetail";
 import AddDataForm from "../pages/AddStudy/AddStudy";
 import Register from "../pages/Auth/Register";
 import Login from "../pages/Auth/Login";
+import PasswordReset from "../pages/Auth/PasswordReset";
 import ProtectedRoute from "../middlewares/ProtectedRoute";
 import DashboardLayout from "../components/Layout/DashboardLayout";
 import Articles from "../pages/Articles/Articles";
@@ -29,6 +30,7 @@ const AppRoutes = () => {
       <Route path="/signup" element={<Register />} />
       <Route path="/create" element={<AddDataForm />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/reset-password" element={<PasswordReset />} />
 
       {/* ✅ Protected Dashboard */}
       <Route element={<ProtectedRoute />}>
