@@ -10,44 +10,59 @@ const StudyFilters = () => {
     activeVisualization,
     setActiveVisualization,
   } = useFilter();
+
   return (
     <div className={styles.studyFiltersContainer}>
       {/* Visualization Toggle */}
       <div className={styles.studyVisualizations}>
         <button
-          className={`buttonIcon ${activeVisualization === "table" ? styles.activeButton : ""}`}
+          className={`${styles.buttonIcon} ${
+            activeVisualization === "table" ? styles.activeButton : ""
+          }`}
           onClick={() => setActiveVisualization("table")}
         >
           <FiTable />
         </button>
         <button
-          className={`buttonIcon ${activeVisualization === "heatmap" ? styles.activeButton : ""}`}
+          className={`${styles.buttonIcon} ${
+            activeVisualization === "heatmap" ? styles.activeButton : ""
+          }`}
           onClick={() => setActiveVisualization("heatmap")}
         >
           <FiRadio />
         </button>
         <button
-          className={`buttonIcon ${activeVisualization === "graph" ? styles.activeButton : ""}`}
+          className={`${styles.buttonIcon} ${
+            activeVisualization === "graph" ? styles.activeButton : ""
+          }`}
           onClick={() => setActiveVisualization("graph")}
         >
           <FiGrid />
         </button>
       </div>
+
+      {/* Filter Buttons */}
       <div className={styles.studyFilters}>
         <button
-          className={`${styles.filterButton} ${activeFilter === "Top-Down" ? styles.activeToggle : ""}`}
+          className={`${styles.filterButton} ${
+            activeFilter === "Top-Down" ? styles.activeToggle : ""
+          }`}
           onClick={() => setActiveFilter("Top-Down")}
         >
           Top Down
         </button>
         <button
-          className={`${styles.filterButton} ${activeFilter === "Bottom-Up" ? styles.activeToggle : ""}`}
+          className={`${styles.filterButton} ${
+            activeFilter === "Bottom-Up" ? styles.activeToggle : ""
+          }`}
           onClick={() => setActiveFilter("Bottom-Up")}
         >
           Bottom Up
         </button>
         <button
-          className={`${styles.filterButton} ${activeFilter === "Response Time" ? styles.activeToggle : ""}`}
+          className={`${styles.filterButton} ${
+            activeFilter === "Response Time" ? styles.activeToggle : ""
+          }`}
           onClick={() => setActiveFilter("Response Time")}
         >
           Response Time

@@ -9,6 +9,7 @@
 .studyTitle {
   flex: 1;
   min-width: 60%;
+  font-family: sans-serif;
 }
 
 .studyActions {
@@ -33,20 +34,24 @@
 }
 
 .studyMetadata {
+  font-family: sans-serif;
   margin-bottom: 2rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .studyRespondents {
   color: rgb(5, 134, 255);
+  font-family: sans-serif;
 }
 
 .studyMetadata p {
   margin-bottom: 0.5rem;
+  font-family: sans-serif;
 }
 
 .studyOptions {
   display: flex;
   gap: 1rem;
   font-weight: 700;
+  font-family: sans-serif;
 }
