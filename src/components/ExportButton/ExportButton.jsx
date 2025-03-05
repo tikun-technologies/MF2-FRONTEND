@@ -6,17 +6,46 @@ import PptxGenJS from "pptxgenjs";
 import "./ExportButton.css";
 
 export const ExportPage = () => {
-  // Function to Export Page as PDF
+  // Function to Export Page as PDF (Full Page Fix)
   const exportToPDF = () => {
     const element = document.getElementById("page-content");
-    html2canvas(element, { scale: 2 }).then((canvas) => {
+    if (!element) return;
+
+    // Set body to full height temporarily for better rendering
+    document.body.style.height = "auto";
+    document.documentElement.style.height = "auto";
+
+    html2canvas(element, {
+      scale: 2, // Increase resolution for better clarity
+      useCORS: true, // Fix issues with external resources
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight,
+    }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-      const imgWidth = 210; // A4 size width in mm
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 297; // A4 height in mm
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
 
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft > 0) {
+        position -= pageHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
       pdf.save("Page_Export.pdf");
+
+      // Restore original height settings
+      document.body.style.height = "";
+      document.documentElement.style.height = "";
     });
   };
 
@@ -45,21 +74,6 @@ export const ExportPage = () => {
       </button>
     </div>
   );
-};
-
-// Button Styling
-const buttonStyle = {
-  display: "flex",
-  alignItems: "center",
-  gap: "5px",
-  padding: "10px 15px",
-  fontSize: "16px",
-  border: "none",
-  cursor: "pointer",
-  background: "#f4f4f4",
-  borderRadius: "5px",
-  transition: "0.3s",
-  color: "blue",
 };
 
 export default ExportPage;
