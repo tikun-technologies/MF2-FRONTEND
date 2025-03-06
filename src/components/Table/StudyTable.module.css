@@ -18,22 +18,26 @@
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid #ececec;
+  /* border: 2px solid red; */
+  min-width: 250px;
 }
 
 /* Ensure text wraps properly inside cells */
-.studyTable td {
+.studyTable td,
+.studyTable th {
   max-width: 300px; /* ✅ Restricts cell width */
   word-wrap: break-word; /* ✅ Wraps text within the box */
   overflow-wrap: break-word; /* ✅ Ensures long words break correctly */
   white-space: normal; /* ✅ Allows text to wrap instead of forcing one line */
-  font-size: 1rem;
+  font-size: 0.875rem;
 }
 
 /* Ensure headers stand out */
 .studyTable th {
-  font-weight: 600;
+  font-weight: bold;
   color: #616161;
   background-color: #f9f9f9;
+  font-size: 0.75rem;
 }
 
 /* Red border (for debugging) */
@@ -61,8 +65,8 @@
   .studyTable th:first-child,
   .studyTable td:first-child {
     /* border: 2px solid red; */
-    width: 40% !important;
+    width: 50% !important;
     max-width: 300px !important;
-    min-width: 250px;
+    min-width: 210px;
   }
 }

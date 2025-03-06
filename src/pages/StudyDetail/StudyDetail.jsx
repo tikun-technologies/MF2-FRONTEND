@@ -100,10 +100,10 @@ const StudyDetail = () => {
                 (out of {study.studyRespondents})
               </p>
             </div>
-            <div className={styles.studyOptions}>
+            {/* <div className={styles.studyOptions}>
               <a>View Raw Data</a>
               <a>View Study Info</a>
-            </div>
+            </div> */}
             {/* Study Filters and Tabs */}
             <StudyFilters />
             <StudyTabs study={study} />
