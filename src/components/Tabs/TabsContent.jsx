@@ -49,29 +49,6 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
 
   return (
     <div className={styles.dataWrapper}>
-      {/* Chart type selection buttons */}
-      {activeVisualization === "graph" && (
-        <div className={styles.buttonContainer}>
-          <button
-            className={chartType === "bar" ? styles.activeButton : styles.button}
-            onClick={() => setChartType("bar")}
-          >
-            Bar Chart
-          </button>
-          <button
-            className={chartType === "line" ? styles.activeButton : styles.button}
-            onClick={() => setChartType("line")}
-          >
-            Line Chart
-          </button>
-          <button
-            className={chartType === "pie" ? styles.activeButton : styles.button}
-            onClick={() => setChartType("pie")}
-          >
-            Pie Chart
-          </button>
-        </div>
-      )}
 
       {/* Map through questions and render visualizations */}
       {filterDownedData.Data.Questions.map((question, index) => {
@@ -169,7 +146,7 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
                       }}
                     />
                     <YAxis />
-                    <Tooltip content={<CustomTooltip />} />
+                    <Tooltip content={<CustomTooltip />} wrapperStyle={{ pointerEvents: "none", zIndex: 1000 }} />
                     {headers.slice(1).map((key, idx) => (
                       <Bar
                         key={key}
@@ -178,57 +155,6 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
                       />
                     ))}
                   </BarChart>
-                )}
-                {chartType === "line" && (
-                  <LineChart data={data}>
-                    <XAxis
-                      dataKey="Response"
-                      tick={{ fontSize: 12, width: '200' }}
-                      interval={0}
-                      height={60}
-                      tickFormatter={(value) => {
-                        const maxLength = 15;
-                        if (value.length > maxLength) {
-                          return value
-                            .match(new RegExp(`.{1,${maxLength}}`, "g"))
-                            .join("\n");
-                        }
-                        return value;
-                      }}
-                    />
-                    <YAxis />
-                    <Tooltip content={<CustomTooltip />} />
-                    {headers.slice(1).map((key, idx) => (
-                      <Line
-                        key={key}
-                        type="monotone"
-                        dataKey={key}
-                        stroke={colors[idx % colors.length]}
-                        strokeWidth={2}
-                      />
-                    ))}
-                  </LineChart>
-                )}
-                {chartType === "pie" && (
-                  <PieChart>
-                    <Tooltip content={<CustomTooltip />} />
-                    <Pie
-                      data={data}
-                      dataKey={headers[1]}
-                      nameKey="Response"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={100}
-                      label
-                    >
-                      {data.map((_, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={colors[index % colors.length]}
-                        />
-                      ))}
-                    </Pie>
-                  </PieChart>
                 )}
               </ResponsiveContainer>
             )}
