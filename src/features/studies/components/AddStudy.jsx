@@ -20,12 +20,11 @@ const AddStudy = ({ isOpen, onClose, onUploadSuccess }) => {
     const file = acceptedFiles[0];
     if (file) {
       setSelectedFile(file);
-      toast.success("File uploaded successfully!");
     }
   }, []);
 
   const handleClose = () => {
-    setSelectedFile(null); // Clear file on close
+    setSelectedFile(null);
     onClose();
   };
 
@@ -39,11 +38,10 @@ const AddStudy = ({ isOpen, onClose, onUploadSuccess }) => {
 
     try {
       await uploadStudy(selectedFile, token);
-      onUploadSuccess(); // ✅ Notify Dashboard to refresh studies
-      handleClose(); // ✅ Close modal
+      onUploadSuccess();
+      setTimeout(handleClose, 1000);
     } catch (error) {
       toast.error(`Upload failed: ${error.message}`);
-    } finally {
       setUploading(false);
     }
   };
@@ -85,7 +83,7 @@ const AddStudy = ({ isOpen, onClose, onUploadSuccess }) => {
           disabled={!selectedFile || uploading}
           onClick={handleUpload}
         >
-          {uploading ? "Uploading..." : "Process File"}
+          {uploading ? `Uploading...` : "Upload Study"}
         </button>
       </div>
     </div>

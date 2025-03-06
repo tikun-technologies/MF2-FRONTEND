@@ -13,16 +13,16 @@ const HeroSection = () => {
       <div className={`container ${styles.heroContainer}`}>
         <div className={styles.heroText}>
           <h1 className={styles.heroTitle}>
-            <span>AI-Powered</span> Customer Understanding
+            <span>Decode</span> Human Decision Making
           </h1>
           <p className={styles.heroSubtext}>
-            Transform weeks of research into instant insights. Discover what
-            truly drives your customers' decisions and create winning strategies
-            in
-            <span> minutes, not months</span>.
+            The best opportunities aren’t invented—they’re uncovered. Mind
+            Genomics instantly deciphers hidden consumer patterns, helping you
+            predict trends and turn insights into winning strategies—
+            <span> faster than ever.</span>
           </p>
           <Link className={styles.heroActionLink} to={redirectPath}>
-            <button className={styles.heroAction}>
+            <button className="btn-primary">
               Begin Your Analysis <FiArrowRight className={styles.arrowIcon} />
             </button>
           </Link>

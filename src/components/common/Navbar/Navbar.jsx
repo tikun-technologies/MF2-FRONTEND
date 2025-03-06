@@ -58,7 +58,7 @@ const Navbar = ({ fixed }) => {
             </div>
           </form> */}
           <Link to="/login" className={styles.navLink}>
-            <button className={styles.signInButton}>Sign In</button>
+            <button className="btn-primary">Get Started</button>
           </Link>
         </div>
       </div>

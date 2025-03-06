@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
 import { getStudies } from "../../api/getStudies";
 import AuthContext from "../../context/AuthContext";
 import StudyCard from "../../components/StudyCard/StudyCard";
@@ -7,6 +6,8 @@ import SkeletonCard from "../../components/StudyCard/SkeletonCard";
 import AddStudy from "../../features/studies/components/AddStudy"; // Import modal
 import styles from "./Dashboard.module.css";
 import { toast } from "react-toastify";
+import Lottie from "lottie-react";
+import uploadAnimation from "../../assets/lottie/upload.json"; // Adjust the path based on your project structure
 
 const Dashboard = () => {
   const { token } = useContext(AuthContext);
@@ -48,9 +49,7 @@ const Dashboard = () => {
 
   // ✅ Callback when a study is deleted successfully
   const handleDeleteSuccess = (deletedId) => {
-    // Remove the study from the current list
     setStudies((prevStudies) => prevStudies.filter((s) => s._id !== deletedId));
-    // Show a single success toast here
     toast.success("Study deleted successfully!");
   };
 
@@ -58,26 +57,36 @@ const Dashboard = () => {
     <div className={`container ${styles.content}`}>
       <div className={styles.header}>
         <h1 className={styles.headerText}>My Studies</h1>
-        <button
-          className={styles.addStudy}
-          onClick={() => setIsModalOpen(true)}
-        >
-          Add Study
-        </button>
+        {studies.length > 0 && ( // ✅ Show only if studies exist
+          <button
+            className={styles.addStudy}
+            onClick={() => setIsModalOpen(true)}
+          >
+            Add Study
+          </button>
+        )}
       </div>
 
       {error && <p className={styles.errorMessage}>⚠️ {error}</p>}
 
-      {loading
-        ? [...Array(3)].map((_, index) => <SkeletonCard key={index} />)
-        : studies.map((study) => (
-            <StudyCard
-              key={study._id}
-              study={study}
-              // Pass our delete success callback
-              onDeleteSuccess={handleDeleteSuccess}
-            />
-          ))}
+      {loading ? (
+        [...Array(3)].map((_, index) => <SkeletonCard key={index} />)
+      ) : studies.length === 0 ? (
+        // ✅ Clickable Empty State to Open Modal
+        <div className={styles.emptyState} onClick={() => setIsModalOpen(true)}>
+          <Lottie animationData={uploadAnimation} className={styles.lottie} />
+          <p>No studies yet. Start by adding your first study.</p>
+          <button className={styles.uploadButton}>Upload Study</button>
+        </div>
+      ) : (
+        studies.map((study) => (
+          <StudyCard
+            key={study._id}
+            study={study}
+            onDeleteSuccess={handleDeleteSuccess}
+          />
+        ))
+      )}
 
       {/* Add Study Modal */}
       <AddStudy

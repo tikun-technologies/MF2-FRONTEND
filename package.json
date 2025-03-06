@@ -23,6 +23,7 @@
     "gray-matter": "^4.0.3",
     "install": "^0.13.0",
     "jspdf": "^3.0.0",
+    "lottie-react": "^2.4.1",
     "lucide-react": "^0.475.0",
     "npm": "^11.1.0",
     "pptxgenjs": "^3.12.0",

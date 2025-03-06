@@ -10,7 +10,7 @@ const AppProviders = ({ children }) => {
     <HelmetProvider>
       <AuthProvider>
         {children}
-        <ToastContainer position="top-right" autoClose={3000} />
+        <ToastContainer position="top-right" autoClose={1000} />
       </AuthProvider>
     </HelmetProvider>
   );
