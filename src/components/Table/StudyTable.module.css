@@ -4,7 +4,6 @@
   overflow-x: auto;
   border-radius: 8px;
   background-color: #fff;
-  /* border: 2px solid red; */
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -21,13 +20,49 @@
   border-bottom: 1px solid #ececec;
 }
 
+/* Ensure text wraps properly inside cells */
+.studyTable td {
+  max-width: 300px; /* ✅ Restricts cell width */
+  word-wrap: break-word; /* ✅ Wraps text within the box */
+  overflow-wrap: break-word; /* ✅ Ensures long words break correctly */
+  white-space: normal; /* ✅ Allows text to wrap instead of forcing one line */
+  font-size: 1rem;
+}
+
+/* Ensure headers stand out */
 .studyTable th {
   font-weight: 600;
   color: #616161;
   background-color: #f9f9f9;
 }
 
-/* .studyTable tr:hover {
+/* Red border (for debugging) */
+.studyTable tr {
+  /* border: 2px solid red; */
+}
+
+/* Hover effect */
+.studyTable tr:hover {
   background-color: #f1f1f1;
   transition: background-color 0.3s;
-} */
+}
+
+/* ✅ Responsive Styling for Mobile */
+@media (max-width: 768px) {
+  .studyTable {
+    min-width: 100%;
+  }
+
+  .studyTable td {
+    max-width: 200px; /* ✅ Smaller max width for mobile */
+    font-size: 0.9rem;
+  }
+
+  .studyTable th:first-child,
+  .studyTable td:first-child {
+    /* border: 2px solid red; */
+    width: 40% !important;
+    max-width: 300px !important;
+    min-width: 250px;
+  }
+}
