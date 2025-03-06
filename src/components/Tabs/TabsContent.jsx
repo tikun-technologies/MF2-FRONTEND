@@ -48,8 +48,9 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
 
   return (
     <div className={styles.dataWrapper}>
-      {activeVisualization === "graph" && (
-        <div style={{ display: "flex", gap: "10px", marginBottom: "32px" }}>
+      {/* Chart type selection buttons */}
+      {/* {activeVisualization === "graph" && (
+        <div className={styles.buttonContainer}>
           <button
             className={chartType === "bar" ? "activeButton" : ""}
             onClick={() => setChartType("bar")}
@@ -69,7 +70,9 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
             Pie Chart
           </button>
         </div>
-      )}
+      )} */}
+
+      {/* Map through questions and render visualizations */}
       {filterDownedData.Data.Questions.map((question, index) => {
         if (!question.options.length) return null;
 
@@ -153,11 +156,27 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
             ) : (
               <ResponsiveContainer width="100%" height={400}>
                 {chartType === "bar" && (
-                  <BarChart data={data}>
-                    <XAxis dataKey="Response" tick={{ fontSize: 12 }} />
+                  <BarChart
+                    data={data}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 100 }}
+                  >
+                    <XAxis
+                      dataKey="Response"
+                      tick={{ fontSize: 12, width: '300' }}
+                      interval={0}
+                      height={30}
+                      tickFormatter={(value) => {
+                        const maxLength = 15;
+                        if (value.length > maxLength) {
+                          return value
+                            .match(new RegExp(`.{1,${maxLength}}`, "g"))
+                            .join("\n");
+                        }
+                        return value;
+                      }}
+                    />
                     <YAxis />
-                    <Tooltip />
-                    <Legend />
+                    <Tooltip content={<CustomTooltip />} wrapperStyle={{ zIndex: 1000 }} />
                     {headers.slice(1).map((key, idx) => (
                       <Bar
                         key={key}

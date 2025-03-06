@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaFilePdf, FaRegFilePowerpoint } from "react-icons/fa";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -6,18 +6,21 @@ import PptxGenJS from "pptxgenjs";
 import "./ExportButton.css";
 
 export const ExportPage = () => {
+  const [isExportingPDF, setIsExportingPDF] = useState(false);
+  const [isExportingPPTX, setIsExportingPPTX] = useState(false);
+
   // Function to Export Page as PDF (Full Page Fix)
   const exportToPDF = () => {
+    setIsExportingPDF(true); // Start PDF loading state
     const element = document.getElementById("page-content");
     if (!element) return;
 
-    // Set body to full height temporarily for better rendering
     document.body.style.height = "auto";
     document.documentElement.style.height = "auto";
 
     html2canvas(element, {
-      scale: 2, // Increase resolution for better clarity
-      useCORS: true, // Fix issues with external resources
+      scale: 2,
+      useCORS: true,
       scrollX: 0,
       scrollY: 0,
       windowWidth: element.scrollWidth,
@@ -25,8 +28,8 @@ export const ExportPage = () => {
     }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-      const imgWidth = 210; // A4 width in mm
-      const pageHeight = 297; // A4 height in mm
+      const imgWidth = 230;
+      const pageHeight = 297;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       let heightLeft = imgHeight;
       let position = 0;
@@ -42,8 +45,8 @@ export const ExportPage = () => {
       }
 
       pdf.save("Page_Export.pdf");
+      setIsExportingPDF(false); // Stop PDF loading state
 
-      // Restore original height settings
       document.body.style.height = "";
       document.documentElement.style.height = "";
     });
@@ -51,6 +54,7 @@ export const ExportPage = () => {
 
   // Function to Export Page as PowerPoint
   const exportToPPTX = () => {
+    setIsExportingPPTX(true); // Start PPTX loading state
     let pptx = new PptxGenJS();
     let slide = pptx.addSlide();
 
@@ -60,17 +64,20 @@ export const ExportPage = () => {
     html2canvas(element, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       slide.addImage({ data: imgData, x: 0, y: 1, w: 10 });
-      pptx.writeFile({ fileName: "Page_Export.pptx" });
+
+      pptx.writeFile({ fileName: "Page_Export.pptx" }).then(() => {
+        setIsExportingPPTX(false); // Stop PPTX loading state
+      });
     });
   };
 
   return (
     <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
-      <button onClick={exportToPDF}>
-        <FaFilePdf size={20} color="red" /> Export PDF
+      <button onClick={exportToPDF} disabled={isExportingPDF} style={{ opacity: isExportingPDF ? 0.7 : 1 }}>
+        <FaFilePdf size={20} color="red" /> {isExportingPDF ? "Exporting..." : "Export PDF"}
       </button>
-      <button onClick={exportToPPTX}>
-        <FaRegFilePowerpoint size={20} color="orange" /> Export PPTX
+      <button onClick={exportToPPTX} disabled={isExportingPPTX} style={{ opacity: isExportingPPTX ? 0.7 : 1 }}>
+        <FaRegFilePowerpoint size={20} color="orange" /> {isExportingPPTX ? "Exporting..." : "Export PPTX"}
       </button>
     </div>
   );

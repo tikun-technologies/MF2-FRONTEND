@@ -17,3 +17,43 @@
   font-weight: bold;
   /* margin: 0 auto; */
 }
+
+/* XAxis tick styles */
+.recharts-x-axis .recharts-cartesian-axis-tick {
+  font-size: 12px;
+  font-family: sans-serif;
+  text-transform: capitalize;
+  white-space: pre-wrap; /* Allow line breaks */
+  word-break: break-word; /* Ensures wrapping */
+  text-align: center;
+}
+
+/* Specific styles for mobile */
+@media (max-width: 768px) {
+  .recharts-x-axis .recharts-cartesian-axis-tick {
+    font-size: 10px;
+    text-anchor: middle;
+    word-wrap: break-word;
+    width: 80px; /* Allow enough space */
+  }
+}
+
+/* XAxis tick styles */
+.recharts-x-axis .recharts-cartesian-axis-tick {
+  font-size: 12px;
+  font-family: sans-serif;
+  text-transform: capitalize;
+  white-space: pre-wrap; /* Allow line breaks */
+  word-break: break-word; /* Ensures wrapping */
+  text-align: center;
+}
+
+/* Specific styles for mobile */
+@media (max-width: 768px) {
+  .recharts-x-axis .recharts-cartesian-axis-tick {
+    font-size: 10px;
+    text-anchor: middle;
+    word-wrap: break-word;
+    width: 80px; /* Allow enough space */
+  }
+}

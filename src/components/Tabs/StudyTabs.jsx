@@ -69,11 +69,11 @@ const StudyTabs = ({ study }) => {
         />
       </Tabs.Content>
       <Tabs.Content value="prelim" className={styles.tabContent}>
-        <TabsContent 
-        tab="Prelim-Answer Segments"
-        topDown={studyData["(T) Prelim-answer segments"]}
-        bottomDown={studyData["(B) Prelim-answer segments"]}
-        responseTime={studyData["(R) Prelim-answer segments"]} />
+        <TabsContent
+          tab="Prelim-Answer Segments"
+          topDown={studyData["(T) Prelim-answer segments"]}
+          bottomDown={studyData["(B) Prelim-answer segments"]}
+          responseTime={studyData["(R) Prelim-answer segments"]} />
       </Tabs.Content>
       <Tabs.Content value="2 market segments" className={styles.tabContent}>
         <TabsContent
