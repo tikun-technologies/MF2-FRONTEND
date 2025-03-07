@@ -1,11 +1,7 @@
-/* Container for tabs */
 .tabsContainer {
-  /* display: flex; */
   width: 100%;
-  /* makes scrollable horizontal */
   overflow-x: auto;
   white-space: nowrap;
-  /* border: 2px solid red; */
   margin-top: 1rem;
 }
 
@@ -15,6 +11,7 @@
   border-bottom: 1px solid rgb(197, 197, 197);
   padding: 0.5rem;
   background: #ffffff;
+  font-family: sans-serif;
 }
 
 .tabTrigger {
@@ -39,3 +36,26 @@
   border-bottom: 2px solid blue;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-track:horizontal {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: gray;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background: gray;
+}
