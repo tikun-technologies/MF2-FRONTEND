@@ -1,9 +1,10 @@
 import React from "react";
 import styles from "./Home.module.css";
 import { FiArrowRight } from "react-icons/fi";
-import Synapses from "../../components/Models/Synapses";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Lottie from "lottie-react"; // ✅ Import Lottie
 import checkLoggedIn from "../../utils/checkLoggedIn";
+import mindAnimation from "../../assets/lottie/mindGenome.json"; // ✅ Import your Lottie JSON
 
 const HeroSection = () => {
   const redirectPath = checkLoggedIn();
@@ -27,11 +28,14 @@ const HeroSection = () => {
             </button>
           </Link>
         </div>
+
+        {/* ✅ Replace <img> with <Lottie /> */}
         <div className={styles.imgContainer}>
-          <img
-            className={styles.heroImage}
-            src="/images/heroImage.png"
-            alt=""
+          <Lottie
+            animationData={mindAnimation}
+            loop={true}
+            autoplay={true}
+            className={styles.heroAnimation}
           />
         </div>
       </div>

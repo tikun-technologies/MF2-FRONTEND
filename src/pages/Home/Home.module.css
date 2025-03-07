@@ -120,6 +120,14 @@ section {
   border-radius: 16px;
 }
 
+.heroAnimation {
+  width: 100%;
+  max-width: 350px; /* same as your previous image */
+  height: auto;
+  object-fit: contain; /* optional, if you want to maintain aspect ratio */
+  border-radius: 16px; /* if you want rounded corners like the image had */
+}
+
 /* ✅ Media Queries for Adjustments */
 @media (max-width: 1025px) {
   .hero {
