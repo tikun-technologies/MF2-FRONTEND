@@ -69,16 +69,48 @@ export const HeatmapChart = ({ data, tab, filter }) => {
       type: "heatmap",
       toolbar: { show: true },
     },
+    // ✅ Custom HTML tooltip
+    tooltip: {
+      enabled: true,
+      followCursor: true,
+      custom: function({ series, seriesIndex, dataPointIndex, w }) {
+        // If there's no data, return nothing
+        if (!series[seriesIndex] || typeof series[seriesIndex][dataPointIndex] === "undefined") {
+          return "";
+        }
+  
+        const val = series[seriesIndex][dataPointIndex];
+        // row label (the "Y-axis" label for each row)
+        const rowLabel = w.globals.seriesNames[seriesIndex];
+        // column label (the "X-axis" label)
+        const colLabel = w.globals.labels[dataPointIndex];
+  
+        // Return an HTML <div> so we can use normal wrapping
+        return `
+          <div style="
+            max-width: 200px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px;
+            color: #000;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+          ">
+            <strong>${rowLabel}</strong><br />
+            <em>${colLabel}</em>: ${val}
+          </div>
+        `;
+      },
+    },
     dataLabels: { enabled: true },
     colors: heatmapColors[filter]?.ranges.map((range) => range.color) || ["#767676"],
-    title: { text: "" },
     xaxis: {
       categories: ageCategories,
-      style: { color: "red" },
     },
-    yaxis: {
-      show: false, // Hide default Y-axis labels
-    },
+    yaxis: { show: false },
     plotOptions: {
       heatmap: {
         colorScale: {
@@ -91,6 +123,7 @@ export const HeatmapChart = ({ data, tab, filter }) => {
       },
     },
   };
+  
 
   return (
     <div className={styles.wrapper}>
