@@ -34,6 +34,7 @@
 
 .buttonIcon:hover {
   background-color: #f5f5f5;
+  color: #000000;
 }
 
 .activeButton {
@@ -105,7 +106,7 @@
   }
 
   .buttonIcon {
-   font-size: 18px;
+    font-size: 18px;
   }
 }
 
