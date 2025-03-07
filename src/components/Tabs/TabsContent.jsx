@@ -56,7 +56,7 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
           >
             Bar Chart
           </button>
-          <button
+          {/* <button
             className={chartType === "line" ? "activeButton" : ""}
             onClick={() => setChartType("line")}
           >
@@ -67,7 +67,7 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
             onClick={() => setChartType("pie")}
           >
             Pie Chart
-          </button>
+          </button> */}
         </div>
       )}
       {filterDownedData.Data.Questions.map((question, index) => {
