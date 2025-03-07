@@ -44,7 +44,7 @@ section {
 /* Hero Section */
 
 .heroContainer {
-  border: 2px solid red;
+  /* border: 2px solid red; */
   margin-top: 7rem;
   display: flex;
   gap: 2rem;
