@@ -37,7 +37,10 @@ export const HeatmapChart = ({ data, tab, filter }) => {
         ],
       };
     } else if (tab === "Prelim-Answer Segments") {
-      const formattedObject = Object.assign({}, ...item["Prelim-Answer Segments"]);
+      const formattedObject = Object.assign(
+        {},
+        ...item["Prelim-Answer Segments"]
+      );
       console.log("Formatted segments: ", formattedObject);
       ageCategories = Object.keys(data[0][tab]);
       return {
@@ -73,18 +76,21 @@ export const HeatmapChart = ({ data, tab, filter }) => {
     tooltip: {
       enabled: true,
       followCursor: true,
-      custom: function({ series, seriesIndex, dataPointIndex, w }) {
+      custom: function ({ series, seriesIndex, dataPointIndex, w }) {
         // If there's no data, return nothing
-        if (!series[seriesIndex] || typeof series[seriesIndex][dataPointIndex] === "undefined") {
+        if (
+          !series[seriesIndex] ||
+          typeof series[seriesIndex][dataPointIndex] === "undefined"
+        ) {
           return "";
         }
-  
+
         const val = series[seriesIndex][dataPointIndex];
         // row label (the "Y-axis" label for each row)
         const rowLabel = w.globals.seriesNames[seriesIndex];
         // column label (the "X-axis" label)
         const colLabel = w.globals.labels[dataPointIndex];
-  
+
         // Return an HTML <div> so we can use normal wrapping
         return `
           <div style="
@@ -106,7 +112,9 @@ export const HeatmapChart = ({ data, tab, filter }) => {
       },
     },
     dataLabels: { enabled: true },
-    colors: heatmapColors[filter]?.ranges.map((range) => range.color) || ["#767676"],
+    colors: heatmapColors[filter]?.ranges.map((range) => range.color) || [
+      "#767676",
+    ],
     xaxis: {
       categories: ageCategories,
     },
@@ -123,17 +131,19 @@ export const HeatmapChart = ({ data, tab, filter }) => {
       },
     },
   };
-  
 
   return (
     <div className={styles.wrapper}>
       {/* Labels Container */}
       <div className={styles.labelsContainer}>
-        {series.map((item, index) => (
-          <div key={index} className={styles.labelItem}>
-            {item.name}
-          </div>
-        ))}
+        {series
+          .slice()
+          .reverse()
+          .map((item, index) => (
+            <div key={index} className={styles.labelItem}>
+              {item.name}
+            </div>
+          ))}
       </div>
 
       {/* Heatmap Chart */}
