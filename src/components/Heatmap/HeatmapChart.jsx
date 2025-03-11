@@ -96,12 +96,13 @@ export const HeatmapChart = ({ data, tab, filter }) => {
     <div className={styles.wrapper}>
       {/* Labels Container */}
       <div className={styles.labelsContainer}>
-        {series.map((item, index) => (
-          <div key={index} className={styles.labelItem}>
-            {item.name}
-          </div>
-        ))}
-      </div>
+  {series.slice().reverse().map((item, index) => (
+    <div key={index} className={styles.labelItem}>
+      {item.name}
+      {console.log(item.name)}
+    </div>
+  ))}
+</div>
 
       {/* Heatmap Chart */}
       <div className={styles.chartContainer}>
