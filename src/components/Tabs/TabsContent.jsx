@@ -111,6 +111,7 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
                 data={question.options}
                 tab={tab}
                 filter={activeFilter}
+                baseValues={filterDownedData["Base Values"]}
 
               />
             </div>
@@ -122,7 +123,7 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
           <div className={styles.chartContainer} key={index}>
             <h2 className={styles.questionHeader}>{question.Question}</h2>
             {activeVisualization === "table" ? (
-              <StudyTable headers={headers} data={data} />
+              <StudyTable headers={headers} data={data} baseValues={filterDownedData["Base Values"]}/>
             ) : (
               <ResponsiveContainer width="100%" height={400}>
                 {chartType === "bar" && (

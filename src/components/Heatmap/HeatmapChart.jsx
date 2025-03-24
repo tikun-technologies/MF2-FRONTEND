@@ -3,7 +3,7 @@ import Chart from "react-apexcharts";
 import heatmapColors from "./heatmapColors";
 import styles from "./Heatmap.module.css";
 
-export const HeatmapChart = ({ data, tab, filter }) => {
+export const HeatmapChart = ({ data, tab, filter,baseValues }) => {
   console.log("data= ", data);
   console.log("Tab from study details:", tab);
   console.log("Filter from heatmap", filter);
@@ -16,6 +16,9 @@ export const HeatmapChart = ({ data, tab, filter }) => {
         item.Mindsets.map((m) => Object.entries(m)[0])
       );
       ageCategories = ["Mindset 1 of 2", "Mindset 2 of 2"];
+      ageCategories = ageCategories.map(
+        (category) => `${category}\n(${baseValues[category] ?? "-"})`
+      );
       return {
         name: item.optiontext,
         data: [
@@ -28,6 +31,9 @@ export const HeatmapChart = ({ data, tab, filter }) => {
         item.Mindsets.map((m) => Object.entries(m)[0])
       );
       ageCategories = ["Mindset 1 of 3", "Mindset 2 of 3", "Mindset 3 of 3"];
+      ageCategories = ageCategories.map(
+        (category) => `${category}\n(${baseValues[category] ?? "-"})`
+      );
       return {
         name: item.optiontext,
         data: [
@@ -43,20 +49,36 @@ export const HeatmapChart = ({ data, tab, filter }) => {
       );
       console.log("Formatted segments: ", formattedObject);
       ageCategories = Object.keys(data[0][tab]);
+      // ageCategories = ageCategories.map(
+      //   (category) => `${category}\n(${baseValues[category] ?? "-"})`
+      // );
+      console.log("category:- ",ageCategories);
+      console.log("name :- ",item.optiontext)
       return {
         name: item.optiontext,
         data: Object.entries(formattedObject).map(([age, value]) => ({
-          x: age,
+          x: `${age}\n(${baseValues[age] ?? "-"})`,
+          // x: `${age}`,
           y: value,
         })),
       };
     } else if (tab === "overall") {
+      ageCategories = ageCategories.map(
+        (category) => `${category}\n(${baseValues[category] ?? "-"})`
+      );
       return {
         name: item.optiontext,
         data: [{ x: "Total", y: item.Total ?? "-" }],
       };
     } else {
       ageCategories = Object.keys(data[0][tab]);
+      ageCategories = ageCategories.map(
+        
+        (category) => `${category}\n(${baseValues[category] ?? "-"})`
+      );
+      // console.log("category:- ",categories);
+      // console.log("item.optiontext:- ",item.optiontext);
+
       return {
         name: item.optiontext,
         data: Object.entries(item[tab]).map(([age, value]) => ({
