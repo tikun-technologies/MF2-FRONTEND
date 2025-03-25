@@ -20,9 +20,9 @@ const StudyTable = ({ headers, data, baseValues }) => {
               return <th key={index}>
               {header}
               <br />
-              <span style={{ fontSize: "12px", fontWeight: "normal", color: "#666" }}>
-                ({baseValues[header]}) {/* Assuming `totals` is an object containing total values for each column */}
-              </span>
+              {baseValues[header] !== undefined && baseValues[header] !== null &&<span style={{ fontSize: "12px", fontWeight: "normal", color: "#666" }}>
+                ({baseValues[header]  }) {/* Assuming `totals` is an object containing total values for each column */}
+              </span>}
             </th>;
             })}
           </tr>
