@@ -187,15 +187,15 @@ const roundedMax = Math.ceil((maxValue * 1.2) / 10) * 10;
                     }}
                   />
                  
-
-                 <YAxis 
+                 <YAxis />
+                 {/* <YAxis 
   domain={[0, roundedMax]}  // Set fixed Y-axis upper limit
   tickCount={6}  // Ensures consistent tick spacing
   allowDecimals={false}  // Ensures only whole numbers appear
-/>
+/> */}
                   <Tooltip content={<CustomTooltip />} wrapperStyle={{ pointerEvents: "none", zIndex: 1000 }} />
-                  <Legend content={<CustomLegend />}  verticalAlign="top"
-  align="left" />
+                  {/* <Legend content={<CustomLegend />}  verticalAlign="top" */}
+  {/* align="left" /> */}
                   {/* Render bars in the same order as headers */}
                   {headers.slice(1).map((key, idx) => (
                     <Bar key={key} dataKey={key} fill={colors[idx % colors.length]} />
