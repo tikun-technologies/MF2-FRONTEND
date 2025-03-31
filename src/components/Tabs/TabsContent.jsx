@@ -30,6 +30,39 @@ const colors = [
   "#f50057",
 ];
 
+
+const CustomLegend = ({ payload }) => (
+  <div style={{
+    display: "flex",
+    flexDirection: "row",
+    gap: "15px",
+    position: "absolute",
+    top: "5px",   // Keep it close to the top
+    right: "10px",
+    background: "rgba(255, 255, 255, 0.8)",
+    padding: "5px 10px",
+    borderRadius: "8px",
+    zIndex: 10
+  }}>
+    {payload.map((entry, index) => (
+      <div key={`item-${index}`} style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+        <span
+          style={{
+            display: "inline-block",
+            width: "12px",
+            height: "12px",
+            borderRadius: "50%",
+            backgroundColor: entry.color,
+          }}
+        />
+        <span style={{ fontSize: "14px", color: "#333", fontWeight: "500" }}>
+          {entry.value}
+        </span>
+      </div>
+    ))}
+  </div>
+);
+
 const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
   const { activeFilter, activeVisualization } = useFilter();
   const [chartType, setChartType] = useState("bar");
@@ -120,7 +153,12 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
 
         // Render table or chart based on active visualization
         
-        
+        const maxValue = Math.max(...data.flatMap(d => headers.slice(1).map(key => d[key] || 0)));
+
+// Round up to the nearest multiple of 10 and add 30% extra space
+const roundedMax = Math.ceil((maxValue * 1.2) / 10) * 10;
+
+
         return (
           <div className={styles.chartContainer} key={index}>
             <h2 className={styles.questionHeader}>{question.Question}</h2>
@@ -148,9 +186,16 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
                       return value;
                     }}
                   />
-                  <YAxis />
+                 
+
+                 <YAxis 
+  domain={[0, roundedMax]}  // Set fixed Y-axis upper limit
+  tickCount={6}  // Ensures consistent tick spacing
+  allowDecimals={false}  // Ensures only whole numbers appear
+/>
                   <Tooltip content={<CustomTooltip />} wrapperStyle={{ pointerEvents: "none", zIndex: 1000 }} />
-                
+                  <Legend content={<CustomLegend />}  verticalAlign="top"
+  align="left" />
                   {/* Render bars in the same order as headers */}
                   {headers.slice(1).map((key, idx) => (
                     <Bar key={key} dataKey={key} fill={colors[idx % colors.length]} />
