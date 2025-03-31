@@ -119,43 +119,43 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
         }
 
         // Render table or chart based on active visualization
+        
+        
         return (
           <div className={styles.chartContainer} key={index}>
             <h2 className={styles.questionHeader}>{question.Question}</h2>
             {activeVisualization === "table" ? (
               <StudyTable headers={headers} data={data} baseValues={filterDownedData["Base Values"]}/>
             ) : (
+              
               <ResponsiveContainer width="100%" height={400}>
                 {chartType === "bar" && (
                   <BarChart
-                    data={data}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 50 }}
-                  >
-                    <XAxis
-                      dataKey="Response"
-                      tick={{ fontSize: 12, width: '300' }}
-                      interval={0}
-                      height={30}
-                      tickFormatter={(value) => {
-                        const maxLength = 15;
-                        if (value.length > maxLength) {
-                          return value
-                            .match(new RegExp(`.{1,${maxLength}}`, "g"))
-                            .join("\n");
-                        }
-                        return value;
-                      }}
-                    />
-                    <YAxis />
-                    <Tooltip content={<CustomTooltip />} wrapperStyle={{ pointerEvents: "none", zIndex: 1000 }} />
-                    {headers.slice(1).map((key, idx) => (
-                      <Bar
-                        key={key}
-                        dataKey={key}
-                        fill={colors[idx % colors.length]}
-                      />
-                    ))}
-                  </BarChart>
+                  data={[...data].reverse()}
+                 
+                  margin={{ top: 20, right: 30, left: 20, bottom: 50 }}
+                >
+                  <XAxis
+                    dataKey="Response"
+                    tick={{ fontSize: 12, width: "300" }}
+                    interval={0}
+                    height={30}
+                    tickFormatter={(value) => {
+                      const maxLength = 15;
+                      if (value.length > maxLength) {
+                        return value.match(new RegExp(`.{1,${maxLength}}`, "g")).join("\n");
+                      }
+                      return value;
+                    }}
+                  />
+                  <YAxis />
+                  <Tooltip content={<CustomTooltip />} wrapperStyle={{ pointerEvents: "none", zIndex: 1000 }} />
+                
+                  {/* Render bars in the same order as headers */}
+                  {headers.slice(1).map((key, idx) => (
+                    <Bar key={key} dataKey={key} fill={colors[idx % colors.length]} />
+                  ))}
+                </BarChart>
                 )}
               </ResponsiveContainer>
             )}
