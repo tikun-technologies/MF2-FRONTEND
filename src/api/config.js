@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "https://ready2prints.in";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 console.log("API BASE URL:", import.meta.env.VITE_API_URL);
 

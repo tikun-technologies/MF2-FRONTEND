@@ -28,8 +28,8 @@ const heatmapColors = {
     ranges: [
       { from: 0.0, to: 0.1, color: "#e3e3e3", name: "Unavailable" },
       { from: 0.1, to: 0.2, color: colors.blue, name: "Fast Response" }, // Blue
-      { from: 0.3, to: 1.2, color: "767676", name: "Moderate Response" }, // Yellow
-      { from: 1.3, to: 100, color: colors.yellow, name: "Slow Response" },
+      { from: 0.3, to: 1.2, color: "767676", name: "Moderate Response" }, // Gray
+      { from: 1.3, to: 100, color: colors.yellow, name: "Slow Response" }, // Yellow
     ],
   },
 };
