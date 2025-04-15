@@ -1,0 +1,190 @@
+.tableWrapper {
+    width: 100%;
+    margin: 2rem 0rem;
+    overflow-x: auto;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  .tableWrapper {
+    margin-top: 20px;
+  }
+  
+  /* Range Filter Container */
+  .rangeFilterContainer {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .filterLabel {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .filterControls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .filterControls select,
+  .filterControls input {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .filterControls span {
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  .displayOption {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .displayOption label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    color: #495057;
+    cursor: pointer;
+  }
+  
+  .displayOption input {
+    margin: 0;
+  }
+  
+  /* Table Styles (keep original) */
+  .studyTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .studyTable th,
+  .studyTable td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .studyTable th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+  }
+  
+  .operatorSelect {
+    min-width: 180px; /* Wider to accommodate longer text */
+  }
+  
+  /* Range "to" text */
+  .rangeTo {
+    margin: 0 5px;
+    color: #666;
+    font-weight: normal;
+  }
+  
+  
+  /* Matching cell highlight */
+  .matchingCell {
+    background-color: #e6f7ff;
+    font-weight: 500;
+  }
+  .studyTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+  }
+  
+  .studyTable th,
+  .studyTable td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ececec;
+    /* border: 2px solid red; */
+    min-width: 250px;
+  }
+  
+  /* Ensure text wraps properly inside cells */
+  .studyTable td,
+  .studyTable th {
+    max-width: 300px; /* ✅ Restricts cell width */
+    word-wrap: break-word; /* ✅ Wraps text within the box */
+    overflow-wrap: break-word; /* ✅ Ensures long words break correctly */
+    white-space: normal; /* ✅ Allows text to wrap instead of forcing one line */
+    font-size: 0.875rem;
+  }
+  
+  /* Ensure headers stand out */
+  .studyTable th {
+    font-weight: bold;
+    color: #616161;
+    background-color: #f9f9f9;
+    font-size: 0.75rem;
+  }
+  
+  /* Red border (for debugging) */
+ 
+  
+  /* Hover effect */
+  .studyTable tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s;
+  }
+  
+  /* ✅ Responsive Styling for Mobile */
+  @media (max-width: 768px) {
+    .studyTable {
+      min-width: 100%;
+    }
+  
+    .studyTable td {
+      max-width: 200px; /* ✅ Smaller max width for mobile */
+      font-size: 0.9rem;
+    }
+  
+    .studyTable th:first-child,
+    .studyTable td:first-child {
+      /* border: 2px solid red; */
+      width: 50% !important;
+      max-width: 300px !important;
+      min-width: 210px;
+    }
+  }
+  .filterButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    align-self: flex-start;
+  }
+  .resetButton {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  
+  .resetButton:hover {
+    background: #f0f0f0;
+  }
+  
+.filterActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }

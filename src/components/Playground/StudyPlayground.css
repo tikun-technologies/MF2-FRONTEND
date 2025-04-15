@@ -1,0 +1,340 @@
+/* Main container */
+.study-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .study-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Filters row - all in one line */
+  .filters-row {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .filters-row::-webkit-scrollbar {
+    height: 5px;
+  }
+  
+  .filters-row::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .filters-row::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  .filters-row::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  /* Each filter group */
+  .filter-group {
+    min-width: 220px;
+    flex-shrink: 0;
+  }
+  
+  .filter-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+  }
+  
+  /* Custom Select styling */
+  .react-select-container {
+    font-size: 14px;
+  }
+  
+  .react-select__control {
+    min-height: 38px;
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    box-shadow: none;
+  }
+  
+  .react-select__control--is-focused {
+    border-color: #2684ff;
+    box-shadow: 0 0 0 1px #2684ff;
+  }
+  
+  .react-select__multi-value {
+    background-color: #e6f7ff;
+    border-radius: 4px;
+  }
+  
+  .react-select__multi-value__label {
+    color: #1890ff;
+    font-size: 13px;
+  }
+  
+  /* Questions section */
+  .questions-section {
+    margin-top: 20px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .filters-row {
+      gap: 10px;
+      padding: 10px;
+    }
+    
+    .filter-group {
+      min-width: 200px;
+    }
+  }
+
+
+/* Main container */
+.study-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  /* Filters row - improved for dropdown visibility */
+  .filters-row {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    overflow-x: auto;
+    position: relative;
+    z-index: 1; /* Lower than dropdown menus */
+  }
+  
+  /* Dropdown container - crucial for visibility */
+  .react-select-container {
+    position: relative;
+    min-width: 220px;
+    z-index: 100; /* Ensure dropdown appears above other elements */
+  }
+  
+  /* Dropdown menu styling */
+  .react-select__menu {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    margin-top: 4px;
+    background: white;
+  }
+  
+  .react-select__menu-list {
+    padding: 8px 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .react-select__option {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .react-select__option--is-focused {
+    background-color: #f0f7ff;
+  }
+  
+  .react-select__option--is-selected {
+    background-color: #e6f7ff;
+    color: #1890ff;
+  }
+  
+  /* Make sure dropdowns appear above other content */
+  .react-select__menu-portal {
+    z-index: 9999 !important;
+  }
+  
+  /* Rest of your existing CSS... */
+
+  .tableWrapper {
+  width: 100%;
+  margin: 2rem 0rem;
+  overflow-x: auto;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.tableWrapper {
+  margin-top: 20px;
+}
+
+/* Range Filter Container */
+.rangeFilterContainer {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.filterLabel {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #333;
+}
+
+.filterControls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.filterControls select,
+.filterControls input {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.filterControls span {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.displayOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.displayOption label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #495057;
+  cursor: pointer;
+}
+
+.displayOption input {
+  margin: 0;
+}
+
+/* Table Styles (keep original) */
+.studyTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.studyTable th,
+.studyTable td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.studyTable th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.operatorSelect {
+  min-width: 180px; /* Wider to accommodate longer text */
+}
+
+/* Range "to" text */
+.rangeTo {
+  margin: 0 5px;
+  color: #666;
+  font-weight: normal;
+}
+
+
+/* Matching cell highlight */
+.matchingCell {
+  background-color: #e6f7ff;
+  font-weight: 500;
+}
+.studyTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.studyTable th,
+.studyTable td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ececec;
+  /* border: 2px solid red; */
+  min-width: 250px;
+}
+
+/* Ensure text wraps properly inside cells */
+.studyTable td,
+.studyTable th {
+  max-width: 300px; /* ✅ Restricts cell width */
+  word-wrap: break-word; /* ✅ Wraps text within the box */
+  overflow-wrap: break-word; /* ✅ Ensures long words break correctly */
+  white-space: normal; /* ✅ Allows text to wrap instead of forcing one line */
+  font-size: 0.875rem;
+}
+
+/* Ensure headers stand out */
+.studyTable th {
+  font-weight: bold;
+  color: #616161;
+  background-color: #f9f9f9;
+  font-size: 0.75rem;
+}
+
+/* Red border (for debugging) */
+.studyTable tr {
+  /* border: 2px solid red; */
+}
+
+/* Hover effect */
+.studyTable tr:hover {
+  background-color: #f1f1f1;
+  transition: background-color 0.3s;
+}
+
+/* ✅ Responsive Styling for Mobile */
+@media (max-width: 768px) {
+  .studyTable {
+    min-width: 100%;
+  }
+
+  .studyTable td {
+    max-width: 200px; /* ✅ Smaller max width for mobile */
+    font-size: 0.9rem;
+  }
+
+  .studyTable th:first-child,
+  .studyTable td:first-child {
+    /* border: 2px solid red; */
+    width: 50% !important;
+    max-width: 300px !important;
+    min-width: 210px;
+  }
+}

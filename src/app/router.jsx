@@ -13,7 +13,7 @@ import DashboardLayout from "../components/Layout/DashboardLayout";
 import Articles from "../pages/Articles/Articles";
 import { SidebarProvider } from "../context/SidebarContext";
 import ArticleDetails from "../features/articles/pages/ArticleDetails";
-
+import StudyDetailPlayground from "../pages/Playground/Playground"
 const AppRoutes = () => {
   const { token } = useContext(AuthContext);
 
@@ -43,6 +43,7 @@ const AppRoutes = () => {
         >
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/study/:id" element={<StudyDetail />} />
+          <Route path="/playground/:id" element={<StudyDetailPlayground />} />
           <Route path="/create" element={<AddDataForm />} />
           <Route path="/articles" element={<Articles />} />
         </Route>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useFilter } from "../../context/FilterContext";
 import StudyTable from "../Table/StudyTable";
 import { HeatmapChart } from "../Heatmap/HeatmapChart";
+// import PlaygroundSegmentFilter from "../Playground/Playground";
 import CustomTooltip from "./CustomTooltip";
 import {
   BarChart,
@@ -31,37 +32,8 @@ const colors = [
 ];
 
 
-const CustomLegend = ({ payload }) => (
-  <div style={{
-    display: "flex",
-    flexDirection: "row",
-    gap: "15px",
-    position: "absolute",
-    top: "5px",   // Keep it close to the top
-    right: "10px",
-    background: "rgba(255, 255, 255, 0.8)",
-    padding: "5px 10px",
-    borderRadius: "8px",
-    zIndex: 10
-  }}>
-    {payload.map((entry, index) => (
-      <div key={`item-${index}`} style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-        <span
-          style={{
-            display: "inline-block",
-            width: "12px",
-            height: "12px",
-            borderRadius: "50%",
-            backgroundColor: entry.color,
-          }}
-        />
-        <span style={{ fontSize: "14px", color: "#333", fontWeight: "500" }}>
-          {entry.value}
-        </span>
-      </div>
-    ))}
-  </div>
-);
+
+
 
 const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
   const { activeFilter, activeVisualization } = useFilter();
@@ -134,7 +106,7 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
           }
           return rowData;
         });
-
+       
         // Render heatmap if active visualization is heatmap
         if (activeVisualization === "heatmap") {
           return (
@@ -152,55 +124,55 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
         }
 
         // Render table or chart based on active visualization
-        
+
         const maxValue = Math.max(...data.flatMap(d => headers.slice(1).map(key => d[key] || 0)));
 
-// Round up to the nearest multiple of 10 and add 30% extra space
-const roundedMax = Math.ceil((maxValue * 1.2) / 10) * 10;
+        // Round up to the nearest multiple of 10 and add 30% extra space
+        const roundedMax = Math.ceil((maxValue * 1.2) / 10) * 10;
 
-
+        console.log("data before table :- ",data)
         return (
           <div className={styles.chartContainer} key={index}>
             <h2 className={styles.questionHeader}>{question.Question}</h2>
             {activeVisualization === "table" ? (
-              <StudyTable headers={headers} data={data} baseValues={filterDownedData["Base Values"]}/>
+              <StudyTable headers={headers} data={data} baseValues={filterDownedData["Base Values"]} />
             ) : (
-              
+
               <ResponsiveContainer width="100%" height={400}>
                 {chartType === "bar" && (
                   <BarChart
-                  data={[...data].reverse()}
-                 
-                  margin={{ top: 20, right: 30, left: 20, bottom: 50 }}
-                >
-                  <XAxis
-                    dataKey="Response"
-                    tick={{ fontSize: 12, width: "300" }}
-                    interval={0}
-                    height={30}
-                    tickFormatter={(value) => {
-                      const maxLength = 15;
-                      if (value.length > maxLength) {
-                        return value.match(new RegExp(`.{1,${maxLength}}`, "g")).join("\n");
-                      }
-                      return value;
-                    }}
-                  />
-                 
-                 <YAxis />
-                 {/* <YAxis 
+                    data={[...data].reverse()}
+
+                    margin={{ top: 20, right: 30, left: 20, bottom: 50 }}
+                  >
+                    <XAxis
+                      dataKey="Response"
+                      tick={{ fontSize: 12, width: "300" }}
+                      interval={0}
+                      height={30}
+                      tickFormatter={(value) => {
+                        const maxLength = 15;
+                        if (value.length > maxLength) {
+                          return value.match(new RegExp(`.{1,${maxLength}}`, "g")).join("\n");
+                        }
+                        return value;
+                      }}
+                    />
+
+                    <YAxis />
+                    {/* <YAxis 
   domain={[0, roundedMax]}  // Set fixed Y-axis upper limit
   tickCount={6}  // Ensures consistent tick spacing
   allowDecimals={false}  // Ensures only whole numbers appear
 /> */}
-                  <Tooltip content={<CustomTooltip />} wrapperStyle={{ pointerEvents: "none", zIndex: 1000 }} />
-                  {/* <Legend content={<CustomLegend />}  verticalAlign="top" */}
-  {/* align="left" /> */}
-                  {/* Render bars in the same order as headers */}
-                  {headers.slice(1).map((key, idx) => (
-                    <Bar key={key} dataKey={key} fill={colors[idx % colors.length]} />
-                  ))}
-                </BarChart>
+                    <Tooltip content={<CustomTooltip />} wrapperStyle={{ pointerEvents: "none", zIndex: 1000 }} />
+                    {/* <Legend content={<CustomLegend />}  verticalAlign="top" */}
+                    {/* align="left" /> */}
+                    {/* Render bars in the same order as headers */}
+                    {headers.slice(1).map((key, idx) => (
+                      <Bar key={key} dataKey={key} fill={colors[idx % colors.length]} />
+                    ))}
+                  </BarChart>
                 )}
               </ResponsiveContainer>
             )}

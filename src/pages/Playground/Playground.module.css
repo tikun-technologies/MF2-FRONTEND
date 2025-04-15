@@ -1,0 +1,58 @@
+.studyHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .studyTitle {
+    flex: 1;
+    min-width: 60%;
+    font-family: sans-serif;
+  }
+  
+  .studyActions {
+    /* justify-content: flex-end; */
+    display: flex;
+    gap: 0.5rem;
+    padding-right: 1rem;
+    min-width: max-content;
+  }
+  
+  .studyAction {
+    padding: 1rem;
+    border: 1px solid #cac9c9;
+    border-radius: 8px;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 1.2rem;
+    /* flex-shrink: 0; */
+  }
+  .studyAction:hover {
+    background-color: #ffffff8c;
+  }
+  
+  .studyMetadata {
+    font-family: sans-serif;
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+  
+  .studyRespondents {
+    color: rgb(5, 134, 255);
+    font-family: sans-serif;
+  }
+  
+  .studyMetadata p {
+    margin-bottom: 0.5rem;
+    font-family: sans-serif;
+  }
+  
+  .studyOptions {
+    display: flex;
+    gap: 1rem;
+    font-weight: 700;
+    font-family: sans-serif;
+  }
+  

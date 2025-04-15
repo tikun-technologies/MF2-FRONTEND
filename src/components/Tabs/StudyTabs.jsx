@@ -42,6 +42,9 @@ const StudyTabs = ({ study }) => {
         <Tabs.Trigger value="3 market segments" className={styles.tabTrigger}>
           3 Market Segments
         </Tabs.Trigger>
+        <Tabs.Trigger value="Playground" className={styles.tabTrigger}>
+        Playground
+        </Tabs.Trigger>
       </Tabs.List>
 
       <Tabs.Content value="overall" className={styles.tabContent}>
@@ -86,6 +89,14 @@ const StudyTabs = ({ study }) => {
       <Tabs.Content value="3 market segments" className={styles.tabContent}>
         <TabsContent
           tab="3Mindsets"
+          topDown={studyData["(T) Mindsets"]}
+          bottomDown={studyData["(B) Mindsets"]}
+          responseTime={studyData["(R) Mindsets"]}
+        />
+      </Tabs.Content>
+      <Tabs.Content value="Playground" className={styles.tabContent}>
+        <TabsContent
+          tab="Playground"
           topDown={studyData["(T) Mindsets"]}
           bottomDown={studyData["(B) Mindsets"]}
           responseTime={studyData["(R) Mindsets"]}
