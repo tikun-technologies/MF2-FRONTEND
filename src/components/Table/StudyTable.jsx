@@ -274,3 +274,4 @@ const StudyTable = ({
 };
 
 export default StudyTable;
+
