@@ -267,6 +267,7 @@ const StudyTable = ({
                   })}
                 </tr>
               ))}
+              
             </tbody>
           </table>
         </div>
