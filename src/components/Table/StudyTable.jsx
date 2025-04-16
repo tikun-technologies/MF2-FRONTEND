@@ -30,7 +30,6 @@ const StudyTable = ({
   }, [globalRangeFilter]);
 
   const shouldHighlightCell = (value, header) => {
-    // Skip Response column and empty/non-numeric values
     if (header === "Response" || value === "-" || value === "N/A") return false;
     
     const numValue = Number(value);
@@ -38,12 +37,10 @@ const StudyTable = ({
 
     const activeFilter = hasLocalChanges ? localRangeFilter : globalRangeFilter;
     
-    // If no filter values are set, don't highlight anything
     if (!activeFilter.minValue && !activeFilter.maxValue && !activeFilter.singleValue) {
       return false;
     }
 
-    // Apply the filter logic
     if (activeFilter.operator === "range") {
       const min = Number(activeFilter.minValue) || -Infinity;
       const max = Number(activeFilter.maxValue) || Infinity;
@@ -100,14 +97,22 @@ const StudyTable = ({
 
     const visibleHeaders = new Set(['Response']);
     
-    const filteredData = data.filter(row => {
-      if (activeFilter.showFullRow) return true;
-      
-      return Object.entries(row).some(([key, value]) => {
-        if (key === "Response") return false;
-        return shouldHighlightCell(value, key);
+    // Add headers that have matching values
+    data.forEach(row => {
+      headers.forEach(header => {
+        if (header !== "Response" && shouldHighlightCell(row[header], header)) {
+          visibleHeaders.add(header);
+        }
       });
     });
+
+    const filteredData = activeFilter.showFullRow 
+      ? data 
+      : data.filter(row => {
+          return headers.some(header => {
+            return header !== "Response" && shouldHighlightCell(row[header], header);
+          });
+        });
 
     return { 
       filteredData, 
@@ -225,7 +230,7 @@ const StudyTable = ({
                     return null;
                   }
                   return (
-                    <th key={index} style={{ width: `${100/headers.length}%` }}>
+                    <th key={index} style={{ minWidth: "150px" }}>
                       <div className={styles.headerContent}>
                         {header}
                         {baseValues[header] !== undefined && baseValues[header] !== null && (
@@ -252,8 +257,7 @@ const StudyTable = ({
                     return (
                       <td 
                         key={colIndex} 
-                        className={shouldHighlight ? styles.matchingCell : ""}
-                        style={{ width: `${100/headers.length}%` }}
+                        className={`${shouldHighlight ? styles.matchingCell : ""} ${styles.tableCell}`}
                       >
                         {cellValue}
                       </td>

@@ -25,7 +25,7 @@ const StudyPlayground = ({ study, visualType }) => {
   const [genderOptions, setGenderOptions] = useState([]);
   const [mindsetOptions, setMindsetOptions] = useState([]);
   const [prelimOptions, setPrelimOptions] = useState([]);
-  
+
   // Selected segments
   const [selectedAge, setSelectedAge] = useState([]);
   const [selectedGender, setSelectedGender] = useState([]);
@@ -34,14 +34,14 @@ const StudyPlayground = ({ study, visualType }) => {
 
   // Common range filter state
   const resetToInitial = () => {
-      setRangeFilter({
-        operator: "range",
-        minValue: "",
-        maxValue: "",
-        singleValue: "",
-        showFullRow: true
-      });
-    };
+    setRangeFilter({
+      operator: "range",
+      minValue: "",
+      maxValue: "",
+      singleValue: "",
+      showFullRow: true
+    });
+  };
   const [rangeFilter, setRangeFilter] = useState({
     operator: "range",
     minValue: "",
@@ -55,9 +55,9 @@ const StudyPlayground = ({ study, visualType }) => {
 
     const keys = Object.keys(study?.studyData || {});
     setSegmentKeys(keys);
-    
+
     const firstSheetData = study?.Data?.Questions?.[0]?.options || [];
-    
+
     const getUniqueKeys = (key) => {
       const keys = new Set();
       firstSheetData.forEach((opt) => {
@@ -145,9 +145,9 @@ const StudyPlayground = ({ study, visualType }) => {
         {tableHeaders.length > 1 && (
           <>
             <h2 className="text-xl font-semibold mb-4 text-gray-800">{question.Question}</h2>
-            <StudyTable 
-              headers={tableHeaders} 
-              data={tableData} 
+            <StudyTable
+              headers={tableHeaders}
+              data={tableData}
               baseValues={baseValues}
               globalRangeFilter={rangeFilter}
               onLocalFilterChange={(newFilter) => {
@@ -182,7 +182,7 @@ const StudyPlayground = ({ study, visualType }) => {
       <div className={styles.filterControlsWrapper}>
         <div className={styles.rangeFilterContainer}>
           <label className={styles.filterLabel}>Range Filter</label>
-          
+
           <div className={styles.filterControls}>
             <select
               value={rangeFilter.operator}
@@ -230,26 +230,26 @@ const StudyPlayground = ({ study, visualType }) => {
               />
             )}
           </div>
-            <div className={styles.filterActions}>
-                          <div className={styles.displayOption}>
-                            <label>
-                              <input
-                                type="checkbox"
-                                checked={rangeFilter.showFullRow}
-                                onChange={toggleShowFullRow}
-                              />
-                              Show full rows
-                            </label>
-                          </div>
-                          <button 
-                            onClick={resetToInitial}
-                            className={styles.resetButton}
-                          >
-                            Reset
-                          </button>
-                        </div>
-          
-          
+          <div className={styles.filterActions}>
+            <div className={styles.displayOption}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={rangeFilter.showFullRow}
+                  onChange={toggleShowFullRow}
+                />
+                Show full rows
+              </label>
+            </div>
+            <button
+              onClick={resetToInitial}
+              className={styles.resetButton}
+            >
+              Reset
+            </button>
+          </div>
+
+
         </div>
       </div>
 
@@ -269,8 +269,8 @@ const StudyPlayground = ({ study, visualType }) => {
               menuPosition="fixed"
               styles={{
                 menuPortal: base => ({ ...base, zIndex: 9999 }),
-                menu: provided => ({ 
-                  ...provided, 
+                menu: provided => ({
+                  ...provided,
                   position: 'absolute',
                   width: 'auto',
                   minWidth: '100%'
@@ -344,7 +344,7 @@ const StudyPlayground = ({ study, visualType }) => {
       {/* Questions Section */}
       <div className="questions-section">
         {questions.map((question) => {
-          switch(visualType) {
+          switch (visualType) {
             case "table":
               return generateTableForQuestion(question);
             case "heatmap":

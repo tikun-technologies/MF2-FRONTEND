@@ -308,10 +308,6 @@
   font-size: 0.75rem;
 }
 
-/* Red border (for debugging) */
-.studyTable tr {
-  /* border: 2px solid red; */
-}
 
 /* Hover effect */
 .studyTable tr:hover {
