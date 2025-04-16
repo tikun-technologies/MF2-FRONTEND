@@ -19,14 +19,13 @@ const StudyPlayground = ({ study, visualType }) => {
   const [loading, setLoading] = useState(false);
   const [segmentKeys, setSegmentKeys] = useState([]);
   const [tableFilters, setTableFilters] = useState({});
-  // const [localRangeFilter, setLocalRangeFilter] = useState(initialRangeFilter);
   // Segment options state
   const [ageOptions, setAgeOptions] = useState([]);
   const [genderOptions, setGenderOptions] = useState([]);
   const [mindsetOptions, setMindsetOptions] = useState([]);
   const [prelimOptions, setPrelimOptions] = useState([]);
   
-  // Selected segments
+  // Selected segments - initialize as empty arrays, will be populated in useEffect
   const [selectedAge, setSelectedAge] = useState([]);
   const [selectedGender, setSelectedGender] = useState([]);
   const [selectedMindset, setSelectedMindset] = useState([]);
@@ -75,10 +74,21 @@ const StudyPlayground = ({ study, visualType }) => {
       return [...keys].map((k) => ({ label: k, value: k }));
     };
 
-    setAgeOptions(getUniqueKeys("Age Segments"));
-    setGenderOptions(getUniqueKeys("Gender Segments"));
-    setMindsetOptions(getUniqueKeys("Mindsets"));
-    setPrelimOptions(getUniqueKeys("Prelim-Answer Segments"));
+    const ageOpts = getUniqueKeys("Age Segments");
+    const genderOpts = getUniqueKeys("Gender Segments");
+    const mindsetOpts = getUniqueKeys("Mindsets");
+    const prelimOpts = getUniqueKeys("Prelim-Answer Segments");
+
+    setAgeOptions(ageOpts);
+    setGenderOptions(genderOpts);
+    setMindsetOptions(mindsetOpts);
+    setPrelimOptions(prelimOpts);
+
+    // Set all options as selected by default
+    setSelectedAge(ageOpts);
+    setSelectedGender(genderOpts);
+    setSelectedMindset(mindsetOpts);
+    setSelectedPrelim(prelimOpts);
   }, [study]);
 
   if (loading) {
@@ -231,25 +241,23 @@ const StudyPlayground = ({ study, visualType }) => {
             )}
           </div>
             <div className={styles.filterActions}>
-                          <div className={styles.displayOption}>
-                            <label>
-                              <input
-                                type="checkbox"
-                                checked={rangeFilter.showFullRow}
-                                onChange={toggleShowFullRow}
-                              />
-                              Show full rows
-                            </label>
-                          </div>
-                          <button 
-                            onClick={resetToInitial}
-                            className={styles.resetButton}
-                          >
-                            Reset
-                          </button>
-                        </div>
-          
-          
+              <div className={styles.displayOption}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={rangeFilter.showFullRow}
+                    onChange={toggleShowFullRow}
+                  />
+                  Show full rows
+                </label>
+              </div>
+              <button 
+                onClick={resetToInitial}
+                className={styles.resetButton}
+              >
+                Reset
+              </button>
+            </div>
         </div>
       </div>
 

@@ -226,7 +226,7 @@ const StudyTable = ({
             <thead>
               <tr>
                 {headers.map((header, index) => {
-                  if (!activeFilter.showFullRow && !visibleHeaders.includes(header)) {
+                  if (!activeFilter.showFullRow && !visibleHeaders.includes(header) && header !== "Response") {
                     return null;
                   }
                   return (
@@ -249,17 +249,19 @@ const StudyTable = ({
               {filteredData.map((row, rowIndex) => (
                 <tr key={rowIndex}>
                   {headers.map((header, colIndex) => {
-                    if (!activeFilter.showFullRow && !visibleHeaders.includes(header)) {
+                    if (!activeFilter.showFullRow && !visibleHeaders.includes(header) && header !== "Response") {
                       return null;
                     }
                     const cellValue = row[header] ?? "-";
                     const shouldHighlight = shouldHighlightCell(cellValue, header);
+                    const shouldShowValue = activeFilter.showFullRow || shouldHighlight || header === "Response";
+                    
                     return (
                       <td 
                         key={colIndex} 
                         className={`${shouldHighlight ? styles.matchingCell : ""} ${styles.tableCell}`}
                       >
-                        {cellValue}
+                        {shouldShowValue ? cellValue : "-"}
                       </td>
                     );
                   })}
@@ -274,4 +276,3 @@ const StudyTable = ({
 };
 
 export default StudyTable;
-
