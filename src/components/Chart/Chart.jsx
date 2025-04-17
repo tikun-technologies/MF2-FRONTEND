@@ -151,7 +151,7 @@ export const BarChart = ({
       },
     },
     dataLabels: {
-      enabled: true,
+      enabled: false,
       style: {
         fontSize: '12px',
         fontWeight: 'bold',
