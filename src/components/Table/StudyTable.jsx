@@ -261,7 +261,7 @@ const StudyTable = ({
                         key={colIndex} 
                         className={`${shouldHighlight ? styles.matchingCell : ""} ${styles.tableCell}`}
                       >
-                        {shouldShowValue ? cellValue : "-"}
+                        {shouldShowValue ? cellValue : ""}
                       </td>
                     );
                   })}

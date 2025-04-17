@@ -3,6 +3,7 @@ import Select from "react-select";
 import { getStudy } from "../../api/getStudies";
 import Spinner from "../../components/common/Spinner";
 import StudyTable from "../../components/Table/StudyTable";
+import HeatmapChart from "./../Heatmap/HeatmapChart";
 import "./StudyPlayground.css";
 import styles from "./StudyPlayground.module.css";
 
@@ -19,28 +20,16 @@ const StudyPlayground = ({ study, visualType }) => {
   const [loading, setLoading] = useState(false);
   const [segmentKeys, setSegmentKeys] = useState([]);
   const [tableFilters, setTableFilters] = useState({});
-  // Segment options state
   const [ageOptions, setAgeOptions] = useState([]);
   const [genderOptions, setGenderOptions] = useState([]);
   const [mindsetOptions, setMindsetOptions] = useState([]);
   const [prelimOptions, setPrelimOptions] = useState([]);
   
-  // Selected segments - initialize as empty arrays, will be populated in useEffect
   const [selectedAge, setSelectedAge] = useState([]);
   const [selectedGender, setSelectedGender] = useState([]);
   const [selectedMindset, setSelectedMindset] = useState([]);
   const [selectedPrelim, setSelectedPrelim] = useState([]);
 
-  // Common range filter state
-  const resetToInitial = () => {
-      setRangeFilter({
-        operator: "range",
-        minValue: "",
-        maxValue: "",
-        singleValue: "",
-        showFullRow: true
-      });
-    };
   const [rangeFilter, setRangeFilter] = useState({
     operator: "range",
     minValue: "",
@@ -48,6 +37,16 @@ const StudyPlayground = ({ study, visualType }) => {
     singleValue: "",
     showFullRow: true
   });
+
+  const resetToInitial = () => {
+    setRangeFilter({
+      operator: "range",
+      minValue: "",
+      maxValue: "",
+      singleValue: "",
+      showFullRow: true
+    });
+  };
 
   useEffect(() => {
     if (!study) return;
@@ -84,7 +83,6 @@ const StudyPlayground = ({ study, visualType }) => {
     setMindsetOptions(mindsetOpts);
     setPrelimOptions(prelimOpts);
 
-    // Set all options as selected by default
     setSelectedAge(ageOpts);
     setSelectedGender(genderOpts);
     setSelectedMindset(mindsetOpts);
@@ -166,10 +164,28 @@ const StudyPlayground = ({ study, visualType }) => {
                   [question.Question]: newFilter
                 }));
               }}
-              key={`${question.Question}-${JSON.stringify(rangeFilter)}`} // Force re-render on global filter change
+              key={`${question.Question}-${JSON.stringify(rangeFilter)}`}
             />
           </>
         )}
+      </div>
+    );
+  };
+
+  const generateHeatmapForQuestion = (question) => {
+    return (
+      <div key={question.Question} className="mb-8">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">{question.Question}</h2>
+        <HeatmapChart 
+          data={question}
+          baseValues={baseValues}
+          selectedAgeKeys={selectedAgeKeys}
+          selectedGenderKeys={selectedGenderKeys}
+          selectedMindsetKeys={selectedMindsetKeys}
+          selectedPrelimKeys={selectedPrelimKeys}
+          filter={rangeFilter.operator}
+          rangeFilter={rangeFilter}
+        />
       </div>
     );
   };
@@ -220,6 +236,7 @@ const StudyPlayground = ({ study, visualType }) => {
                   name="minValue"
                   value={rangeFilter.minValue}
                   onChange={handleFilterChange}
+                  className={styles.rangeInput}
                 />
                 <span className={styles.rangeTo}>to</span>
                 <input
@@ -228,6 +245,7 @@ const StudyPlayground = ({ study, visualType }) => {
                   name="maxValue"
                   value={rangeFilter.maxValue}
                   onChange={handleFilterChange}
+                  className={styles.rangeInput}
                 />
               </>
             ) : (
@@ -237,6 +255,7 @@ const StudyPlayground = ({ study, visualType }) => {
                 name="singleValue"
                 value={rangeFilter.singleValue}
                 onChange={handleFilterChange}
+                className={styles.rangeInput}
               />
             )}
           </div>
@@ -356,9 +375,7 @@ const StudyPlayground = ({ study, visualType }) => {
             case "table":
               return generateTableForQuestion(question);
             case "heatmap":
-              return <HeatmapChart key={question.id} data={question} />;
-            case "chart":
-              return <ResponsiveChart key={question.id} data={question} />;
+              return generateHeatmapForQuestion(question);
             default:
               return null;
           }

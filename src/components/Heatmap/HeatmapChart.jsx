@@ -3,117 +3,137 @@ import Chart from "react-apexcharts";
 import heatmapColors from "./heatmapColors";
 import styles from "./Heatmap.module.css";
 
-export const HeatmapChart = ({ data, tab, filter,baseValues }) => {
-  console.log("data= ", data);
-  console.log("Tab from study details:", tab);
-  console.log("Filter from heatmap", filter);
-
-  let ageCategories = [];
-
-  const series = data.map((item) => {
-    if (tab === "2Mindsets") {
-      const mindsets = Object.fromEntries(
-        item.Mindsets.map((m) => Object.entries(m)[0])
-      );
-      ageCategories = ["Mindset 1 of 2", "Mindset 2 of 2"];
-      ageCategories = ageCategories.map(
-        (category) => `${category}\n(${baseValues[category] ?? "-"})`
-      );
-      return {
-        name: item.optiontext,
-        data: [
-          { x: "Mindset 1 of 2", y: mindsets["Mindset 1 of 2"] ?? "-" },
-          { x: "Mindset 2 of 2", y: mindsets["Mindset 2 of 2"] ?? "-" },
-        ],
-      };
-    } else if (tab === "3Mindsets") {
-      const mindsets = Object.fromEntries(
-        item.Mindsets.map((m) => Object.entries(m)[0])
-      );
-      ageCategories = ["Mindset 1 of 3", "Mindset 2 of 3", "Mindset 3 of 3"];
-      ageCategories = ageCategories.map(
-        (category) => `${category}\n(${baseValues[category] ?? "-"})`
-      );
-      return {
-        name: item.optiontext,
-        data: [
-          { x: "Mindset 1 of 3", y: mindsets["Mindset 1 of 3"] ?? "-" },
-          { x: "Mindset 2 of 3", y: mindsets["Mindset 2 of 3"] ?? "-" },
-          { x: "Mindset 3 of 3", y: mindsets["Mindset 3 of 3"] ?? "-" },
-        ],
-      };
-    } else if (tab === "Prelim-Answer Segments") {
-      const formattedObject = Object.assign(
-        {},
-        ...item["Prelim-Answer Segments"]
-      );
-      console.log("Formatted segments: ", formattedObject);
-      ageCategories = Object.keys(data[0][tab]);
-      // ageCategories = ageCategories.map(
-      //   (category) => `${category}\n(${baseValues[category] ?? "-"})`
-      // );
-      console.log("category:- ",ageCategories);
-      console.log("name :- ",item.optiontext)
-      return {
-        name: item.optiontext,
-        data: Object.entries(formattedObject).map(([age, value]) => ({
-          x: `${age}\n(${baseValues[age] ?? "-"})`,
-          // x: `${age}`,
-          y: value,
-        })),
-      };
-    } else if (tab === "overall") {
-      ageCategories = ageCategories.map(
-        (category) => `${category}\n(${baseValues[category] ?? "-"})`
-      );
-      return {
-        name: item.optiontext,
-        data: [{ x: "Total", y: item.Total ?? "-" }],
-      };
+export const HeatmapChart = ({ 
+  data, 
+  baseValues,
+  selectedAgeKeys,
+  selectedGenderKeys,
+  selectedMindsetKeys,
+  selectedPrelimKeys,
+  filter,
+  rangeFilter
+}) => {
+  const extractValues = (segment, selectedKeys) => {
+    const result = {};
+    if (Array.isArray(segment)) {
+      selectedKeys.forEach((key) => {
+        for (const obj of segment) {
+          if (obj && obj[key] !== undefined) {
+            result[key] = obj[key];
+            break;
+          }
+        }
+        if (!result[key]) result[key] = "-";
+      });
+    } else if (typeof segment === "object") {
+      selectedKeys.forEach((key) => {
+        result[key] = segment[key] ?? "-";
+      });
     } else {
-      ageCategories = Object.keys(data[0][tab]);
-      ageCategories = ageCategories.map(
-        
-        (category) => `${category}\n(${baseValues[category] ?? "-"})`
-      );
-      // console.log("category:- ",categories);
-      // console.log("item.optiontext:- ",item.optiontext);
-
-      return {
-        name: item.optiontext,
-        data: Object.entries(item[tab]).map(([age, value]) => ({
-          x: age,
-          y: value,
-        })),
-      };
+      selectedKeys.forEach((key) => (result[key] = "-"));
     }
-  });
+    return result;
+  };
+
+  const shouldShowCell = (value) => {
+    if (!rangeFilter || 
+        (rangeFilter.operator === "range" && !rangeFilter.minValue && !rangeFilter.maxValue) ||
+        (rangeFilter.operator !== "range" && !rangeFilter.singleValue)) {
+      return true;
+    }
+
+    const numValue = typeof value === 'number' ? value : parseFloat(value);
+    if (isNaN(numValue)) return false;
+
+    switch (rangeFilter.operator) {
+      case ">":
+        return numValue > parseFloat(rangeFilter.singleValue);
+      case "<":
+        return numValue < parseFloat(rangeFilter.singleValue);
+      case "=":
+        return numValue === parseFloat(rangeFilter.singleValue);
+      case ">=":
+        return numValue >= parseFloat(rangeFilter.singleValue);
+      case "<=":
+        return numValue <= parseFloat(rangeFilter.singleValue);
+      case "range":
+        return numValue >= parseFloat(rangeFilter.minValue) && 
+               numValue <= parseFloat(rangeFilter.maxValue);
+      default:
+        return true;
+    }
+  };
+
+  const getSeriesData = () => {
+    if (!data?.options) return [];
+    
+    return data.options
+      .map((item) => {
+        const ageData = extractValues(item["Age Segments"], selectedAgeKeys);
+        const genderData = extractValues(item["Gender Segments"], selectedGenderKeys);
+        const mindsetData = extractValues(item["Mindsets"], selectedMindsetKeys);
+        const prelimData = extractValues(item["Prelim-Answer Segments"], selectedPrelimKeys);
+
+        const allSegments = {
+          ...ageData,
+          ...genderData,
+          ...mindsetData,
+          ...prelimData
+        };
+
+        const filteredData = Object.entries(allSegments)
+          .map(([category, value]) => ({
+            x: `${category}\n(${baseValues[category] ?? "-"})`,
+            y: shouldShowCell(value) ? value : null,
+            fillColor: shouldShowCell(value) ? undefined : '#ffffff'
+          }));
+
+        return {
+          name: item.optiontext,
+          data: filteredData,
+          shouldShow: rangeFilter.showFullRow || filteredData.some(item => item.y !== null)
+        };
+      })
+      .filter(series => series.shouldShow);
+  };
+
+  const series = getSeriesData();
+  const categories = [
+    ...selectedAgeKeys,
+    ...selectedGenderKeys,
+    ...selectedMindsetKeys,
+    ...selectedPrelimKeys
+  ].map(category => `${category}\n(${baseValues[category] ?? "-"})`);
 
   const options = {
     chart: {
       type: "heatmap",
-      toolbar: { show: true },
+      toolbar: { 
+        show: true,
+        tools: {
+          download: true,
+          selection: false,
+          zoom: false,
+          zoomin: false,
+          zoomout: false,
+          pan: false,
+          reset: false
+        }
+      },
+      animations: {
+        enabled: false
+      }
     },
-    // ✅ Custom HTML tooltip
     tooltip: {
       enabled: true,
       followCursor: true,
       custom: function ({ series, seriesIndex, dataPointIndex, w }) {
-        // If there's no data, return nothing
-        if (
-          !series[seriesIndex] ||
-          typeof series[seriesIndex][dataPointIndex] === "undefined"
-        ) {
-          return "";
-        }
-
         const val = series[seriesIndex][dataPointIndex];
-        // row label (the "Y-axis" label for each row)
-        const rowLabel = w.globals.seriesNames[seriesIndex];
-        // column label (the "X-axis" label)
-        const colLabel = w.globals.labels[dataPointIndex];
+        if (val === null) return "";
 
-        // Return an HTML <div> so we can use normal wrapping
+        const rowLabel = w.globals.seriesNames[seriesIndex];
+        const colLabel = w.globals.labels[dataPointIndex].split('\n')[0];
+
         return `
           <div style="
             max-width: 200px;
@@ -125,7 +145,6 @@ export const HeatmapChart = ({ data, tab, filter,baseValues }) => {
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
             white-space: normal;
             word-wrap: break-word;
-            overflow-wrap: break-word;
           ">
             <strong>${rowLabel}</strong><br />
             <em>${colLabel}</em>: ${val}
@@ -133,16 +152,55 @@ export const HeatmapChart = ({ data, tab, filter,baseValues }) => {
         `;
       },
     },
-    dataLabels: { enabled: true },
+    dataLabels: {
+      enabled: true,
+      style: {
+        fontSize: '12px',
+        fontWeight: 'normal',
+        colors: ['#000']
+      },
+      formatter: function(val) {
+        return val === null ? '' : (val % 1 === 0 ? val : val.toFixed(1));
+      }
+    },
     colors: heatmapColors[filter]?.ranges.map((range) => range.color) || [
       "#767676",
     ],
     xaxis: {
-      categories: ageCategories,
+      categories: categories,
+      labels: {
+        trim: false,
+        hideOverlappingLabels: false,
+        style: {
+          fontSize: '10px',
+          cssClass: 'heatmap-xaxis-label'
+        }
+      },
+      axisBorder: {
+        show: true
+      }
     },
-    yaxis: { show: false },
+    yaxis: {
+      labels: {
+        show: false
+      }
+    },
+    grid: {
+      padding: {
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 0
+      }
+    },
     plotOptions: {
       heatmap: {
+        radius: 0,
+        enableShades: true,
+        shadeIntensity: 0.5,
+        reverseNegativeShade: true,
+        distributed: false,
+        useFillColorAsStroke: false,
         colorScale: {
           ranges: heatmapColors[filter]?.ranges || [
             { from: -1000, to: 0, color: "#ba322b", name: "Negative" },
@@ -150,8 +208,11 @@ export const HeatmapChart = ({ data, tab, filter,baseValues }) => {
             { from: 20, to: 1000, color: "#029109", name: "Positive" },
           ],
         },
-      },
-    },
+        dataLabels: {
+          position: 'center'
+        }
+      }
+    }
   };
 
   return (
@@ -159,10 +220,14 @@ export const HeatmapChart = ({ data, tab, filter,baseValues }) => {
       {/* Labels Container */}
       <div className={styles.labelsContainer}>
         {series
-          .slice()
-          .reverse()
+          // .slice()
+          // .reverse()
           .map((item, index) => (
-            <div key={index} className={styles.labelItem}>
+            <div key={index} className={styles.labelItem} style={{
+              height: '50px', // Increased cell size
+              display: 'flex',
+              alignItems: 'center'
+            }}>
               {item.name}
             </div>
           ))}
@@ -170,7 +235,13 @@ export const HeatmapChart = ({ data, tab, filter,baseValues }) => {
 
       {/* Heatmap Chart */}
       <div className={styles.chartContainer}>
-        <Chart options={options} series={series} type="heatmap" height={500} />
+        <Chart 
+          options={options} 
+          series={series.slice().reverse()}
+          type="heatmap" 
+          height={Math.max(300, series.length * 50)} // Increased row height
+          width="100%"
+        />
       </div>
     </div>
   );
