@@ -1,0 +1,80 @@
+.chartWrapper {
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .chartContainer {
+    width: 100%;
+    overflow-x: auto;
+    position: relative;
+  }
+  
+  .tooltipContainer {
+    padding: 8px 12px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    font-size: 13px;
+    max-width: 200px;
+  }
+  
+  .tooltipContainer strong {
+    color: #333;
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .tooltipContainer em {
+    color: #666;
+    font-style: normal;
+  }
+  
+  /* Indicator styling */
+  .apexcharts-xaxis-label {
+    text-anchor: end;
+  }
+  
+  .apexcharts-yaxis-label {
+    text-anchor: middle;
+  }
+  
+  /* Custom scrollbar */
+  .chartContainer::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  .chartContainer::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+  
+  .chartContainer::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+  }
+  
+  .chartContainer::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .chartWrapper {
+      padding: 15px;
+    }
+    
+    .apexcharts-xaxis-label {
+      font-size: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .chartWrapper {
+      padding: 10px;
+    }
+  }

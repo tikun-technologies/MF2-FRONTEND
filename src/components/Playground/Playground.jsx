@@ -4,6 +4,7 @@ import { getStudy } from "../../api/getStudies";
 import Spinner from "../../components/common/Spinner";
 import StudyTable from "../../components/Table/StudyTable";
 import HeatmapChart from "./../Heatmap/HeatmapChart";
+import BarChart from "../Chart/Chart";
 import "./StudyPlayground.css";
 import styles from "./StudyPlayground.module.css";
 
@@ -128,7 +129,8 @@ const StudyPlayground = ({ study, visualType }) => {
     }
     return result;
   };
-
+  
+  
   const generateTableForQuestion = (question) => {
     if (!question?.options || !Array.isArray(question.options)) return null;
 
@@ -177,6 +179,24 @@ const StudyPlayground = ({ study, visualType }) => {
       <div key={question.Question} className="mb-8">
         <h2 className="text-xl font-semibold mb-4 text-gray-800">{question.Question}</h2>
         <HeatmapChart 
+          data={question}
+          baseValues={baseValues}
+          selectedAgeKeys={selectedAgeKeys}
+          selectedGenderKeys={selectedGenderKeys}
+          selectedMindsetKeys={selectedMindsetKeys}
+          selectedPrelimKeys={selectedPrelimKeys}
+          filter={rangeFilter.operator}
+          rangeFilter={rangeFilter}
+        />
+      </div>
+    );
+  };
+
+  const generateBarChartForQuestion = (question) => {
+    return (
+      <div key={question.Question} className="mb-8">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">{question.Question}</h2>
+        <BarChart 
           data={question}
           baseValues={baseValues}
           selectedAgeKeys={selectedAgeKeys}
@@ -377,7 +397,7 @@ const StudyPlayground = ({ study, visualType }) => {
             case "heatmap":
               return generateHeatmapForQuestion(question);
             default:
-              return null;
+              return generateBarChartForQuestion(question);
           }
         })}
       </div>
