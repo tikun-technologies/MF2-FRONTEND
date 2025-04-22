@@ -10,6 +10,42 @@ import ConfirmationModal from "../common/Modals/ConfirmationModal";
 import AuthContext from "../../context/AuthContext";
 import { deleteStudy } from "../../features/studies/api/deleteStudy";
 
+const NavigationPopup = ({ _id, onClose }) => {
+  const navigate = useNavigate();
+
+  const handleDetailsClick = () => {
+    navigate(`/study/${_id}`);
+    onClose();
+  };
+
+  const handlePlaygroundClick = () => {
+    navigate(`/playground/${_id}`);
+    onClose();
+  };
+
+  return (
+    <div className={styles.popupOverlay}>
+      <div className={styles.navPopup}>
+        <h3>Where would you like to go?</h3>
+        <div className={styles.navButtons}>
+          <button 
+            className={styles.navButton}
+            onClick={handleDetailsClick}
+          >
+            Study Details
+          </button>
+          <button 
+            className={styles.navButton}
+            onClick={handlePlaygroundClick}
+          >
+            Playground
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const StudyCard = ({ study, onDeleteSuccess, onEdit }) => {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -18,58 +54,47 @@ const StudyCard = ({ study, onDeleteSuccess, onEdit }) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [showNavPopup, setShowNavPopup] = useState(false);
 
   const optionsButtonRef = useRef(null);
 
-  /**
-   * Clicking the card navigates to the study details page,
-   * unless the Options menu is open.
-   */
   const handleCardClick = () => {
     if (!isOptionsOpen) {
-      navigate(`/study/${_id}`);
+      setShowNavPopup(true);
     }
   };
 
-  /**
-   * Toggle the 3-dot OptionsModal, stopping click
-   * so we don't navigate.
-   */
+  const closeNavPopup = () => {
+    setShowNavPopup(false);
+  };
+
   const toggleOptions = (e) => {
     e.stopPropagation();
     setIsOptionsOpen((prev) => !prev);
   };
 
-  /**
-   * User clicks "Delete" inside OptionsModal → show ConfirmationModal
-   */
   const handleDeleteClick = () => {
-    setIsOptionsOpen(false); // close the 3-dot menu
-    setIsConfirmOpen(true); // open the ConfirmationModal
+    setIsOptionsOpen(false);
+    setIsConfirmOpen(true);
   };
 
-  /**
-   * User confirms deletion → call delete API
-   */
   const handleConfirmDelete = async () => {
     if (isDeleting) return;
     setIsDeleting(true);
 
     try {
       await deleteStudy(_id, token);
-      onDeleteSuccess(_id); // Parent removes the study & can show success toast
+      onDeleteSuccess(_id);
     } catch (error) {
       toast.error("Failed to delete study. Please try again.");
       console.error("❌ Delete Error:", error.message);
     } finally {
       setIsDeleting(false);
-      setIsConfirmOpen(false); // close the ConfirmationModal
+      setIsConfirmOpen(false);
     }
   };
 
-  // 3-dot menu options
   const options = [
-    // { label: "Edit", icon: <FiEdit />, onClick: () => onEdit && onEdit(_id) },
     { label: "Delete", icon: <FiTrash2 />, onClick: handleDeleteClick },
   ];
 
@@ -77,14 +102,14 @@ const StudyCard = ({ study, onDeleteSuccess, onEdit }) => {
     <div
       className={`global-border ${styles.studyContainer}`}
       style={{ position: "relative" }}
-      onClick={handleCardClick} // Entire card navigates
+      onClick={handleCardClick}
     >
       <div className={styles.studiesHeader}>
         <h2 className={styles.studyTitle}>{studyTitle}</h2>
         <button
           ref={optionsButtonRef}
           className={styles.studyOptions}
-          onClick={toggleOptions} // Stop click from navigating
+          onClick={toggleOptions}
         >
           <PiDotsThreeVertical className={styles.studyOptionsIcon} />
         </button>
@@ -116,9 +141,13 @@ const StudyCard = ({ study, onDeleteSuccess, onEdit }) => {
         </ul>
       </div>
 
+      {/* Navigation Popup */}
+      {showNavPopup && (
+        <NavigationPopup _id={_id} onClose={closeNavPopup} />
+      )}
+
       {/* Options Modal */}
       {isOptionsOpen && (
-        // 🟩 STOP PROPAGATION HERE to avoid card click
         <div
           className={styles.studyOptionsModal}
           onClick={(e) => e.stopPropagation()}
@@ -134,7 +163,6 @@ const StudyCard = ({ study, onDeleteSuccess, onEdit }) => {
 
       {/* Confirmation Modal */}
       {isConfirmOpen && (
-        // 🟩 STOP PROPAGATION HERE too
         <div
           className={styles.studyOptionsModal}
           onClick={(e) => e.stopPropagation()}
