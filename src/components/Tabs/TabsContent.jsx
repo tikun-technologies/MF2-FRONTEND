@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useFilter } from "../../context/FilterContext";
 import StudyTable from "../Table/StudyTable";
 import { HeatmapChart } from "../Heatmap/HeatmapChart";
 // import PlaygroundSegmentFilter from "../Playground/Playground";
 import CustomTooltip from "./CustomTooltip";
+import { useNavigate,useParams } from "react-router-dom";
 import {
   BarChart,
   Bar,
@@ -35,10 +36,17 @@ const colors = [
 
 
 
-const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
+const TabsContent = ({ _id,tab, topDown, bottomDown, responseTime }) => {
   const { activeFilter, activeVisualization } = useFilter();
   const [chartType, setChartType] = useState("bar");
+  const navigate = useNavigate();
 
+  console.log(_id)
+  useEffect(() => {
+    if (tab === "Playground") {
+      navigate(`/playground/${_id}`);
+    }
+  }, [tab, _id, navigate]);
   // Determine which dataset to use based on the active filter
   let filterDownedData = topDown;
   if (activeFilter === "Bottom-Up") {
@@ -135,7 +143,7 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
           <div className={styles.chartContainer} key={index}>
             <h2 className={styles.questionHeader}>{question.Question}</h2>
             {activeVisualization === "table" ? (
-              <StudyTable headers={headers} data={data} baseValues={filterDownedData["Base Values"]} />
+              <StudyTable headers={headers} data={data} baseValues={filterDownedData["Base Values"]}/>
             ) : (
 
               <ResponsiveContainer width="100%" height={400}>

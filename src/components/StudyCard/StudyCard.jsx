@@ -27,7 +27,7 @@ const StudyCard = ({ study, onDeleteSuccess, onEdit }) => {
    */
   const handleCardClick = () => {
     if (!isOptionsOpen) {
-      navigate(`/playground/${_id}`);
+      navigate(`/study/${_id}`);
     }
   };
 

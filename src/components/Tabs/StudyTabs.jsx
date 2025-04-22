@@ -49,6 +49,7 @@ const StudyTabs = ({ study }) => {
 
       <Tabs.Content value="overall" className={styles.tabContent}>
         <TabsContent
+        _id={study["_id"]}
           tab="overall"
           topDown={studyData["(T) Overall"]}
           bottomDown={studyData["(B) Overall"]}
@@ -57,6 +58,7 @@ const StudyTabs = ({ study }) => {
       </Tabs.Content>
       <Tabs.Content value="age" className={styles.tabContent}>
         <TabsContent
+        _id={study["_id"]}
           tab="Age Segments"
           topDown={studyData["(T) Age segments"]}
           bottomDown={studyData["(B) Age segments"]}
@@ -65,6 +67,7 @@ const StudyTabs = ({ study }) => {
       </Tabs.Content>
       <Tabs.Content value="gender" className={styles.tabContent}>
         <TabsContent
+        _id={study["_id"]}
           tab="Gender Segments"
           topDown={studyData["(T) Gender segments"]}
           bottomDown={studyData["(B) Gender segments"]}
@@ -73,6 +76,7 @@ const StudyTabs = ({ study }) => {
       </Tabs.Content>
       <Tabs.Content value="prelim" className={styles.tabContent}>
         <TabsContent 
+        _id={study["_id"]}
         tab="Prelim-Answer Segments"
         topDown={studyData["(T) Prelim-answer segments"]}
         bottomDown={studyData["(B) Prelim-answer segments"]}
@@ -80,6 +84,7 @@ const StudyTabs = ({ study }) => {
       </Tabs.Content>
       <Tabs.Content value="2 market segments" className={styles.tabContent}>
         <TabsContent
+        _id={study["_id"]}
           tab="2Mindsets"
           topDown={studyData["(T) Mindsets"]}
           bottomDown={studyData["(B) Mindsets"]}
@@ -88,6 +93,7 @@ const StudyTabs = ({ study }) => {
       </Tabs.Content>
       <Tabs.Content value="3 market segments" className={styles.tabContent}>
         <TabsContent
+        _id={study["_id"]}
           tab="3Mindsets"
           topDown={studyData["(T) Mindsets"]}
           bottomDown={studyData["(B) Mindsets"]}
@@ -96,6 +102,7 @@ const StudyTabs = ({ study }) => {
       </Tabs.Content>
       <Tabs.Content value="Playground" className={styles.tabContent}>
         <TabsContent
+          _id={study["_id"]}
           tab="Playground"
           topDown={studyData["(T) Mindsets"]}
           bottomDown={studyData["(B) Mindsets"]}

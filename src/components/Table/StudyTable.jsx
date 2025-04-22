@@ -1,277 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { FiFilter } from "react-icons/fi";
+import React from "react";
 import styles from "./StudyTable.module.css";
 
-const operatorOptions = [
-  { value: "range", label: "Range (between)" },
-  { value: ">", label: "Greater than" },
-  { value: "<", label: "Less than" },
-  { value: "=", label: "Equal to" },
-  { value: ">=", label: "Greater than or equal" },
-  { value: "<=", label: "Less than or equal" }
-];
+/**
+ *
+ * @param {Array} headers - Array of header strings
+ * @param {Array} data - Array of Objects representing rows
+ */
 
-const StudyTable = ({ 
-  headers, 
-  data, 
-  baseValues, 
-  globalRangeFilter,
-  onLocalFilterChange 
-}) => {
-  const [showFilters, setShowFilters] = useState(false);
-  const [localRangeFilter, setLocalRangeFilter] = useState(globalRangeFilter);
-  const [hasLocalChanges, setHasLocalChanges] = useState(false);
-
-  // Sync with global filter when it changes
-  useEffect(() => {
-    if (!hasLocalChanges) {
-      setLocalRangeFilter(globalRangeFilter);
-    }
-  }, [globalRangeFilter]);
-
-  const shouldHighlightCell = (value, header) => {
-    if (header === "Response" || value === "-" || value === "N/A") return false;
-    
-    const numValue = Number(value);
-    if (isNaN(numValue)) return false;
-
-    const activeFilter = hasLocalChanges ? localRangeFilter : globalRangeFilter;
-    
-    if (!activeFilter.minValue && !activeFilter.maxValue && !activeFilter.singleValue) {
-      return false;
-    }
-
-    if (activeFilter.operator === "range") {
-      const min = Number(activeFilter.minValue) || -Infinity;
-      const max = Number(activeFilter.maxValue) || Infinity;
-      return numValue >= min && numValue <= max;
-    } else {
-      const filterValue = Number(activeFilter.singleValue);
-      if (isNaN(filterValue)) return false;
-      
-      switch (activeFilter.operator) {
-        case ">": return numValue > filterValue;
-        case "<": return numValue < filterValue;
-        case "=": return numValue === filterValue;
-        case ">=": return numValue >= filterValue;
-        case "<=": return numValue <= filterValue;
-        default: return false;
-      }
-    }
-  };
-
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    const newFilter = { ...localRangeFilter, [name]: value };
-    updateFilters(newFilter);
-  };
-
-  const toggleShowFullRow = () => {
-    const newFilter = {
-      ...localRangeFilter,
-      showFullRow: !localRangeFilter.showFullRow
-    };
-    updateFilters(newFilter);
-  };
-
-  const resetToGlobal = () => {
-    updateFilters(globalRangeFilter);
-    setHasLocalChanges(false);
-  };
-
-  const updateFilters = (newFilter) => {
-    setLocalRangeFilter(newFilter);
-    setHasLocalChanges(JSON.stringify(newFilter) !== JSON.stringify(globalRangeFilter));
-    onLocalFilterChange(newFilter);
-  };
-
-  const filterData = () => {
-    const activeFilter = hasLocalChanges ? localRangeFilter : globalRangeFilter;
-    
-    if (!activeFilter.minValue && !activeFilter.maxValue && !activeFilter.singleValue) {
-      return { 
-        filteredData: data, 
-        visibleHeaders: headers
-      };
-    }
-
-    const visibleHeaders = new Set(['Response']);
-    
-    // Add headers that have matching values
-    data.forEach(row => {
-      headers.forEach(header => {
-        if (header !== "Response" && shouldHighlightCell(row[header], header)) {
-          visibleHeaders.add(header);
-        }
-      });
-    });
-
-    const filteredData = activeFilter.showFullRow 
-      ? data 
-      : data.filter(row => {
-          return headers.some(header => {
-            return header !== "Response" && shouldHighlightCell(row[header], header);
-          });
-        });
-
-    return { 
-      filteredData, 
-      visibleHeaders: Array.from(visibleHeaders) 
-    };
-  };
-
-  const { filteredData, visibleHeaders } = filterData();
-  const activeFilter = hasLocalChanges ? localRangeFilter : globalRangeFilter;
-
+const StudyTable = ({ headers, data, baseValues }) => {
+  // console.log(study);
+  console.log("data:= ",data)
+  console.log("baseValues:= ",baseValues)
   return (
-    <div className={styles.tableContainer}>
-      {/* Filter Header */}
-      <div className={styles.filterHeader}>
-        <button 
-          onClick={() => setShowFilters(!showFilters)}
-          className={styles.filterButton}
-          aria-label="Toggle filters"
-        >
-          <FiFilter className={
-            activeFilter.minValue || 
-            activeFilter.maxValue || 
-            activeFilter.singleValue
-              ? styles.activeFilterIcon 
-              : styles.filterIcon
-          } />
-        </button>
-        
-        {showFilters && (
-          <div className={styles.tableFilterControls}>
-            <div className={styles.filterControls}>
-              <select
-                value={localRangeFilter.operator}
-                onChange={(e) => {
-                  updateFilters({
-                    operator: e.target.value,
-                    minValue: "",
-                    maxValue: "",
-                    singleValue: "",
-                    showFullRow: localRangeFilter.showFullRow
-                  });
-                }}
-                className={styles.operatorSelect}
-              >
-                {operatorOptions.map(option => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-
-              {localRangeFilter.operator === "range" ? (
-                <>
-                  <input
-                    type="number"
-                    placeholder="Min"
-                    name="minValue"
-                    value={localRangeFilter.minValue}
-                    onChange={handleFilterChange}
-                    className={styles.filterInput}
-                  />
-                  <span className={styles.rangeTo}>to</span>
-                  <input
-                    type="number"
-                    placeholder="Max"
-                    name="maxValue"
-                    value={localRangeFilter.maxValue}
-                    onChange={handleFilterChange}
-                    className={styles.filterInput}
-                  />
-                </>
-              ) : (
-                <input
-                  type="number"
-                  placeholder="Value"
-                  name="singleValue"
-                  value={localRangeFilter.singleValue}
-                  onChange={handleFilterChange}
-                  className={styles.filterInput}
-                />
-              )}
-            </div>
-
-            <div className={styles.filterActions}>
-              <div className={styles.displayOption}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={localRangeFilter.showFullRow}
-                    onChange={toggleShowFullRow}
-                  />
-                  Show full rows
-                </label>
-              </div>
-              <button 
-                onClick={resetToGlobal}
-                className={styles.resetButton}
-                disabled={!hasLocalChanges}
-              >
-                Reset to Global
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Table */}
-      <div className={styles.tableWrapper}>
-        <div className={styles.tableScrollContainer}>
-          <table className={styles.studyTable}>
-            <thead>
-              <tr>
-                {headers.map((header, index) => {
-                  if (!activeFilter.showFullRow && !visibleHeaders.includes(header) && header !== "Response") {
-                    return null;
-                  }
-                  return (
-                    <th key={index} style={{ minWidth: "150px" }}>
-                      <div className={styles.headerContent}>
-                        {header}
-                        {baseValues[header] !== undefined && baseValues[header] !== null && (
-                          <span className={styles.baseValue}>
-                            <br />({baseValues[header]})
-                          </span>
-                        )}
-                      </div>
-                    </th>
-                  );
+    <div className={styles.tableWrapper}>
+      <table className={styles.studyTable}>
+        <thead>
+          <tr>
+            {headers.map((header, index) => {
+              return <th key={index}>
+              {header}
+              <br />
+              {baseValues[header] !== undefined && baseValues[header] !== null &&<span style={{ fontSize: "12px", fontWeight: "normal", color: "#666" }}>
+                ({baseValues[header]  }) {/* Assuming `totals` is an object containing total values for each column */}
+              </span>}
+            </th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((row, index) => {
+            return (
+              <tr key={index}>
+                {headers.map((header, idx) => {
+                  return <td key={idx}>{row[header] ?? "-"}</td>;
                 })}
               </tr>
-            </thead>
-            
-            <tbody>
-              {filteredData.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  {headers.map((header, colIndex) => {
-                    if (!activeFilter.showFullRow && !visibleHeaders.includes(header) && header !== "Response") {
-                      return null;
-                    }
-                    const cellValue = row[header] ?? "-";
-                    const shouldHighlight = shouldHighlightCell(cellValue, header);
-                    const shouldShowValue = activeFilter.showFullRow || shouldHighlight || header === "Response";
-                    
-                    return (
-                      <td 
-                        key={colIndex} 
-                        className={`${shouldHighlight ? styles.matchingCell : ""} ${styles.tableCell}`}
-                      >
-                        {shouldShowValue ? cellValue : ""}
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
-              
-            </tbody>
-          </table>
-        </div>
-      </div>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 };

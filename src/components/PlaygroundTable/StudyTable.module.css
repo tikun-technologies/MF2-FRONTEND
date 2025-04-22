@@ -1,0 +1,178 @@
+.tableContainer {
+  margin-bottom: 30px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.filterHeader {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding: 10px 15px 0;
+}
+
+.filterButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  align-self: flex-start;
+  margin-left: -5px;
+}
+
+.filterIcon {
+  color: #666;
+  font-size: 18px;
+  transition: color 0.2s;
+}
+
+.activeFilterIcon {
+  color: #1890ff;
+  font-size: 18px;
+}
+
+.tableFilterControls {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  margin: 10px 0 15px;
+  border: 1px solid #eee;
+}
+
+.filterControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.operatorSelect {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+}
+
+.filterInput {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 80px;
+  font-size: 14px;
+}
+
+.rangeTo {
+  color: #666;
+  font-size: 14px;
+}
+
+.filterActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.displayOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.displayOption input {
+  margin-right: 5px;
+}
+
+.resetButton {
+  background: none;
+  border: 1px solid #ddd;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.resetButton:hover {
+  background: #f0f0f0;
+}
+
+.resetButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  background-color: white;
+}
+
+.tableScrollContainer {
+  min-width: 100%;
+}
+
+.studyTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.studyTable th {
+  padding: 12px 16px;
+  text-align: left;
+  background-color: #f1f3f5;
+  font-weight: 600;
+  color: #333;
+  position: sticky;
+  top: 0;
+}
+
+.headerContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.baseValue {
+  font-weight: normal;
+  font-size: 12px;
+  color: #666;
+}
+
+.studyTable tr {
+  border-bottom: 1px solid #eee;
+}
+
+.studyTable tr:hover {
+  background-color: #f8f9fa;
+}
+
+
+
+
+.studyTable td {
+  padding: 12px 16px;
+  color: #333;
+  background-color: transparent;
+  transition: background-color 0.2s;
+}
+
+/* Cell-specific highlighting */
+.matchingCell {
+  background-color: #e6f7ff;
+  font-weight: 600;
+  position: relative;
+}
+
+.matchingCell::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
+  left: 2px;
+  border: 1px solid #1890ff;
+  border-radius: 2px;
+  pointer-events: none;
+}

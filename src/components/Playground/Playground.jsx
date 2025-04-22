@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { getStudy } from "../../api/getStudies";
 import Spinner from "../../components/common/Spinner";
-import StudyTable from "../../components/Table/StudyTable";
-import HeatmapChart from "./../Heatmap/HeatmapChart";
-import BarChart from "../Chart/Chart";
+import StudyTable from "../PlaygroundTable/StudyTable";
+import HeatmapChart from "./../PlaygroundHeatmap/HeatmapChart";
+import BarChart from "../PlaygroundChart/Chart";
 import "./StudyPlayground.css";
 import styles from "./StudyPlayground.module.css";
 
