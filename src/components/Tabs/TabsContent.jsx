@@ -41,6 +41,7 @@ const TabsContent = ({ _id,tab, topDown, bottomDown, responseTime }) => {
   const [chartType, setChartType] = useState("bar");
   const navigate = useNavigate();
 
+  
   console.log(_id)
   useEffect(() => {
     if (tab === "Playground") {
