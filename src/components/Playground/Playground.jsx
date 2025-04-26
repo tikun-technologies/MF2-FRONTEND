@@ -26,7 +26,7 @@ const StudyPlayground = ({ study, visualType }) => {
   const [mindsetOptions, setMindsetOptions] = useState([]);
   const [prelimOptions, setPrelimOptions] = useState([]);
   
-  // Initialize all selections as empty (will show all data without labels)
+  // Initialize with null to indicate "show all" state
   const [selectedAge, setSelectedAge] = useState([]);
   const [selectedGender, setSelectedGender] = useState([]);
   const [selectedMindset, setSelectedMindset] = useState([]);
@@ -40,9 +40,6 @@ const StudyPlayground = ({ study, visualType }) => {
     showFullRow: true
   });
 
-  // Track if user has made any selections
-  const [hasUserSelection, setHasUserSelection] = useState(false);
-
   const resetToInitial = () => {
     setRangeFilter({
       operator: "range",
@@ -51,11 +48,11 @@ const StudyPlayground = ({ study, visualType }) => {
       singleValue: "",
       showFullRow: true
     });
+    // Reset all segment filters to show all columns
     setSelectedAge([]);
     setSelectedGender([]);
     setSelectedMindset([]);
     setSelectedPrelim([]);
-    setHasUserSelection(false);
   };
 
   useEffect(() => {
@@ -94,7 +91,7 @@ const StudyPlayground = ({ study, visualType }) => {
     setPrelimOptions(prelimOpts);
   }, [study]);
 
-  // Check if user has made any selections
+
   useEffect(() => {
     if (selectedAge.length > 0 || selectedGender.length > 0 || 
         selectedMindset.length > 0 || selectedPrelim.length > 0) {
@@ -103,7 +100,6 @@ const StudyPlayground = ({ study, visualType }) => {
       setHasUserSelection(false);
     }
   }, [selectedAge, selectedGender, selectedMindset, selectedPrelim]);
-
   if (loading) {
     return (
       <div className="h-screen flex justify-center items-center">
@@ -111,13 +107,45 @@ const StudyPlayground = ({ study, visualType }) => {
       </div>
     );
   }
-
+  const [hasUserSelection, setHasUserSelection] = useState(false);
   if (!study) return <div className="p-6 text-center text-gray-500">No study data available</div>;
+  const [isAnySelected,setIsAnySelected]= useState(false)
+  useEffect(() => {
+    const anySelected = 
+      (selectedAge?.length > 0) ||
+      (selectedGender?.length > 0) ||
+      (selectedMindset?.length > 0) ||
+      (selectedPrelim?.length > 0);
+  
+    // Only update state if it's different to prevent unnecessary re-renders
+    if (anySelected !== isAnySelected) {
+      setIsAnySelected(anySelected);
+    }
+  
+    // Debug logs - show the actual arrays and computed value
+    console.log("Current selections:", {
+      selectedAge,
+      selectedGender,
+      selectedMindset,
+      selectedPrelim,
+      computedIsSelected: anySelected,
+      currentState: isAnySelected
+    });
+  }, [selectedAge, selectedGender, selectedMindset, selectedPrelim, isAnySelected]);
+  // Helper function to get keys to display
+  const getDisplayKeys = (options, selected) => {
+    // If nothing is selected (null), show all options
+    if ((selected === null && isAnySelected===false) || (selected.length === 0 && isAnySelected===false)) {
+      return options.map(opt => opt.value);
+    }
+    // Otherwise show only selected options
+    return selected.map(opt => opt.value);
+  };
 
-  const selectedAgeKeys = selectedAge.map((x) => x.value);
-  const selectedGenderKeys = selectedGender.map((x) => x.value);
-  const selectedMindsetKeys = selectedMindset.map((x) => x.value);
-  const selectedPrelimKeys = selectedPrelim.map((x) => x.value);
+  const selectedAgeKeys = getDisplayKeys(ageOptions, selectedAge);
+  const selectedGenderKeys = getDisplayKeys(genderOptions, selectedGender);
+  const selectedMindsetKeys = getDisplayKeys(mindsetOptions, selectedMindset);
+  const selectedPrelimKeys = getDisplayKeys(prelimOptions, selectedPrelim);
 
   const questions = study?.Data?.Questions || [];
   const baseValues = study?.["Base Values"] || {};
@@ -144,92 +172,48 @@ const StudyPlayground = ({ study, visualType }) => {
     return result;
   };
 
-  const generateTableHeaders = (question) => {
-    // When no user selections, just show "Response" and "Value"
-    if (!hasUserSelection) {
-      return ["Response", "Value"];
-    }
-
-    // When user has made selections, show selected segments
-    const headers = ["Response"];
-    
-    if (selectedAge.length > 0) {
-      headers.push(...selectedAgeKeys.map(key => `Age: ${key}`));
-    }
-    
-    if (selectedGender.length > 0) {
-      headers.push(...selectedGenderKeys.map(key => `Gender: ${key}`));
-    }
-    
-    if (selectedMindset.length > 0) {
-      headers.push(...selectedMindsetKeys.map(key => `Mindset: ${key}`));
-    }
-    
-    if (selectedPrelim.length > 0) {
-      headers.push(...selectedPrelimKeys.map(key => `Prelim: ${key}`));
-    }
-
-    return headers;
-  };
-
   const generateTableForQuestion = (question) => {
     if (!question?.options || !Array.isArray(question.options)) return null;
 
-    const tableHeaders = generateTableHeaders(question);
+    const tableHeaders = [
+      "Response",
+      ...selectedAgeKeys,
+      ...selectedGenderKeys,
+      ...selectedMindsetKeys,
+      ...selectedPrelimKeys,
+    ];
 
-    const tableData = question.options.map((opt) => {
-      if (!hasUserSelection) {
-        // When no selections, show aggregated values
-        return {
-          Response: opt?.optiontext || "N/A",
-          Value: opt?.aggregatedValue || "-" // Assuming there's an aggregated value field
-        };
-      }
-
-      // When selections exist, show segmented data
-      const row = {
-        Response: opt?.optiontext || "N/A"
-      };
-
-      if (selectedAge.length > 0) {
-        Object.assign(row, extractValues(opt["Age Segments"], selectedAgeKeys));
-      }
-      
-      if (selectedGender.length > 0) {
-        Object.assign(row, extractValues(opt["Gender Segments"], selectedGenderKeys));
-      }
-      
-      if (selectedMindset.length > 0) {
-        Object.assign(row, extractValues(opt["Mindsets"], selectedMindsetKeys));
-      }
-      
-      if (selectedPrelim.length > 0) {
-        Object.assign(row, extractValues(opt["Prelim-Answer Segments"], selectedPrelimKeys));
-      }
-
-      return row;
-    });
+    const tableData = question.options.map((opt) => ({
+      Response: opt?.optiontext || "N/A",
+      ...extractValues(opt["Age Segments"], selectedAgeKeys),
+      ...extractValues(opt["Gender Segments"], selectedGenderKeys),
+      ...extractValues(opt["Mindsets"], selectedMindsetKeys),
+      ...extractValues(opt["Prelim-Answer Segments"], selectedPrelimKeys),
+    }));
 
     return (
       <div key={question.Question} className="mb-8">
-        <h2 className="text-xl font-semibold mb-4 text-gray-800">{question.Question}</h2>
-        <StudyTable 
-          headers={tableHeaders} 
-          data={tableData} 
-          baseValues={baseValues}
-          globalRangeFilter={rangeFilter}
-          onLocalFilterChange={(newFilter) => {
-            setTableFilters(prev => ({
-              ...prev,
-              [question.Question]: newFilter
-            }));
-          }}
-          key={`${question.Question}-${JSON.stringify(rangeFilter)}`}
-        />
+        {tableHeaders.length > 1 && (
+          <>
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">{question.Question}</h2>
+            <StudyTable 
+              headers={tableHeaders} 
+              data={tableData} 
+              baseValues={baseValues}
+              globalRangeFilter={rangeFilter}
+              onLocalFilterChange={(newFilter) => {
+                setTableFilters(prev => ({
+                  ...prev,
+                  [question.Question]: newFilter
+                }));
+              }}
+              key={`${question.Question}-${JSON.stringify(rangeFilter)}`}
+            />
+          </>
+        )}
       </div>
     );
   };
-
   const generateHeatmapForQuestion = (question) => {
     return (
       <div key={question.Question} className="mb-8">
@@ -237,10 +221,28 @@ const StudyPlayground = ({ study, visualType }) => {
         <HeatmapChart 
           data={question}
           baseValues={baseValues}
-          selectedAgeKeys={hasUserSelection ? selectedAgeKeys : []}
-          selectedGenderKeys={hasUserSelection ? selectedGenderKeys : []}
-          selectedMindsetKeys={hasUserSelection ? selectedMindsetKeys : []}
-          selectedPrelimKeys={hasUserSelection ? selectedPrelimKeys : []}
+          selectedAgeKeys={selectedAgeKeys}
+          selectedGenderKeys={ selectedGenderKeys}
+          selectedMindsetKeys={ selectedMindsetKeys }
+          selectedPrelimKeys={ selectedPrelimKeys }
+          filter={rangeFilter.operator}
+          rangeFilter={rangeFilter}
+          showAggregated={!hasUserSelection}
+        />
+      </div>
+    );
+  };
+  const generateBarChartForQuestion = (question) => {
+    return (
+      <div key={question.Question} className="mb-8">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">{question.Question}</h2>
+        <BarChart 
+          data={question}
+          baseValues={baseValues}
+          selectedAgeKeys={selectedAgeKeys}
+          selectedGenderKeys={ selectedGenderKeys}
+          selectedMindsetKeys={ selectedMindsetKeys }
+          selectedPrelimKeys={ selectedPrelimKeys }
           filter={rangeFilter.operator}
           rangeFilter={rangeFilter}
           showAggregated={!hasUserSelection}
@@ -249,24 +251,7 @@ const StudyPlayground = ({ study, visualType }) => {
     );
   };
 
-  const generateBarChartForQuestion = (question) => {
-    return (
-      <div key={question.Question} className="mb-8">
-        <h2 className="text-xl font-semibold mb-4 text-gray-800">{question.Question}</h2>
-        <BarChart 
-          data={question}
-          baseValues={baseValues}
-          selectedAgeKeys={hasUserSelection ? selectedAgeKeys : []}
-          selectedGenderKeys={hasUserSelection ? selectedGenderKeys : []}
-          selectedMindsetKeys={hasUserSelection ? selectedMindsetKeys : []}
-          selectedPrelimKeys={hasUserSelection ? selectedPrelimKeys : []}
-          filter={rangeFilter.operator}
-          rangeFilter={rangeFilter}
-          showAggregated={!hasUserSelection}
-        />
-      </div>
-    );
-  };
+  // ... (keep the generateHeatmapForQuestion and generateBarChartForQuestion functions the same as before)
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -278,14 +263,6 @@ const StudyPlayground = ({ study, visualType }) => {
       ...prev,
       showFullRow: !prev.showFullRow
     }));
-  };
-
-  const handleSegmentChange = (setter, selectedOptions) => {
-    setter(selectedOptions);
-    // Any selection change will trigger user selection mode
-    if (selectedOptions.length > 0) {
-      setHasUserSelection(true);
-    }
   };
 
   return (
@@ -360,7 +337,7 @@ const StudyPlayground = ({ study, visualType }) => {
               onClick={resetToInitial}
               className={styles.resetButton}
             >
-              Reset All
+              Show All Columns
             </button>
           </div>
         </div>
@@ -375,13 +352,12 @@ const StudyPlayground = ({ study, visualType }) => {
               isMulti
               options={ageOptions}
               value={selectedAge}
-              onChange={(options) => handleSegmentChange(setSelectedAge, options)}
+              onChange={setSelectedAge}
               className="react-select-container"
               classNamePrefix="react-select"
-              closeMenuOnSelect={false}
-              placeholder="Select age segments..."
               menuPortalTarget={document.body}
               menuPosition="fixed"
+              placeholder="Filter age segments (show all by default)..."
               styles={{
                 menuPortal: base => ({ ...base, zIndex: 9999 }),
                 menu: provided => ({ 
@@ -402,13 +378,12 @@ const StudyPlayground = ({ study, visualType }) => {
               isMulti
               options={genderOptions}
               value={selectedGender}
-              onChange={(options) => handleSegmentChange(setSelectedGender, options)}
+              onChange={setSelectedGender}
               className="react-select-container"
               classNamePrefix="react-select"
-              closeMenuOnSelect={false}
-              placeholder="Select gender segments..."
               menuPortalTarget={document.body}
               menuPosition="fixed"
+              placeholder="Filter gender segments (show all by default)..."
               styles={{
                 menuPortal: base => ({ ...base, zIndex: 9999 }),
                 menu: provided => ({ ...provided, position: 'absolute' })
@@ -424,13 +399,12 @@ const StudyPlayground = ({ study, visualType }) => {
               isMulti
               options={mindsetOptions}
               value={selectedMindset}
-              onChange={(options) => handleSegmentChange(setSelectedMindset, options)}
+              onChange={setSelectedMindset}
               className="react-select-container"
               classNamePrefix="react-select"
-              closeMenuOnSelect={false}
-              placeholder="Select mindsets..."
               menuPortalTarget={document.body}
               menuPosition="fixed"
+              placeholder="Filter mindsets (show all by default)..."
               styles={{
                 menuPortal: base => ({ ...base, zIndex: 9999 }),
                 menu: provided => ({ ...provided, position: 'absolute' })
@@ -446,13 +420,12 @@ const StudyPlayground = ({ study, visualType }) => {
               isMulti
               options={prelimOptions}
               value={selectedPrelim}
-              onChange={(options) => handleSegmentChange(setSelectedPrelim, options)}
+              onChange={setSelectedPrelim}
               className="react-select-container"
               classNamePrefix="react-select"
-              closeMenuOnSelect={false}
-              placeholder="Select prelim segments..."
               menuPortalTarget={document.body}
               menuPosition="fixed"
+              placeholder="Filter prelim segments (show all by default)..."
               styles={{
                 menuPortal: base => ({ ...base, zIndex: 9999 }),
                 menu: provided => ({ ...provided, position: 'absolute' })

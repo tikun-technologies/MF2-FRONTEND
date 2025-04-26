@@ -1,6 +1,6 @@
 import React from "react";
 import Chart from "react-apexcharts";
-import heatmapColors from "./../Heatmap/heatmapColors";
+import heatmapColors from "../Heatmap/heatmapColors";
 import styles from "./BarChart.module.css";
 
 export const BarChart = ({ 
