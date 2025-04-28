@@ -3,8 +3,8 @@ import Chart from "react-apexcharts";
 import heatmapColors from "./heatmapColors";
 import styles from "./Heatmap.module.css";
 
-export const HeatmapChart = ({ 
-  data, 
+export const HeatmapChart = ({
+  data,
   baseValues,
   selectedAgeKeys,
   selectedGenderKeys,
@@ -36,9 +36,9 @@ export const HeatmapChart = ({
   };
 
   const shouldShowCell = (value) => {
-    if (!rangeFilter || 
-        (rangeFilter.operator === "range" && !rangeFilter.minValue && !rangeFilter.maxValue) ||
-        (rangeFilter.operator !== "range" && !rangeFilter.singleValue)) {
+    if (!rangeFilter ||
+      (rangeFilter.operator === "range" && !rangeFilter.minValue && !rangeFilter.maxValue) ||
+      (rangeFilter.operator !== "range" && !rangeFilter.singleValue)) {
       return true;
     }
 
@@ -57,8 +57,8 @@ export const HeatmapChart = ({
       case "<=":
         return numValue <= parseFloat(rangeFilter.singleValue);
       case "range":
-        return numValue >= parseFloat(rangeFilter.minValue) && 
-               numValue <= parseFloat(rangeFilter.maxValue);
+        return numValue >= parseFloat(rangeFilter.minValue) &&
+          numValue <= parseFloat(rangeFilter.maxValue);
       default:
         return true;
     }
@@ -66,7 +66,7 @@ export const HeatmapChart = ({
 
   const getSeriesData = () => {
     if (!data?.options) return [];
-    
+
     return data.options
       .map((item) => {
         const ageData = extractValues(item["Age Segments"], selectedAgeKeys);
@@ -82,16 +82,20 @@ export const HeatmapChart = ({
         };
 
         const filteredData = Object.entries(allSegments)
-          .map(([category, value]) => ({
-            x: `${category}\n(${baseValues[category] ?? "-"})`,
-            y: shouldShowCell(value) ? value : null,
-            fillColor: shouldShowCell(value) ? undefined : '#ffffff'
-          }));
+          .map(([category, value]) => {
+            const numValue = typeof value === 'number' ? value : parseFloat(value);
+            const validValue = isNaN(numValue) ? "-" : numValue;
+            return {
+              x: `${category}\n(${baseValues[category] ?? "-"})`,
+              y: shouldShowCell(value) ? validValue : "-",
+              fillColor: shouldShowCell(value) ? undefined : '#ffffff'
+            };
+          });
 
         return {
           name: item.optiontext,
           data: filteredData,
-          shouldShow: rangeFilter.showFullRow || filteredData.some(item => item.y !== null)
+          shouldShow: rangeFilter.showFullRow || filteredData.some(item => item.y !== null && item.y !== "-")
         };
       })
       .filter(series => series.shouldShow);
@@ -108,7 +112,7 @@ export const HeatmapChart = ({
   const options = {
     chart: {
       type: "heatmap",
-      toolbar: { 
+      toolbar: {
         show: true,
         tools: {
           download: true,
@@ -129,7 +133,7 @@ export const HeatmapChart = ({
       followCursor: true,
       custom: function ({ series, seriesIndex, dataPointIndex, w }) {
         const val = series[seriesIndex][dataPointIndex];
-        if (val === null) return "";
+        if (val === null || val === "-") return "";
 
         const rowLabel = w.globals.seriesNames[seriesIndex];
         const colLabel = w.globals.labels[dataPointIndex].split('\n')[0];
@@ -159,8 +163,9 @@ export const HeatmapChart = ({
         fontWeight: 'normal',
         colors: ['#000']
       },
-      formatter: function(val) {
-        return val === null ? '' : (val % 1 === 0 ? val : val.toFixed(1));
+      formatter: function (val) {
+        if (val === null || val === "-" || isNaN(val)) return "-";
+        return val % 1 === 0 ? val : val.toFixed(1);
       }
     },
     colors: heatmapColors[filter]?.ranges.map((range) => range.color) || [
@@ -219,27 +224,24 @@ export const HeatmapChart = ({
     <div className={styles.wrapper}>
       {/* Labels Container */}
       <div className={styles.labelsContainer}>
-        {series
-          // .slice()
-          // .reverse()
-          .map((item, index) => (
-            <div key={index} className={styles.labelItem} style={{
-              height: '50px', // Increased cell size
-              display: 'flex',
-              alignItems: 'center'
-            }}>
-              {item.name}
-            </div>
-          ))}
+        {series.map((item, index) => (
+          <div key={index} className={styles.labelItem} style={{
+            height: '50px',
+            display: 'flex',
+            alignItems: 'center'
+          }}>
+            {item.name}
+          </div>
+        ))}
       </div>
 
       {/* Heatmap Chart */}
       <div className={styles.chartContainer}>
-        <Chart 
-          options={options} 
+        <Chart
+          options={options}
           series={series.slice().reverse()}
-          type="heatmap" 
-          height={Math.max(300, series.length * 50)} // Increased row height
+          type="heatmap"
+          height={Math.max(300, series.length * 50)}
           width="100%"
         />
       </div>
