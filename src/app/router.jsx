@@ -13,6 +13,7 @@ import DashboardLayout from "../components/Layout/DashboardLayout";
 import Articles from "../pages/Articles/Articles";
 import { SidebarProvider } from "../context/SidebarContext";
 import ArticleDetails from "../features/articles/pages/ArticleDetails";
+import { Test } from "../pages/test/page";
 
 const AppRoutes = () => {
   const { token } = useContext(AuthContext);
@@ -24,7 +25,7 @@ const AppRoutes = () => {
         path="/"
         element={token ? <Navigate to="/dashboard" replace /> : <Home />}
       />
-
+      <Route path="/test" element={<Test />} />
       {/* ✅ Public Routes */}
       <Route path="/articles/:id" element={<ArticleDetails />} />
       <Route path="/signup" element={<Register />} />
