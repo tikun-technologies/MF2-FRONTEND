@@ -152,55 +152,58 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
         }
 
         // Render table or chart based on active visualization
-        
+
         const maxValue = Math.max(...data.flatMap(d => headers.slice(1).map(key => d[key] || 0)));
 
-// Round up to the nearest multiple of 10 and add 30% extra space
-const roundedMax = Math.ceil((maxValue * 1.2) / 10) * 10;
+        // Round up to the nearest multiple of 10 and add 30% extra space
+        const roundedMax = Math.ceil((maxValue * 1.2) / 10) * 10;
 
 
         return (
           <div className={styles.chartContainer} key={index}>
             <h2 className={styles.questionHeader}>{question.Question}</h2>
             {activeVisualization === "table" ? (
-              <StudyTable headers={headers} data={data} baseValues={filterDownedData["Base Values"]}/>
+              <StudyTable headers={headers} data={data} baseValues={filterDownedData["Base Values"]} />
             ) : (
-              
+
               <ResponsiveContainer width="100%" height={400}>
                 {chartType === "bar" && (
                   <BarChart
-                  data={[...data].reverse()}
-                 
-                  margin={{ top: 20, right: 30, left: 20, bottom: 50 }}
-                >
-                  <XAxis
-                    dataKey="Response"
-                    tick={{ fontSize: 12, width: "300" }}
-                    interval={0}
-                    height={30}
-                    tickFormatter={(value) => {
-                      const maxLength = 15;
-                      if (value.length > maxLength) {
-                        return value.match(new RegExp(`.{1,${maxLength}}`, "g")).join("\n");
-                      }
-                      return value;
-                    }}
-                  />
-                 
-                 <YAxis />
-                 {/* <YAxis 
+                    data={[...data].reverse()}
+
+                    margin={{ top: 20, right: 30, left: 20, bottom: 50 }}
+                  >
+                    <XAxis
+                      dataKey="Response"
+                      tick={{ fontSize: 18, width: "200" }}
+                      interval={0}
+                      height={30}
+                      tickFormatter={(value) => {
+                        const maxLength = 15;
+                        if (value.length > maxLength) {
+                          return value.match(new RegExp(`.{1,${maxLength}}`, "g")).join("\n");
+                        }
+                        return value;
+                      }}
+                    />
+
+                    <YAxis tick={{ fontSize: 18 }} />
+                    {/* <YAxis 
   domain={[0, roundedMax]}  // Set fixed Y-axis upper limit
   tickCount={6}  // Ensures consistent tick spacing
   allowDecimals={false}  // Ensures only whole numbers appear
 /> */}
-                  <Tooltip content={<CustomTooltip />} wrapperStyle={{ pointerEvents: "none", zIndex: 1000 }} />
-                  {/* <Legend content={<CustomLegend />}  verticalAlign="top" */}
-  {/* align="left" /> */}
-                  {/* Render bars in the same order as headers */}
-                  {headers.slice(1).map((key, idx) => (
-                    <Bar key={key} dataKey={key} fill={colors[idx % colors.length]} />
-                  ))}
-                </BarChart>
+                    <Tooltip content={<CustomTooltip />} wrapperStyle={{ pointerEvents: "none", zIndex: 1000 }} />
+                    <Legend
+                      verticalAlign="top"
+                      align="center"
+                      wrapperStyle={{ fontSize: "16px" }} // Added legend with styling
+                    />
+                    {/* Render bars in the same order as headers */}
+                    {headers.slice(1).map((key, idx) => (
+                      <Bar key={key} dataKey={key} fill={colors[idx % colors.length]} />
+                    ))}
+                  </BarChart>
                 )}
               </ResponsiveContainer>
             )}
