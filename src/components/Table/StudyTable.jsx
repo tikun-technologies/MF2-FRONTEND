@@ -13,14 +13,14 @@ const StudyTable = ({ headers, data, baseValues }) => {
   return (
     <div className="shadow-lg rounded-lg overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200 bg-white">
-        <thead className="bg-gray-50">
+        <thead className="bg-zinc-700">
           <tr>
             {headers.map((header, index) => {
               return (
                 <th
                   key={index}
                   scope="col"
-                  className="!px-8 !py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider" // Increased font size to sm, weight to semibold, color to gray-600
+                  className="!px-8 !py-4 text-left text-sm font-semibold text-white uppercase tracking-wider" // Increased font size to sm, weight to semibold, color to gray-600
                 >
                   {header}
                   {baseValues && baseValues[header] !== undefined && baseValues[header] !== null && (

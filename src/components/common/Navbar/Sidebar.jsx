@@ -1,17 +1,15 @@
-import React, { useContext } from "react";
-// import styles from "./Sidebar.module.css"; // Removed CSS module import
+import React, { useContext, forwardRef } from "react"; // Modified import
 import { useNavigate, NavLink } from "react-router-dom";
-import { GiBrain } from "react-icons/gi"; // Keep for logo if needed, or remove if not used elsewhere
-import { MdDashboard } from "react-icons/md"; // Added for Studies tab
-// import { CgProfile } from "react-icons/cg"; // Assuming this might be used later
-// import { RiArticleLine } from "react-icons/ri"; // Assuming this might be used later
+import { GiBrain } from "react-icons/gi";
+import { MdDashboard } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
 import AuthContext from "../../../context/AuthContext";
 
-const Sidebar = ({ isSidebarOpen }) => {
+// Wrapped component with forwardRef
+const Sidebar = forwardRef(({ isSidebarOpen }, ref) => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { firstName } = user || {}; // Added fallback for user
+  const { firstName } = user || {};
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -21,8 +19,9 @@ const Sidebar = ({ isSidebarOpen }) => {
 
   return (
     <div
-      className={`bg-gray-800 text-white h-screen flex flex-col shadow-lg transition-all duration-300 ease-in-out ${isSidebarOpen ? "w-64" : "w-0 overflow-hidden" // Changed to w-0 and added overflow-hidden
-        } fixed left-0 top-0 z-40`}
+      ref={ref} // Applied the forwarded ref
+      className={`bg-gray-800 text-white h-screen flex flex-col shadow-lg transition-all duration-300 ease-in-out ${isSidebarOpen ? "w-64" : "w-0 overflow-hidden"
+        }`} // Removed fixed, left, top, z-index classes
     >
       <div className={`flex items-center justify-center h-16 border-b border-gray-700 ${!isSidebarOpen && "hidden"}`}>
         {isSidebarOpen ? (
@@ -92,6 +91,6 @@ const Sidebar = ({ isSidebarOpen }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Sidebar;
