@@ -83,7 +83,7 @@ const Sidebar = ({ isSidebarOpen }) => {
         )} */}
         <button
           onClick={handleLogout}
-          className={`flex items-center p-4 my-1 rounded-lg text-gray-200 hover:bg-gray-700 hover:text-white transition-colors duration-150 ease-in-out group w-full text-red-400 hover:bg-red-600 ${!isSidebarOpen ? "justify-center" : ""}`
+          className={`flex items-center p-4 my-1 rounded-lg hover:text-white transition-colors duration-150 ease-in-out group w-full text-red-400 hover:bg-red-600 ${!isSidebarOpen ? "justify-center" : ""}`
           }
         >
           <IoLogOutOutline className="h-6 w-6 shrink-0 transition-colors duration-150 ease-in-out text-red-400 group-hover:text-white" />

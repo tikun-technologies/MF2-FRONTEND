@@ -78,7 +78,7 @@ const StudyDetail = () => {
           <div className="container">
             <div className={styles.studyHeader}>
               <h1 className={styles.studyTitle}>{study.studyTitle}</h1>
-              <ExportPage />
+              <ExportPage hasPpt={study.hasPpt} id={id} />
             </div>
             <div className={styles.studyMetadata}>
               <p>
