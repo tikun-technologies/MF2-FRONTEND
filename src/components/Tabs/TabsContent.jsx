@@ -175,7 +175,7 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
                   >
                     <XAxis
                       dataKey="Response"
-                      tick={{ fontSize: 18, width: "200" }}
+                      tick={{ fontSize: 18, width: "200", textAnchor: "middle" }}
                       interval={0}
                       height={30}
                       tickFormatter={(value) => {
@@ -187,7 +187,7 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
                       }}
                     />
 
-                    <YAxis tick={{ fontSize: 18 }} />
+                    <YAxis tick={{ fontSize: 18, }} />
                     {/* <YAxis 
   domain={[0, roundedMax]}  // Set fixed Y-axis upper limit
   tickCount={6}  // Ensures consistent tick spacing
@@ -197,7 +197,7 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
                     <Legend
                       verticalAlign="top"
                       align="center"
-                      wrapperStyle={{ fontSize: "16px" }} // Added legend with styling
+                      wrapperStyle={{ fontSize: "16px", paddingBottom: '40px' }} // Added legend with styling
                     />
                     {/* Render bars in the same order as headers */}
                     {headers.slice(1).map((key, idx) => (
