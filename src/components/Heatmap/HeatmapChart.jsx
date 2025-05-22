@@ -3,7 +3,7 @@ import Chart from "react-apexcharts";
 import heatmapColors from "./heatmapColors";
 import styles from "./Heatmap.module.css";
 
-export const HeatmapChart = ({ data, tab, filter,baseValues }) => {
+export const HeatmapChart = ({ data, tab, filter, baseValues }) => {
   console.log("data= ", data);
   console.log("Tab from study details:", tab);
   console.log("Filter from heatmap", filter);
@@ -52,8 +52,8 @@ export const HeatmapChart = ({ data, tab, filter,baseValues }) => {
       // ageCategories = ageCategories.map(
       //   (category) => `${category}\n(${baseValues[category] ?? "-"})`
       // );
-      console.log("category:- ",ageCategories);
-      console.log("name :- ",item.optiontext)
+      console.log("category:- ", ageCategories);
+      console.log("name :- ", item.optiontext);
       return {
         name: item.optiontext,
         data: Object.entries(formattedObject).map(([age, value]) => ({
@@ -73,7 +73,6 @@ export const HeatmapChart = ({ data, tab, filter,baseValues }) => {
     } else {
       ageCategories = Object.keys(data[0][tab]);
       ageCategories = ageCategories.map(
-        
         (category) => `${category}\n(${baseValues[category] ?? "-"})`
       );
       // console.log("category:- ",categories);
@@ -94,7 +93,6 @@ export const HeatmapChart = ({ data, tab, filter,baseValues }) => {
       type: "heatmap",
       toolbar: { show: true },
     },
-    // ✅ Custom HTML tooltip
     tooltip: {
       enabled: true,
       followCursor: true,
@@ -133,14 +131,34 @@ export const HeatmapChart = ({ data, tab, filter,baseValues }) => {
         `;
       },
     },
-    dataLabels: { enabled: true },
+    dataLabels: {
+      enabled: true,
+      style: {
+        fontSize: "40px", // Increased font size for data labels
+      },
+    },
     colors: heatmapColors[filter]?.ranges.map((range) => range.color) || [
       "#767676",
     ],
     xaxis: {
       categories: ageCategories,
+      labels: {
+        style: {
+          fontSize: "16px", // Increased font size for x-axis labels
+        },
+      },
     },
-    yaxis: { show: false },
+    yaxis: {
+      show: false,
+      labels: {
+        style: {
+          fontSize: "100px", // Increased font size for y-axis labels
+        },
+      },
+    },
+    legend: {
+      fontSize: "16px", // Increased font size for legend
+    },
     plotOptions: {
       heatmap: {
         colorScale: {

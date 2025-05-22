@@ -50,6 +50,7 @@
   font-family: sans-serif;
   display: inline-block;
   width: 100%;
+  padding: 1.5rem 0.5rem;
   word-wrap: break-word;
   white-space: normal;
   text-align: left;
@@ -69,5 +70,6 @@
   font-size: 12px;
   font-family: sans-serif;
   text-transform: capitalize;
-  white-space: pre-wrap; /* Allow line breaks */
+  white-space: pre-wrap;
+  /* Allow line breaks */
 }
