@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { FaFilePdf, FaRegFilePowerpoint } from "react-icons/fa";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import PptxGenJS from "pptxgenjs";
+// PptxGenJS import removed as it's no longer used for PPT export when pptUrl is present
 import "./ExportButton.css";
 import AuthContext from "../../context/AuthContext";
 import { getStudy } from '../../api/getStudies';
@@ -15,9 +15,17 @@ export const ExportPage = ({ hasPpt: initialHasPpt, id }) => {
   const [actualCanExportPpt, setActualCanExportPpt] = useState(initialHasPpt);
   const [pptCooldown, setPptCooldown] = useState(0); // Cooldown in seconds
   const [isCheckingPptStatus, setIsCheckingPptStatus] = useState(false);
+  const [currentPptUrl, setCurrentPptUrl] = useState(null);
+  const [fetchedStudyDetails, setFetchedStudyDetails] = useState(null);
 
   useEffect(() => {
     setActualCanExportPpt(initialHasPpt);
+    if (!initialHasPpt) {
+      setCurrentPptUrl(null);
+      setFetchedStudyDetails(null);
+    }
+    // If initialHasPpt is true, currentPptUrl might still be null.
+    // The click handler will fetch the URL if needed.
   }, [initialHasPpt]);
 
   useEffect(() => {
@@ -83,35 +91,23 @@ export const ExportPage = ({ hasPpt: initialHasPpt, id }) => {
     });
   };
 
-  const performActualPptExport = () => {
+  const performPptDownload = (url, studyTitle) => {
     setIsExportingPPTX(true);
-    let pptx = new PptxGenJS();
-    let slide = pptx.addSlide();
-
-    slide.addText("Page Export", { x: 1, y: 0.5, fontSize: 24, bold: true });
-
-    const element = document.getElementById("page-content");
-    if (!element) {
-      console.error("Element with ID 'page-content' not found for PPT export.");
+    try {
+      const link = document.createElement('a');
+      link.href = url;
+      // Sanitize title for filename or use a default
+      const fileNameBase = studyTitle ? studyTitle.replace(/[^a-z0-9_.-]+/gi, '_') : 'Study_Export';
+      link.setAttribute('download', `${fileNameBase}.pptx`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      // Add a small delay before setting exporting to false to allow download to initiate
+      setTimeout(() => setIsExportingPPTX(false), 500);
+    } catch (error) {
+      console.error("Error triggering PPT download:", error);
       setIsExportingPPTX(false);
-      return;
     }
-
-    html2canvas(element, { scale: 2, useCORS: true }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      // Adjust w and h for desired image size/aspect ratio in PPT
-      slide.addImage({ data: imgData, x: 0, y: 1, w: 10, h: 5.625 });
-
-      pptx.writeFile({ fileName: "Page_Export.pptx" }).then(() => {
-        setIsExportingPPTX(false);
-      }).catch(err => {
-        console.error("Error writing PPTX file:", err);
-        setIsExportingPPTX(false);
-      });
-    }).catch(err => {
-      console.error("Error during html2canvas for PPTX:", err);
-      setIsExportingPPTX(false);
-    });
   };
 
   const handlePptExportOrCheck = async () => {
@@ -119,32 +115,39 @@ export const ExportPage = ({ hasPpt: initialHasPpt, id }) => {
       return;
     }
 
-    if (actualCanExportPpt) {
-      performActualPptExport();
+    if (actualCanExportPpt && currentPptUrl) {
+      performPptDownload(currentPptUrl, fetchedStudyDetails?.studyTitle);
     } else {
       setIsCheckingPptStatus(true);
       if (!token) {
         console.warn("No authentication token found. Cannot check PPT status.");
-        setPptCooldown(50); // Start cooldown as we can't proceed
+        setPptCooldown(50);
         setIsCheckingPptStatus(false);
+        setCurrentPptUrl(null);
+        setFetchedStudyDetails(null);
         return;
       }
 
       try {
-        const study = await getStudy(id, token); // Use the actual getStudy function
-        console.log("Fetched study for PPT check:", study); // Optional: log fetched study
-        if (study && study.hasPpt) {
+        const study = await getStudy(id, token);
+        console.log("Fetched study for PPT check:", study);
+        if (study && study.hasPpt && study.pptUrl) {
           setActualCanExportPpt(true);
-          // Automatically attempt export now that permission is granted
-          performActualPptExport();
+          setCurrentPptUrl(study.pptUrl);
+          setFetchedStudyDetails(study);
+          performPptDownload(study.pptUrl, study.studyTitle);
         } else {
-          setActualCanExportPpt(false); // Explicitly set to false
+          setActualCanExportPpt(false);
+          setCurrentPptUrl(null);
+          setFetchedStudyDetails(null);
           setPptCooldown(50);
         }
       } catch (error) {
         console.error("Error fetching study for PPT check:", error);
-        setActualCanExportPpt(false); // Ensure it's false on error
-        setPptCooldown(50); // Start cooldown on error
+        setActualCanExportPpt(false);
+        setCurrentPptUrl(null);
+        setFetchedStudyDetails(null);
+        setPptCooldown(50);
       } finally {
         setIsCheckingPptStatus(false);
       }
@@ -157,14 +160,14 @@ export const ExportPage = ({ hasPpt: initialHasPpt, id }) => {
   } else if (isCheckingPptStatus) {
     pptButtonText = "Checking...";
   } else if (pptCooldown > 0) {
-    pptButtonText = `Try again in ${pptCooldown}s`;
+    pptButtonText = `Getting ready in ${pptCooldown}s`;
   }
 
   return (
     <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
-      <button onClick={exportToPDF} disabled={isExportingPDF} style={{ opacity: isExportingPDF ? 0.7 : 1 }}>
+      {/* <button onClick={exportToPDF} disabled={isExportingPDF} style={{ opacity: isExportingPDF ? 0.7 : 1 }}>
         <FaFilePdf size={20} color="red" /> {isExportingPDF ? "Exporting..." : "Export PDF"}
-      </button>
+      </button> */}
       <button
         onClick={handlePptExportOrCheck}
         disabled={isExportingPPTX || isCheckingPptStatus || pptCooldown > 0}
