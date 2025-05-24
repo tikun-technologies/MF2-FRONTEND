@@ -98,7 +98,7 @@ const StudyTable = ({ headers, data, baseValues }) => {
     <div>
       {numericColumns.length > 0 && (
         <div className="mb-4 p-4 bg-gray-100 rounded-lg shadow">
-          <div className="flex flex-wrap items-end gap-4">
+          <div className="flex flex-wrap items-center !p-4 gap-4">
             {/* Column selector */}
             <div>
               <label htmlFor="columnSelect" className="block text-sm font-medium text-gray-700 mb-1">
