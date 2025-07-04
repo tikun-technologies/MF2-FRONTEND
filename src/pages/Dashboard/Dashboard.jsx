@@ -66,7 +66,7 @@ const Dashboard = () => {
           </button>
         )}
       </div>
-
+      <p className={styles.subText}>Manage and track your research studies</p>
       {error && <p className={styles.errorMessage}>⚠️ {error}</p>}
 
       {loading ? (
