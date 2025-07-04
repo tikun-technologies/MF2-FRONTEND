@@ -6,8 +6,11 @@ import React, { useEffect } from "react";
 import TabsContent from "./TabsContent";
 
 const StudyTabs = ({ study }) => {
-  // console.log("Received from study detail:", study);
   const { studyData } = study || {};
+  console.log("✅ studyData extracted:", studyData);
+  console.log("study from tabs component:", study);
+  // console.log("Received from study detail:", study);
+
   const { activeFilter, activeVisualization } = useFilter();
 
   useEffect(() => {
@@ -69,11 +72,12 @@ const StudyTabs = ({ study }) => {
         />
       </Tabs.Content>
       <Tabs.Content value="prelim" className={styles.tabContent}>
-        <TabsContent 
-        tab="Prelim-Answer Segments"
-        topDown={studyData["(T) Prelim-answer segments"]}
-        bottomDown={studyData["(B) Prelim-answer segments"]}
-        responseTime={studyData["(R) Prelim-answer segments"]} />
+        <TabsContent
+          tab="Prelim-Answer Segments"
+          topDown={studyData["(T) Prelim-answer segments"]}
+          bottomDown={studyData["(B) Prelim-answer segments"]}
+          responseTime={studyData["(R) Prelim-answer segments"]}
+        />
       </Tabs.Content>
       <Tabs.Content value="2 market segments" className={styles.tabContent}>
         <TabsContent

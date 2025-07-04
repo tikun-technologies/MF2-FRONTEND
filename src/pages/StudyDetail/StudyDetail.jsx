@@ -40,8 +40,9 @@ const StudyDetail = () => {
       }
 
       try {
-        const study = await getStudy(id, token);
-        console.log(study);
+        let study = await getStudy(id, token);
+        study = study.study;
+        console.log("study fetched from studyDetail page:", study);
         setStudy(study);
       } catch (error) {
         console.log("error fetching study:", error);
