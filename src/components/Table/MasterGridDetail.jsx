@@ -3,13 +3,10 @@ import { themeAlpine } from "ag-grid-community";
 import { colorSchemeDarkBlue } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 
-// Dheeraj couldn't complete the challenge
-
 const MasterGridDetail = ({ tab, data }) => {
   const [rowData, setRowData] = useState([]);
   const [colDefs, setColDefs] = useState([]);
 
-  // Your existing theme configuration
   const theme = themeAlpine.withPart(colorSchemeDarkBlue).withParams({
     fontFamily: "Anek Devanagari",
     headerFontFamily: "Anek Devanagari",
@@ -24,45 +21,62 @@ const MasterGridDetail = ({ tab, data }) => {
 
   const rowSelection = useMemo(() => ({ mode: "multiRow" }), []);
 
+  const sanitizeKey = (key) =>
+    key.replace(/[().]/g, "").replace(/\s+/g, "_").trim();
+
   useEffect(() => {
-    if (Array.isArray(data) && data.length > 0) {
-      // Process data to ensure all values are properly formatted
-      const processedData = data.map((row) => {
-        const newRow = {};
-        Object.keys(row).forEach((key) => {
-          // Convert all values to numbers where possible
-          const numValue = Number(row[key]);
-          newRow[key] = isNaN(numValue) ? row[key] : numValue;
-        });
-        return newRow;
+    console.log("[GRID DEBUG] Received tab:", tab);
+    console.log("[GRID DEBUG] Received data:", data);
+
+    if (!Array.isArray(data)) {
+      console.warn("[GRID WARN] Data is not an array!", data);
+      setRowData([]);
+      setColDefs([]);
+      return;
+    }
+
+    if (data.length === 0) {
+      console.warn("[GRID WARN] Data array is empty!");
+      setRowData([]);
+      setColDefs([]);
+      return;
+    }
+
+    const allKeys = new Set();
+    const processedData = data.map((row) => {
+      const newRow = {};
+      Object.entries(row).forEach(([key, value]) => {
+        const safeKey = sanitizeKey(key);
+        allKeys.add(safeKey);
+        const numVal = Number(value);
+        newRow[safeKey] = isNaN(numVal) ? value : numVal;
       });
+      return newRow;
+    });
 
-      setRowData(processedData);
+    setRowData(processedData);
 
-      // Get all unique keys from all rows
-      const allKeys = new Set();
-      processedData.forEach((row) => {
-        Object.keys(row).forEach((key) => allKeys.add(key));
-      });
-      console.log("all keys = ,", allKeys);
-      // Create ordered columns (Question, Option, Total first)
-      const orderedKeys = [
-        "Question",
-        "Option",
-        "Overall",
-        ...Array.from(allKeys)
-          .filter((key) => !["Question", "Option", "Overall"].includes(key))
-          .sort(),
-      ];
+    const orderedKeys = [
+      "Question",
+      "Option",
+      "Overall",
+      ...Array.from(allKeys)
+        .filter((key) => !["Question", "Option", "Overall"].includes(key))
+        .sort(),
+    ];
 
-      const columns = orderedKeys.map((key) => ({
-        field: key,
-        headerName: key,
+    const columns = orderedKeys.map((sanitizedKey) => {
+      const originalKey =
+        Object.keys(data[0]).find((k) => sanitizeKey(k) === sanitizedKey) ||
+        sanitizedKey;
+      return {
+        field: sanitizedKey,
+        headerName: originalKey,
         sortable: true,
         filter: true,
         wrapText: true,
         autoHeight: true,
-        tooltipField: key,
+        tooltipField: sanitizedKey,
         cellStyle: {
           whiteSpace: "nowrap",
           overflow: "hidden",
@@ -70,11 +84,7 @@ const MasterGridDetail = ({ tab, data }) => {
         },
         cellRenderer: (params) => {
           const val = params.value;
-
-          // Handle null/undefined/empty
           if (val == null || val === "") return "";
-
-          // Handle numbers
           if (typeof val === "number") {
             return (
               <span
@@ -110,17 +120,12 @@ const MasterGridDetail = ({ tab, data }) => {
               </span>
             );
           }
-
-          // Default string rendering
           return val;
         },
-      }));
+      };
+    });
 
-      setColDefs(columns);
-    } else {
-      setRowData([]);
-      setColDefs([]);
-    }
+    setColDefs(columns);
   }, [data]);
 
   return (
