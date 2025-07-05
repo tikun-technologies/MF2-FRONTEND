@@ -49,7 +49,7 @@ const StudyTabs = ({ study }) => {
 
       <Tabs.Content value="overall" className={styles.tabContent}>
         <TabsContent
-          tab="overall"
+          tab="Overall"
           topDown={studyData["(T) Overall"]}
           bottomDown={studyData["(B) Overall"]}
           responseTime={studyData["(R) Overall"]}

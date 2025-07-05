@@ -1,153 +1,139 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { themeAlpine } from "ag-grid-community";
-
 import { colorSchemeDarkBlue } from "ag-grid-community";
+import { AgGridReact } from "ag-grid-react";
 
-// 3. Import the React Data Grid Component
-import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
-import { studyTestData } from "./StudyTestData";
-
-// 4. Define the rows and columns
-
-const MasterGridDetail = () => {
-  // Row Data: The data to be displayed.
+const MasterGridDetail = ({ tab, data }) => {
   const [rowData, setRowData] = useState([]);
   const [colDefs, setColDefs] = useState([]);
 
+  // Your existing theme configuration
   const theme = themeAlpine.withPart(colorSchemeDarkBlue).withParams({
     fontFamily: "Anek Devanagari",
     headerFontFamily: "Anek Devanagari",
     cellFontFamily: "Anek Devanagari",
     selectedRowBackgroundColor: "rgba(0, 255, 0, 0.1)",
-    // color and style of border around selection
     rangeSelectionBorderColor: "rgb(193, 0, 97)",
     rangeSelectionBorderStyle: "dashed",
-    // background color of selection - you can use a semi-transparent color
-    // and it wil overlay on top of the existing cells
     rangeSelectionBackgroundColor: "rgb(255, 0, 128, 0.1)",
-    // color used to indicate that data has been copied form the cell range
     rangeSelectionHighlightColor: "rgb(60, 188, 0, 0.3)",
-
-    // alternating row colors will be visible through the semi-transparent
-    // selection background color
     oddRowBackgroundColor: "#8881",
   });
 
-  console.log("Alpine properties: ", theme);
-
-  const rowSelection = useMemo(() => {
-    return { mode: "multiRow" };
-  }, []);
+  const rowSelection = useMemo(() => ({ mode: "multiRow" }), []);
 
   useEffect(() => {
-    if (studyTestData && studyTestData.length > 0) {
-      setRowData(studyTestData);
+    if (Array.isArray(data) && data.length > 0) {
+      // Process data to ensure all values are properly formatted
+      const processedData = data.map((row) => {
+        const newRow = {};
+        Object.keys(row).forEach((key) => {
+          // Convert all values to numbers where possible
+          const numValue = Number(row[key]);
+          newRow[key] = isNaN(numValue) ? row[key] : numValue;
+        });
+        return newRow;
+      });
 
-      const firstRow = studyTestData[0];
-      const columns = Object.keys(firstRow)
-        .filter((key) => key !== "") // optionally filter out empty keys
-        .map((key, index) => ({
-          field: key,
-          headerName: key,
-          sortable: true,
-          filter: true,
-          wrapText: true,
-          autoHeight: true,
-          cellStyle: {
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "wrap",
-          },
-          cellRenderer:
-            key === "Successful"
-              ? (params) => (params.value ? "✔️" : "❌")
-              : (params) => {
-                  const val = params.value;
+      setRowData(processedData);
 
-                  // ✅ Only apply style for numeric values > 20
-                  if (typeof val === "number" && val > 20) {
-                    return (
-                      <span
-                        style={{
-                          backgroundColor: "#198754",
-                          color: "white",
-                          paddingTop: "4px",
-                          paddingLeft: "8px",
-                          paddingRight: "8px",
-                          borderRadius: "32px",
-                          fontWeight: 600,
-                          fontSize: "0.8rem",
-                          display: "inline-flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          minWidth: "24px",
-                          height: "16px",
-                          lineHeight: "1",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {val.toLocaleString()}
-                      </span>
-                    );
-                  }
+      // Get all unique keys from all rows
+      const allKeys = new Set();
+      processedData.forEach((row) => {
+        Object.keys(row).forEach((key) => allKeys.add(key));
+      });
+      console.log("all keys = ,", allKeys);
+      // Create ordered columns (Question, Option, Total first)
+      const orderedKeys = [
+        "Question",
+        "Option",
+        "Overall",
+        ...Array.from(allKeys)
+          .filter((key) => !["Question", "Option", "Overall"].includes(key))
+          .sort(),
+      ];
 
-                  // Otherwise, just return plain value
-                  return (
-                    <span
-                      style={{
-                        // backgroundColor: "#198754",
+      const columns = orderedKeys.map((key) => ({
+        field: key,
+        headerName: key,
+        sortable: true,
+        filter: true,
+        wrapText: true,
+        autoHeight: true,
+        tooltipField: key,
+        cellStyle: {
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        },
+        cellRenderer: (params) => {
+          const val = params.value;
+
+          // Handle null/undefined/empty
+          if (val == null || val === "") return "";
+
+          // Handle numbers
+          if (typeof val === "number") {
+            return (
+              <span
+                style={
+                  val > 20
+                    ? {
+                        backgroundColor: "#198754",
                         color: "white",
-
-                        paddingLeft: "8px",
-                        paddingRight: "8px",
-                        borderRadius: "999px",
-                        // fontWeight: 600,
+                        padding: "4px 8px",
+                        borderRadius: "32px",
+                        fontWeight: 600,
                         fontSize: "0.8rem",
                         display: "inline-flex",
                         alignItems: "center",
-                        justifyContent: "center",
+                        minWidth: "24px",
+                        height: "16px",
+                        lineHeight: "1",
+                      }
+                    : {
+                        color: "white",
+                        padding: "0 8px",
+                        borderRadius: "999px",
+                        fontSize: "0.8rem",
+                        display: "inline-flex",
+                        alignItems: "center",
                         minWidth: "24px",
                         height: "10px",
                         lineHeight: "1",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {val.toLocaleString()}
-                    </span>
-                  );
-                },
-          tooltipField: key,
-        }));
+                      }
+                }
+              >
+                {val.toLocaleString()}
+              </span>
+            );
+          }
+
+          // Default string rendering
+          return val;
+        },
+      }));
 
       setColDefs(columns);
+    } else {
+      setRowData([]);
+      setColDefs([]);
     }
-  }, []);
+  }, [data]);
 
-  //   const defaultColDef = {
-  //     flex: 1,
-  //   };
-
-  // // 5. React Data Grid Component
   return (
-    // Data Grid will fill the size of the parent container
     <div style={{ width: "100%", height: "800px" }}>
       <AgGridReact
         theme={theme}
         rowSelection={rowSelection}
         rowData={rowData}
         columnDefs={colDefs}
-        pagination={true} // Enable Pagination
-        // rowSelection="multiple"
+        pagination={true}
         cellSelection={true}
         enableCharts={true}
-        // rowHeight={40}
-        // defaultColDef={defaultColDef}
       />
     </div>
   );
-
-  // ...
 };
 
 export default MasterGridDetail;
