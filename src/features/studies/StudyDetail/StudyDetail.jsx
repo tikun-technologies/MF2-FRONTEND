@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./StudyDetail.module.css";
-import { getStudy } from "../../api/getStudies";
+import { getStudy } from "../api/getStudies";
 import { FaRegFileExcel } from "react-icons/fa";
 import { FaRegFilePowerpoint } from "react-icons/fa";
-import StudyTabs from "../../components/Tabs/StudyTabs";
-import { FilterProvider } from "../../context/FilterContext";
-import StudyFilters from "../../components/Tabs/StudyFilters";
-import ExportPage from "../../components/ExportButton/ExportButton";
-import Spinner from "../../components/common/Spinner";
-import AuthContext from "../../context/AuthContext";
+import StudyTabs from "../../../components/Tabs/StudyTabs";
+import { FilterProvider } from "../../../context/FilterContext";
+import StudyFilters from "../../../components/Tabs/StudyFilters";
+import ExportPage from "../../../components/ExportButton/ExportButton";
+import Spinner from "../../../components/common/Spinner";
+import AuthContext from "../../../context/AuthContext";
 
 // Test study data
 const headers = ["Response", "Overall"];

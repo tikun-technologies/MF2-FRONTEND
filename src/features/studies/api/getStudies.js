@@ -1,5 +1,5 @@
-import API_BASE_URL from "./config";
-import { authenticatedRequest } from "../middlewares/AuthMiddleware";
+import API_BASE_URL from "../../../api/config";
+import { authenticatedRequest } from "../../../middlewares/AuthMiddleware";
 
 // ✅ Get all studies (Accept token as argument)
 // ✅ Get all studies for the user (requires token to be passed in)

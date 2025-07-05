@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { getStudies } from "../../api/getStudies";
+import { getStudies } from "../../features/studies/api/getStudies";
 import AuthContext from "../../context/AuthContext";
 import StudyCard from "../../components/StudyCard/StudyCard";
 import SkeletonCard from "../../components/StudyCard/SkeletonCard";

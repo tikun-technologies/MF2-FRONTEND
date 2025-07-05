@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Home from "../pages/Home/Home";
-import StudyDetail from "../pages/StudyDetail/StudyDetail";
+import StudyDetail from "../features/studies/StudyDetail/StudyDetail";
 import AddDataForm from "../pages/AddStudy/AddStudy";
 import Register from "../pages/Auth/Register";
 import Login from "../pages/Auth/Login";
