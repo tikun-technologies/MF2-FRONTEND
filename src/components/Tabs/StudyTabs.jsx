@@ -26,7 +26,7 @@ const StudyTabs = ({ study }) => {
 
   return (
     <Tabs.Root defaultValue="overall" className={styles.tabsContainer}>
-      <Tabs.List className={styles.tabsList}>
+      <Tabs.List className={`card ${styles.tabsList}`}>
         <Tabs.Trigger value="overall" className={styles.tabTrigger}>
           Overall
         </Tabs.Trigger>

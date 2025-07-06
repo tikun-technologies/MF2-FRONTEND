@@ -2,22 +2,23 @@
   width: 100%;
   overflow-x: auto;
   white-space: nowrap;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .tabsList {
   display: flex;
   flex-wrap: wrap;
-  border-bottom: 1px solid rgb(197, 197, 197);
-  padding: 0.5rem;
+  /* border-bottom: 1px solid rgb(197, 197, 197); */
+  padding: 4px;
+  font-family: var(--primary-font);
   background: #ffffff;
-  font-family: sans-serif;
+  /* border: 2px solid green; */
 }
 
 .tabTrigger {
   background: none;
   color: #333;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   margin-right: 0.2rem;
   font-weight: 700;
   border-radius: 0px;
@@ -33,7 +34,7 @@
 }
 
 .tabTrigger[data-state="active"] {
-  border-bottom: 2px solid blue;
+  border-bottom: 2px solid var(--dark-primary);
 }
 
 ::-webkit-scrollbar {

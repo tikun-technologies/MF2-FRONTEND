@@ -8,9 +8,9 @@ const MasterGridDetail = ({ tab, data }) => {
   const [colDefs, setColDefs] = useState([]);
 
   const theme = themeAlpine.withPart(colorSchemeDarkBlue).withParams({
-    fontFamily: "Anek Devanagari",
-    headerFontFamily: "Anek Devanagari",
-    cellFontFamily: "Anek Devanagari",
+    fontFamily: "Geist",
+    headerFontFamily: "Geist",
+    cellFontFamily: "Geist",
     selectedRowBackgroundColor: "rgba(0, 255, 0, 0.1)",
     rangeSelectionBorderColor: "rgb(193, 0, 97)",
     rangeSelectionBorderStyle: "dashed",
