@@ -2,6 +2,7 @@ import React from "react";
 import { useFilter } from "../../context/FilterContext";
 import styles from "./TabsContent.module.css";
 import MasterGridDetail from "../Table/MasterGridDetail"; // 🔁 Fix name if needed
+import HeatmapChart from "../Graphs/Heatmap/HeatmapChart";
 
 const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
   console.log("Tab from Tabs Content: ", tab);
@@ -20,14 +21,15 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
   return (
     <div className={styles.dataWrapper}>
       {activeVisualization === "table" && (
-        <MasterGridDetail
-          // label={`AG ${activeVisualization === "heatmap" ? "Heatmap" : "Table"} — ${activeFilter} — ${tab}`}
+        <MasterGridDetail tab={tab} data={filterDownedData} />
+      )}
+
+      {activeVisualization === "heatmap" && (
+        <HeatmapChart
           tab={tab}
           data={filterDownedData}
+          activeFilter={activeFilter}
         />
-        // <h1>
-        //   {`${activeVisualization === "heatmap" ? "Heatmap" : "Table"} — ${activeFilter} — ${tab}`}
-        // </h1>
       )}
     </div>
   );
