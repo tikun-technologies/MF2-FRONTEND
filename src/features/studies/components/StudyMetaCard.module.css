@@ -1,0 +1,51 @@
+.metaCard {
+  background: var(--white-primary);
+  /* box-shadow: var(--box-shadow-1); */
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 0.5rem;
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.metaCardInfo {
+  display: flex;
+  align-items: center;
+  /* border: 2px solid red; */
+}
+
+.metaCardIcon {
+  /* border: 2px solid red; */
+  padding: 0.75rem;
+  font-size: 1.25rem;
+  border-radius: 8px;
+  margin-left: 0.5rem;
+  margin-right: 1rem;
+}
+
+.header,
+.subtext {
+  font-size: 14px;
+}
+
+.subtext {
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+.purple {
+  background: #f1e8fd;
+  color: #883ae1;
+}
+
+.blue {
+  background: #dee9fc;
+  color: #3662e3;
+}
+
+.green {
+  background: #e2fbe8;
+  color: #4ca154;
+}

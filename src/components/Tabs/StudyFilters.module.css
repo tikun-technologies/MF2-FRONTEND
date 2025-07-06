@@ -52,7 +52,7 @@
 
 /* Updated filter buttons */
 .filterButton {
-  font-family: sans-serif;
+  font-family: var(--primary-font);
   background: #fff;
   color: #333;
   padding: 12px 18px; /* Increased padding for better spacing */

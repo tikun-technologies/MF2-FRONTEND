@@ -12,7 +12,7 @@
 
 /* Button styles */
 .button {
-  font-family: sans-serif;
+  font-family: var(--primary-font);
   background: none;
   color: #333;
   background: #fff;
@@ -32,7 +32,7 @@
 .activeButton {
   background-color: #000;
   color: white;
-  font-family: sans-serif;
+  font-family: var(--primary-font);
 }
 
 /* Chart container */

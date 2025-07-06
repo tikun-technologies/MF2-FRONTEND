@@ -72,12 +72,22 @@ export const ExportPage = () => {
   };
 
   return (
-    <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
-      <button onClick={exportToPDF} disabled={isExportingPDF} style={{ opacity: isExportingPDF ? 0.7 : 1 }}>
-        <FaFilePdf size={20} color="red" /> {isExportingPDF ? "Exporting..." : "Export PDF"}
+    <div style={{ display: "flex", gap: "10px" }}>
+      <button
+        onClick={exportToPDF}
+        disabled={isExportingPDF}
+        style={{ opacity: isExportingPDF ? 0.7 : 1 }}
+      >
+        <FaFilePdf size={20} color="red" />{" "}
+        {isExportingPDF ? "Exporting..." : "Export PDF"}
       </button>
-      <button onClick={exportToPPTX} disabled={isExportingPPTX} style={{ opacity: isExportingPPTX ? 0.7 : 1 }}>
-        <FaRegFilePowerpoint size={20} color="orange" /> {isExportingPPTX ? "Exporting..." : "Export PPTX"}
+      <button
+        onClick={exportToPPTX}
+        disabled={isExportingPPTX}
+        style={{ opacity: isExportingPPTX ? 0.7 : 1 }}
+      >
+        <FaRegFilePowerpoint size={20} color="orange" />{" "}
+        {isExportingPPTX ? "Exporting..." : "Export PPTX"}
       </button>
     </div>
   );

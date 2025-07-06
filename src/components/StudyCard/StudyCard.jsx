@@ -9,6 +9,7 @@ import OptionsModal from "../common/Modals/OptionsModal";
 import ConfirmationModal from "../common/Modals/ConfirmationModal";
 import AuthContext from "../../context/AuthContext";
 import { deleteStudy } from "../../features/studies/api/deleteStudy";
+import { getStudyStatusBadge } from "../../utils/getStudyStatusBadge";
 
 const StudyCard = ({ study, onDeleteSuccess, onEdit }) => {
   const { token } = useContext(AuthContext);
@@ -92,18 +93,10 @@ const StudyCard = ({ study, onDeleteSuccess, onEdit }) => {
 
       <div className={styles.studyMeta}>
         <div className={styles.studyStatus}>
-          <Badge
-            type={
-              /^\d{2}\/\d{2}\/\d{4}$/.test(studyStatus)
-                ? "completed"
-                : studyStatus
-            }
-            badgeText={
-              /^\d{2}\/\d{2}\/\d{4}$/.test(studyStatus)
-                ? "completed"
-                : studyStatus
-            }
-          />
+          {(() => {
+            const { type, text } = getStudyStatusBadge(studyStatus);
+            return <Badge type={type} badgeText={text} />;
+          })()}
           {studyStarted && <p>{`Created on: ${studyStarted}`}</p>}
         </div>
       </div>

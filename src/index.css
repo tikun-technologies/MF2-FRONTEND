@@ -6,9 +6,16 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Geist";
+  src: url("./assets/fonts/Geist-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 700; /* Supports weight range */
+  font-style: normal;
+}
+
 :root {
   /* fonts */
-  --primary-font: "Space Grotesk";
+  --primary-font: "Geist";
 
   /* Colors */
   --dark-primary: #111729;
@@ -19,6 +26,19 @@
     rgba(0, 67, 158, 0.8),
     rgba(3, 255, 255, 1)
   );
+
+  /* Grays */
+
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
 
   /* Shadows */
   --box-shadow-1: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -39,7 +59,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
   background: #efefef;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--primary-font);
 }
 
 img,
@@ -156,6 +176,7 @@ a {
 /* Fonts and Typography */
 h1 {
   font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-family: var(--primary-font);
 }
 
 /* Buttons */
