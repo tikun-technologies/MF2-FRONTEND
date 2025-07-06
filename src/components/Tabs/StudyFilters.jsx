@@ -12,57 +12,48 @@ const StudyFilters = () => {
   } = useFilter();
 
   return (
-    <div className={styles.studyFiltersContainer}>
+    <div className={`${styles.studyFiltersContainer} card`}>
       {/* Visualization Toggle */}
       <div className={styles.studyVisualizations}>
         <button
-          className={`${styles.buttonIcon} ${
-            activeVisualization === "table" ? styles.activeButton : ""
-          }`}
+          className={`btn ${activeVisualization === "table" ? "active" : ""}`}
           onClick={() => setActiveVisualization("table")}
         >
           <FiTable />
         </button>
         <button
-          className={`${styles.buttonIcon} ${
-            activeVisualization === "heatmap" ? styles.activeButton : ""
-          }`}
+          className={`btn ${activeVisualization === "heatmap" ? "active" : ""}`}
           onClick={() => setActiveVisualization("heatmap")}
         >
           <FiRadio />
         </button>
         <button
-          className={`${styles.buttonIcon} ${
-            activeVisualization === "graph" ? styles.activeButton : ""
-          }`}
+          className={`btn ${activeVisualization === "graph" ? "active" : ""}`}
           onClick={() => setActiveVisualization("graph")}
         >
           <FiGrid />
         </button>
       </div>
 
+      {/* Divider */}
+      <div className={`divider-small ${styles.hideOnMobile}`} />
+
       {/* Filter Buttons */}
       <div className={styles.studyFilters}>
         <button
-          className={`${styles.filterButton} ${
-            activeFilter === "Top-Down" ? styles.activeToggle : ""
-          }`}
+          className={`btn btn-small ${activeFilter === "Top-Down" ? "active" : ""}`}
           onClick={() => setActiveFilter("Top-Down")}
         >
           Top Down
         </button>
         <button
-          className={`${styles.filterButton} ${
-            activeFilter === "Bottom-Up" ? styles.activeToggle : ""
-          }`}
+          className={`btn btn-small ${activeFilter === "Bottom-Up" ? "active" : ""}`}
           onClick={() => setActiveFilter("Bottom-Up")}
         >
           Bottom Up
         </button>
         <button
-          className={`${styles.filterButton} ${
-            activeFilter === "Response Time" ? styles.activeToggle : ""
-          }`}
+          className={`btn btn-small ${activeFilter === "Response Time" ? "active" : ""}`}
           onClick={() => setActiveFilter("Response Time")}
         >
           Response Time
