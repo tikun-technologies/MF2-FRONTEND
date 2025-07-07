@@ -27,12 +27,12 @@ const StudyFilters = () => {
         >
           <FiRadio />
         </button>
-        <button
+        {/* <button
           className={`btn ${activeVisualization === "graph" ? "active" : ""}`}
           onClick={() => setActiveVisualization("graph")}
         >
           <FiGrid />
-        </button>
+        </button> */}
       </div>
 
       {/* Divider */}

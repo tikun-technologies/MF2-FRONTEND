@@ -82,17 +82,17 @@ const StudyTabs = ({ study }) => {
       <Tabs.Content value="2 market segments" className={styles.tabContent}>
         <TabsContent
           tab="2Mindsets"
-          topDown={studyData["(T) Mindsets"]}
-          bottomDown={studyData["(B) Mindsets"]}
-          responseTime={studyData["(R) Mindsets"]}
+          topDown={studyData["(T) Mindsets_2"]}
+          bottomDown={studyData["(B) Mindsets_2"]}
+          responseTime={studyData["(R) Mindsets_2"]}
         />
       </Tabs.Content>
       <Tabs.Content value="3 market segments" className={styles.tabContent}>
         <TabsContent
           tab="3Mindsets"
-          topDown={studyData["(T) Mindsets"]}
-          bottomDown={studyData["(B) Mindsets"]}
-          responseTime={studyData["(R) Mindsets"]}
+          topDown={studyData["(T) Mindsets_3"]}
+          bottomDown={studyData["(B) Mindsets_3"]}
+          responseTime={studyData["(R) Mindsets_3"]}
         />
       </Tabs.Content>
     </Tabs.Root>

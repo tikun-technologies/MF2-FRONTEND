@@ -41,6 +41,18 @@ const HeatmapChart = ({
     return {
       data: flattenedData,
       title: { text: `${tab} - ${activeFilter}` },
+      theme: {
+        // baseTheme: "ag-default",
+        overrides: {
+          heatmap: {
+            title: {
+              fontFamily: "'Geisk', sans-serif",
+              fontWeight: 600,
+              fontSize: 16,
+            },
+          },
+        },
+      },
       series: [
         {
           type: "heatmap",

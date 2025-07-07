@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { themeAlpine } from "ag-grid-community";
+import { themeQuartz } from "ag-grid-community";
 import { colorSchemeDarkBlue } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 
@@ -7,16 +7,19 @@ const MasterGridDetail = ({ tab, data }) => {
   const [rowData, setRowData] = useState([]);
   const [colDefs, setColDefs] = useState([]);
 
-  const theme = themeAlpine.withPart(colorSchemeDarkBlue).withParams({
+  const theme = themeQuartz.withParams({
     fontFamily: "Geist",
     headerFontFamily: "Geist",
+    headerBackgroundColor: "#ffffff", // <-- white header
+    headerFontColor: "#111827", // <-- dark text
     cellFontFamily: "Geist",
+    rowBackgroundColor: "#ffffff", // even row
+    oddRowBackgroundColor: "#f9fafb", // odd row, slightly off-white
     selectedRowBackgroundColor: "rgba(0, 255, 0, 0.1)",
     rangeSelectionBorderColor: "rgb(193, 0, 97)",
     rangeSelectionBorderStyle: "dashed",
     rangeSelectionBackgroundColor: "rgb(255, 0, 128, 0.1)",
     rangeSelectionHighlightColor: "rgb(60, 188, 0, 0.3)",
-    oddRowBackgroundColor: "#8881",
   });
 
   const rowSelection = useMemo(() => ({ mode: "multiRow" }), []);
@@ -104,7 +107,7 @@ const MasterGridDetail = ({ tab, data }) => {
                         lineHeight: "1",
                       }
                     : {
-                        color: "white",
+                        color: "black",
                         padding: "0 8px",
                         borderRadius: "999px",
                         fontSize: "0.8rem",
