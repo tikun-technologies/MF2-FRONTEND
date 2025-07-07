@@ -21,7 +21,11 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
   return (
     <div className={styles.dataWrapper}>
       {activeVisualization === "table" && (
-        <MasterGridDetail tab={tab} data={filterDownedData} />
+        <MasterGridDetail
+          tab={tab}
+          data={filterDownedData}
+          activeFilter={activeFilter}
+        />
       )}
 
       {activeVisualization === "heatmap" && (

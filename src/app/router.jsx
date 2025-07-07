@@ -4,7 +4,7 @@ import AuthContext from "../context/AuthContext";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Home from "../pages/Home/Home";
 import StudyDetail from "../features/studies/StudyDetail/StudyDetail";
-import AddDataForm from "../pages/AddStudy/AddStudy";
+// import AddDataForm from "../pages/AddStudy/AddStudy";
 import Register from "../pages/Auth/Register";
 import Login from "../pages/Auth/Login";
 import PasswordReset from "../pages/Auth/PasswordReset";
@@ -28,7 +28,7 @@ const AppRoutes = () => {
       {/* ✅ Public Routes */}
       <Route path="/articles/:id" element={<ArticleDetails />} />
       <Route path="/signup" element={<Register />} />
-      <Route path="/create" element={<AddDataForm />} />
+      {/* <Route path="/create" element={<AddDataForm />} /> */}
       <Route path="/login" element={<Login />} />
       <Route path="/reset-password" element={<PasswordReset />} />
 
@@ -43,7 +43,7 @@ const AppRoutes = () => {
         >
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/study/:id" element={<StudyDetail />} />
-          <Route path="/create" element={<AddDataForm />} />
+          {/* <Route path="/create" element={<AddDataForm />} /> */}
           <Route path="/articles" element={<Articles />} />
         </Route>
       </Route>

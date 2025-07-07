@@ -3,7 +3,7 @@ import { themeQuartz } from "ag-grid-community";
 import { colorSchemeDarkBlue } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 
-const MasterGridDetail = ({ tab, data }) => {
+const MasterGridDetail = ({ tab, data, activeFilter }) => {
   const [rowData, setRowData] = useState([]);
   const [colDefs, setColDefs] = useState([]);
 
@@ -30,6 +30,7 @@ const MasterGridDetail = ({ tab, data }) => {
   useEffect(() => {
     console.log("[GRID DEBUG] Received tab:", tab);
     console.log("[GRID DEBUG] Received data:", data);
+    console.log("[GRID DEBUG] Received activeFilter:", activeFilter);
 
     if (!Array.isArray(data)) {
       console.warn("[GRID WARN] Data is not an array!", data);
@@ -88,7 +89,8 @@ const MasterGridDetail = ({ tab, data }) => {
         cellRenderer: (params) => {
           const val = params.value;
           if (val == null || val === "") return "";
-          if (typeof val === "number") {
+          // Convert Top-Down to green colors
+          if (typeof val === "number" && activeFilter === "Top-Down") {
             return (
               <span
                 style={
@@ -96,6 +98,78 @@ const MasterGridDetail = ({ tab, data }) => {
                     ? {
                         backgroundColor: "#198754",
                         color: "white",
+                        padding: "4px 8px",
+                        borderRadius: "32px",
+                        fontWeight: 600,
+                        fontSize: "0.8rem",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        minWidth: "24px",
+                        height: "16px",
+                        lineHeight: "1",
+                      }
+                    : {
+                        color: "black",
+                        padding: "0 8px",
+                        borderRadius: "999px",
+                        fontSize: "0.8rem",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        minWidth: "24px",
+                        height: "10px",
+                        lineHeight: "1",
+                      }
+                }
+              >
+                {val.toLocaleString()}
+              </span>
+            );
+          }
+          // Convert Bottom-Up to red colors
+          if (typeof val === "number" && activeFilter === "Bottom-Up") {
+            return (
+              <span
+                style={
+                  val > 16
+                    ? {
+                        backgroundColor: "#ee2704",
+                        color: "white",
+                        padding: "4px 8px",
+                        borderRadius: "32px",
+                        fontWeight: 600,
+                        fontSize: "0.8rem",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        minWidth: "24px",
+                        height: "16px",
+                        lineHeight: "1",
+                      }
+                    : {
+                        color: "black",
+                        padding: "0 8px",
+                        borderRadius: "999px",
+                        fontSize: "0.8rem",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        minWidth: "24px",
+                        height: "10px",
+                        lineHeight: "1",
+                      }
+                }
+              >
+                {val.toLocaleString()}
+              </span>
+            );
+          }
+          // Convert Response-Time to yellow colors
+          if (typeof val === "number" && activeFilter === "Response Time") {
+            return (
+              <span
+                style={
+                  val < 0.4
+                    ? {
+                        backgroundColor: "#fbff02",
+                        color: "black",
                         padding: "4px 8px",
                         borderRadius: "32px",
                         fontWeight: 600,
