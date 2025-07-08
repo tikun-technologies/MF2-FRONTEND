@@ -5,7 +5,7 @@ import { authenticatedRequest } from "../middlewares/AuthMiddleware";
 // ✅ Get all studies for the user (requires token to be passed in)
 export async function getStudies(token) {
   try {
-    const response = await fetch(`${API_BASE_URL}/user/studies`, {
+    const response = await fetch(`${API_BASE_URL}/user/studies/all_data`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export async function getStudies(token) {
 
 export async function getStudy(id, token) {
   try {
-    const response = await fetch(`${API_BASE_URL}/user/studies`, {
+    const response = await fetch(`${API_BASE_URL}/user/studies/all_data`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
