@@ -6,7 +6,8 @@ import React, { useEffect } from "react";
 import TabsContent from "./TabsContent";
 
 const StudyTabs = ({ study }) => {
-  const { studyData } = study || {};
+  const { studyData_flat } = study || {};
+  const studyData = studyData_flat;
   console.log("✅ studyData extracted:", studyData);
   console.log("study from tabs component:", study);
   // console.log("Received from study detail:", study);

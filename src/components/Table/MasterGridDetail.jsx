@@ -73,11 +73,17 @@ const MasterGridDetail = ({ tab, data, activeFilter }) => {
       const originalKey =
         Object.keys(data[0]).find((k) => sanitizeKey(k) === sanitizedKey) ||
         sanitizedKey;
+
+      const isNumeric = data.some((row) => {
+        const val = row[originalKey];
+        return !isNaN(Number(val)) && val !== "" && val !== null;
+      });
+
       return {
         field: sanitizedKey,
         headerName: originalKey,
         sortable: true,
-        filter: true,
+        filter: isNumeric ? "agNumberColumnFilter" : "agTextColumnFilter",
         wrapText: true,
         autoHeight: true,
         tooltipField: sanitizedKey,
