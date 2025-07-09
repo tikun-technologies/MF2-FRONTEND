@@ -6,6 +6,7 @@ import { AgGridReact } from "ag-grid-react";
 const MasterGridDetail = ({ tab, data, activeFilter }) => {
   const [rowData, setRowData] = useState([]);
   const [colDefs, setColDefs] = useState([]);
+  const [globalMinValue, setGlobalMinValue] = useState(0); // start with no filter
 
   const theme = themeQuartz.withParams({
     fontFamily: "Geist",
@@ -52,8 +53,15 @@ const MasterGridDetail = ({ tab, data, activeFilter }) => {
       Object.entries(row).forEach(([key, value]) => {
         const safeKey = sanitizeKey(key);
         allKeys.add(safeKey);
-        const numVal = Number(value);
-        newRow[safeKey] = isNaN(numVal) ? value : numVal;
+        let newVal;
+        if (value === "" || value === null || value === undefined) {
+          newVal = ""; // preserve blank
+        } else if (!isNaN(value) && value !== "") {
+          newVal = Number(value);
+        } else {
+          newVal = value;
+        }
+        newRow[safeKey] = newVal;
       });
       return newRow;
     });
@@ -86,6 +94,13 @@ const MasterGridDetail = ({ tab, data, activeFilter }) => {
         filter: isNumeric ? "agNumberColumnFilter" : "agTextColumnFilter",
         wrapText: true,
         autoHeight: true,
+        valueFormatter: isNumeric
+          ? (params) => {
+              const val = params.value;
+              if (val === "" || val === null || isNaN(val)) return "";
+              return val;
+            }
+          : undefined,
         tooltipField: sanitizedKey,
         cellStyle: {
           whiteSpace: "nowrap",

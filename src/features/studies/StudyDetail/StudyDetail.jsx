@@ -15,6 +15,7 @@ import StudyMetaCard from "../components/StudyMetaCard";
 import { getStudyStatusBadge } from "../../../utils/getStudyStatusBadge";
 import Badge from "../../../components/Badges/Badge";
 
+
 // Test study data
 const headers = ["Response", "Overall"];
 const data = [
@@ -28,6 +29,8 @@ const data = [
     Overall: 18,
   },
 ];
+// For Filtering down data to component
+
 
 const StudyDetail = () => {
   const [study, setStudy] = useState({});
