@@ -3,7 +3,7 @@ import { themeQuartz } from "ag-grid-community";
 import { colorSchemeDarkBlue } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 
-const MasterGridDetail = ({ tab, data, activeFilter }) => {
+const MasterGridDetail = ({ tab, data, activeFilter, visibleColumns }) => {
   const [rowData, setRowData] = useState([]);
   const [colDefs, setColDefs] = useState([]);
   const [globalMinValue, setGlobalMinValue] = useState(0); // start with no filter
@@ -32,6 +32,7 @@ const MasterGridDetail = ({ tab, data, activeFilter }) => {
     console.log("[GRID DEBUG] Received tab:", tab);
     console.log("[GRID DEBUG] Received data:", data);
     console.log("[GRID DEBUG] Received activeFilter:", activeFilter);
+    console.log("[GRID DEBUG] visibleColumns:", visibleColumns);
 
     if (!Array.isArray(data)) {
       console.warn("[GRID WARN] Data is not an array!", data);
@@ -48,6 +49,7 @@ const MasterGridDetail = ({ tab, data, activeFilter }) => {
     }
 
     const allKeys = new Set();
+    const sanitizedVisibleCols = visibleColumns?.map(sanitizeKey);
     const processedData = data.map((row) => {
       const newRow = {};
       Object.entries(row).forEach(([key, value]) => {
@@ -68,12 +70,15 @@ const MasterGridDetail = ({ tab, data, activeFilter }) => {
 
     setRowData(processedData);
 
+    const coreKeys = ["Question", "Option"];
     const orderedKeys = [
-      "Question",
-      "Option",
-      "Overall",
+      ...coreKeys,
       ...Array.from(allKeys)
-        .filter((key) => !["Question", "Option", "Overall"].includes(key))
+        .filter((key) => {
+          const isNotCore = !coreKeys.includes(key);
+          const isVisible = sanitizedVisibleCols?.includes(key);
+          return isNotCore && isVisible;
+        })
         .sort(),
     ];
 

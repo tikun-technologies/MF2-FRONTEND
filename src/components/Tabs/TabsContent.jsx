@@ -44,7 +44,28 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
       .filter(Boolean); // Remove null rows
   }, [filterDownedData, globalMinValue]);
 
+  const visibleColumns = React.useMemo(() => {
+    if (!filteredData.length) return [];
+
+    const safeMin =
+      typeof globalMinValue === "number" ? globalMinValue : -Infinity;
+
+    const numericKeys = Object.keys(filteredData[0]).filter(
+      (key) =>
+        typeof filteredData[0][key] === "number" ||
+        filteredData.some((row) => typeof row[key] === "number")
+    );
+
+    return numericKeys.filter((key) =>
+      filteredData.some(
+        (row) => typeof row[key] === "number" && row[key] > safeMin
+      )
+    );
+  }, [filteredData, globalMinValue]);
+
   console.log("🚨 Filtered sample:", filteredData?.[0]);
+
+  console.log("🧩 Visible columns:", visibleColumns);
 
   return (
     <>
@@ -69,6 +90,7 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
             tab={tab}
             data={filteredData}
             activeFilter={activeFilter}
+            visibleColumns={visibleColumns}
           />
         )}
 
