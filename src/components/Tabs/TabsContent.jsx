@@ -21,17 +21,27 @@ const TabsContent = ({ tab, topDown, bottomDown, responseTime }) => {
     const safeMin =
       typeof globalMinValue === "number" ? globalMinValue : -Infinity;
 
-    return rows.map((row) => {
-      const newRow = {};
-      for (const [key, value] of Object.entries(row)) {
-        if (typeof value === "number") {
-          newRow[key] = value > safeMin ? value : ""; // ✅ this blanks it
-        } else {
-          newRow[key] = value;
+    return rows
+      .map((row) => {
+        const newRow = {};
+        let hasValueAboveMin = false;
+
+        for (const [key, value] of Object.entries(row)) {
+          if (typeof value === "number") {
+            if (value > safeMin) {
+              newRow[key] = value;
+              hasValueAboveMin = true;
+            } else {
+              newRow[key] = ""; // Hide number
+            }
+          } else {
+            newRow[key] = value;
+          }
         }
-      }
-      return newRow;
-    });
+
+        return hasValueAboveMin ? newRow : null; // Exclude if nothing matched
+      })
+      .filter(Boolean); // Remove null rows
   }, [filterDownedData, globalMinValue]);
 
   console.log("🚨 Filtered sample:", filteredData?.[0]);
