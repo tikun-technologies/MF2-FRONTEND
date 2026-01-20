@@ -6,10 +6,10 @@ import React, { useEffect } from "react";
 import TabsContent from "./TabsContent";
 
 const StudyTabs = ({ study }) => {
-  // console.log("Received from study detail:", study);
-  const { studyData } = study || {};
+  console.log("Received from study detail:", study);
+  const studyData  = study.studyData_flat ;
   const { activeFilter, activeVisualization } = useFilter();
-
+  console.log("Study Data in Tabs:", studyData);
   useEffect(() => {
     console.log("Current Active Filter:", activeFilter);
     console.log("Current Active Visualization:", activeVisualization);

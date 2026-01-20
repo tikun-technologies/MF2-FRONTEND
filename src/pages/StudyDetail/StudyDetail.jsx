@@ -26,7 +26,7 @@ const data = [
 ];
 
 const StudyDetail = () => {
-  const [study, setStudy] = useState({});
+  const [study, setStudy] = useState(null);
   const [loading, setLoading] = useState(true);
   const { token } = useContext(AuthContext);
 
